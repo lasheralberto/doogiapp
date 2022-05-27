@@ -2,14 +2,8 @@
 //import '../flutter_flow/flutter_flow_util.dart';
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
-import 'package:ebook/pages/books/CostLivingTable.dart';
 import 'package:ebook/widgets/BehaviorCard.dart';
-import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:flex_with_main_child/flex_with_main_child.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'physicalCard.dart';
 
 class DogCardDetails extends StatefulWidget {

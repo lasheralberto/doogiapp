@@ -35,6 +35,3 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     ),
   ];
 }
-
-
-

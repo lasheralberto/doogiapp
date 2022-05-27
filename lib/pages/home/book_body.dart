@@ -1,21 +1,14 @@
-import 'package:ebook/models/dogsmodel.dart';
 import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/models/listas.dart';
-import 'package:ebook/pages/books/CostLivingTable.dart';
-import 'package:ebook/pages/books/popularbooksdetails.dart';
 import 'package:ebook/widgets/ListCard.dart';
-import 'package:ebook/widgets/app_column.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/dimensions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ebook/models/ItemsToLoad.dart';
-import 'package:ebook/widgets/MainPage.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 // create client instance
 class BookPageBody extends StatefulWidget {
@@ -197,14 +190,14 @@ class _BookPageBodyState extends State<BookPageBody> {
           Expanded(
             child: InkWell(
               onTap: () {
-                if (index == 0) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CostLivingTable(
-                                index: index,
-                              )));
-                }
+                // if (index == 0) {
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => CostLivingTable(
+                //                 index: index,
+                //               )));
+                // }
               },
               child: Container(
                   height: Dimensions.pageViewContainer,
