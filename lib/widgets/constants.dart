@@ -4,6 +4,8 @@ class AppConstants {
   static const String version = 'v1';
 
   // ignore: constant_identifier_names
+  static const String APPLOGO =
+      'https://ik.imagekit.io/aml28/DogiApp__2__zJl1hYcXv.png?ik-sdk-version=javascript-1.4.3&updatedAt=1652993161226';
   static const APIBASE_URL = 'https://dogsbreedapp.herokuapp.com/';
   static const APIBASE_WEATHER_KEY = '0b54b0b1a5be1bd4c89f38a64844fe30';
   static const APIBASE_PEXELS =

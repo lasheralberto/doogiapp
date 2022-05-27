@@ -57,11 +57,26 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       
+        appBar: AppBar(
+            shadowColor: Colors.white,
+            backgroundColor: Colors.white,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Image.network(AppConstants.APPLOGO),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
+            title: Text('MyApp')),
         backgroundColor: Colors.white,
         body: Column(children: [
           Container(
-            margin: const EdgeInsets.only(top: 60, bottom: 15),
+            margin: const EdgeInsets.only(top: 15, bottom: 15),
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,18 +96,17 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           Expanded(
-              child:
-                  _firstSearch == true
+              child: _firstSearch == true
                   //textController.text.isEmpty
-                      ? const SingleChildScrollView(
-                          child: BookPageBody(),
-                        )
-                      : SingleChildScrollView(
-                          child: foundDog(
-                          filterlist: _filterList,
-                          glossarlist: glossarListOnSearch,
-                          query: _query,
-                        )))
+                  ? const SingleChildScrollView(
+                      child: BookPageBody(),
+                    )
+                  : SingleChildScrollView(
+                      child: foundDog(
+                      filterlist: _filterList,
+                      glossarlist: glossarListOnSearch,
+                      query: _query,
+                    )))
         ]));
   }
 }

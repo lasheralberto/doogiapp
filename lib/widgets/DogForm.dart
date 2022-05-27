@@ -5,10 +5,12 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geocoding/geocoding.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:location/location.dart' ;
+
 
 class DogForm extends StatefulWidget {
   @override
@@ -21,69 +23,103 @@ class _DogFormState extends State<DogForm> {
   PickedFile? pickedFile;
   bool isLoading = false;
   late ParseFileBase parseFile;
-
-  late bool _serviceEnabled;
-  String? _currentAddress;
-  Position? _currentPosition;
-
   final List<DropdownMenuItem> breeds = [];
 
   String? _mySelection = 'Cavalier King Charles Spaniel';
 
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  
+Location location = Location();
+late bool _serviceEnabled;
+late PermissionStatus _permissionGranted;
+late LocationData _locationData;
+late double? fieldLatitude;
+late double? fieldLogitude;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
-        return false;
+  @override
+  void initState() {
+    super.initState();
+
+    getfieldlocation();
+  }
+
+  Future<void> getfieldlocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
       }
     }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
     }
-    return true;
-  }
-
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      setState(() => _currentPosition = position);
-      _getAddressFromLatLng(_currentPosition!);
-    }).catchError((e) {
-      debugPrint(e);
+    _locationData = await location.getLocation();
+    setState(() {
+       fieldLatitude = _locationData.latitude;
+       fieldLogitude = _locationData.longitude;
+      print(fieldLatitude);print(fieldLogitude);
     });
   }
 
-  Future<void> _getAddressFromLatLng(Position position) async {
-    await placemarkFromCoordinates(position.latitude, position.longitude)
-        .then((List<Placemark> placemarks) {
-      Placemark place = placemarks[0];
-      setState(() {
-        _currentAddress =
-            '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-      });
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
+  // Future<bool> _handleLocationPermission() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text(
+  //             'Location services are disabled. Please enable the services')));
+  //     return false;
+  //   }
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           const SnackBar(content: Text('Location permissions are denied')));
+  //       return false;
+  //     }
+  //   }
+  //   if (permission == LocationPermission.deniedForever) {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text(
+  //             'Location permissions are permanently denied, we cannot request permissions.')));
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  // Future<void> _getCurrentPosition() async {
+  //   final hasPermission = await _handleLocationPermission();
+
+  //   if (!hasPermission) return;
+  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+  //       .then((Position position) {
+  //     setState(() => _currentPosition = position);
+  //     _getAddressFromLatLng(_currentPosition!);
+  //   }).catchError((e) {
+  //     debugPrint(e);
+  //   });
+  // }
+
+  // Future<void> _getAddressFromLatLng(Position position) async {
+  //   await placemarkFromCoordinates(position.latitude, position.longitude)
+  //       .then((List<Placemark> placemarks) {
+  //     Placemark place = placemarks[0];
+  //     setState(() {
+  //       _currentAddress =
+  //           '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+  //     });
+  //   }).catchError((e) {
+  //     debugPrint(e);
+  //   });
+  // }
 
   void addToDo(String controllername, String controllerage,
       String breedSelection, ParseFileBase parsefile) async {
@@ -207,12 +243,12 @@ class _DogFormState extends State<DogForm> {
             SizedBox(
               height: 20,
             ),
-            Text('LAT: ${_currentPosition?.altitude ?? "na"}'),
-            Text('LNG: ${_currentPosition?.longitude ?? "na"}'),
-            Text('ADDRESS: ${_currentAddress ?? "na"}'),
+            Text('LAT: $fieldLatitude'),
+            Text('LNG: $fieldLogitude'),
+            ///Text('ADDRESS: ${_currentAddress ?? "na"}'),
             const SizedBox(height: 32),
             ElevatedButton(
-              onPressed: _getCurrentPosition,
+              onPressed: getfieldlocation,
               child: const Text("Get Current Location"),
             ),
             GestureDetector(

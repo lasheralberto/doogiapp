@@ -20,8 +20,8 @@ class BookPageBody extends StatefulWidget {
 
 class _BookPageBodyState extends State<BookPageBody> {
   //pagecontroller hace que sea visible el anterior y el posterior slide en la pantalla
-  PageController pageController = PageController(viewportFraction: 0.87);
-  var _currPageValue = 0.0;
+  PageController pageController = PageController(viewportFraction: 0.70);
+  var _currPageValue = 0.1;
   double scaleFactor = 0.8;
   final double _height = Dimensions.pageViewContainer;
   bool loading = true;
@@ -36,7 +36,7 @@ class _BookPageBodyState extends State<BookPageBody> {
   Future _loadMoreItems() async {
     //cuando se llame iterará hasta la pos 10, returning False hasta que no llegue
     final totalItems = itemsLoad.length;
-    await Future.delayed(Duration(seconds: 3), () {
+    await Future.delayed(Duration(seconds: 1), () {
       for (var i = 0; i < _numItemsPage; i++) {
         itemsLoad.add(Item(totalItems + i + 1));
       }
@@ -75,87 +75,92 @@ class _BookPageBodyState extends State<BookPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    //final hotelsList = fetchData(AppConstants.APIBASE_URL);
 
-    return Column(children: [
-      SizedBox(
-        height: Dimensions.pageView,
-        child: PageView.builder(
-            //depende de dos parámetros el builder. Position cogerá desde el index 0 al itemcount.
-            itemCount: items.length,
-            controller: pageController,
-            itemBuilder: (context, position) {
-              return _buildPageItem(position);
-            }),
-      ),
-      DotsIndicator(
-        dotsCount: items.length,
-        position: _currPageValue,
-        decorator: DotsDecorator(
-          size: const Size.square(9.0),
-          activeSize: const Size(18.0, 9.0),
-          activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radius20)),
+    return SafeArea(
+      child: Column(
+        children: [
+        //********************PARTE DE ARRIBA SCROLLABLE CARDS****************************************** */
+        SizedBox(
+          height: Dimensions.pageView,
+          child: PageView.builder(
+              //depende de dos parámetros el builder. Position cogerá desde el index 0 al itemcount.
+              itemCount: items.length,
+              controller: pageController,
+              itemBuilder: (context, position) {
+                return _buildPageItem(position);
+              }),
         ),
-      ),
-      SizedBox(height: Dimensions.height20),
-      Container(
-          margin: EdgeInsets.only(left: Dimensions.width20),
-          child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BigText(text: 'Breed List'),
-              ])),
-      FutureBuilder(
-          future: _initialLoad,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
-              case ConnectionState.done:
-                return IncrementallyLoadingListView(
-                    hasMore: () => _hasMoreItems,
-                    loadMore: () async {
-                      await _loadMoreItems();
-                    },
-                    onLoadMore: () {
-                      setState(() {
-                        _loadingMore = true;
+        DotsIndicator(
+          dotsCount: items.length,
+          position: _currPageValue,
+          decorator: DotsDecorator(
+            size: const Size.square(9.0),
+            activeSize: const Size(18.0, 9.0),
+            activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimensions.radius20)),
+          ),
+        ),
+        //************************************************************** */
+        SizedBox(height: Dimensions.height20),
+        Container(
+            margin: EdgeInsets.only(left: Dimensions.width20),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BigText(text: 'Breed List'),
+                ])),
+        FutureBuilder(
+            future: _initialLoad,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(child: 
+                  CircularProgressIndicator());
+                case ConnectionState.done:
+                  return IncrementallyLoadingListView(
+                      hasMore: () => _hasMoreItems,
+                      loadMore: () async {
+                        await _loadMoreItems();
+                      },
+                      onLoadMore: () {
+                        setState(() {
+                          _loadingMore = true;
+                        });
+                      },
+                      onLoadMoreFinished: () {
+                        setState(() {
+                          _loadingMore = false;
+                        });
+                      },
+                      loadMoreOffsetFromBottom: 2,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: () => itemsLoad.length,
+                      separatorBuilder: (_, __) => const Divider(),
+                      itemBuilder: (BuildContext context, int index) {
+                        final itemtoLoad = itemsLoad[index];
+                        if ((_loadingMore ?? false) &&
+                            index == itemsLoad.length ) { ///-1
+                          return ListCard(
+                            index: index,
+                            doglist: BreedList,
+                          );
+                        } else {
+                          return ListCard(
+                            index: index,
+                            doglist: BreedList,
+                          );
+                        }
                       });
-                    },
-                    onLoadMoreFinished: () {
-                      setState(() {
-                        _loadingMore = false;
-                      });
-                    },
-                    loadMoreOffsetFromBottom: 2,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: () => itemsLoad.length,
-                    separatorBuilder: (_, __) => const Divider(),
-                    itemBuilder: (BuildContext context, int index) {
-                      final itemtoLoad = itemsLoad[index];
-                      if ((_loadingMore ?? false) &&
-                          index == itemsLoad.length - 1) {
-                        return ListCard(
-                          index: index,
-                          doglist: BreedList,
-                        );
-                      } else {
-                        return ListCard(
-                          index: index,
-                          doglist: BreedList,
-                        );
-                      }
-                    });
-              case ConnectionState.none:
-                return const Text('None');
-              case ConnectionState.active:
-                return const Text('Active');
-            }
-          })
-    ]);
+                case ConnectionState.none:
+                  return const Text('None');
+                case ConnectionState.active:
+                  return const Text('Active');
+              }
+            })
+      ]),
+    );
   }
 
   Widget _buildPageItem(int index) {
