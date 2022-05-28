@@ -16,6 +16,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:ebook/widgets/MainPage.dart';
 import 'package:ebook/models/listas.dart';
 import 'package:ebook/pages/home/main_settings.dart';
+import 'package:location/location.dart' ;
 
 class MainBookPage extends StatefulWidget {
   const MainBookPage({Key? key}) : super(key: key);
@@ -25,12 +26,41 @@ class MainBookPage extends StatefulWidget {
 
 class _MainBookPageState extends State<MainBookPage> {
   final _controller = PersistentTabController(initialIndex: 0);
+    Location location = Location();
+late bool _serviceEnabled;
+late PermissionStatus _permissionGranted;
+late LocationData _locationData;
+var fieldLatitude;
+var fieldLogitude;
+
+  Future<void> getfieldlocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+    setState(() {
+       fieldLatitude = _locationData.latitude;
+       fieldLogitude = _locationData.longitude;
+
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
-
+     getfieldlocation();
     fetchData(AppConstants.APIBASE_URL);
 
     }
@@ -66,7 +96,7 @@ class _MainBookPageState extends State<MainBookPage> {
       ),
       navBarStyle: NavBarStyle.style9,
       controller: _controller,
-      screens:  [MainPage(), DogsAdoptionList(), DogForm()],
+      screens:  [MainPage(), const DogsAdoptionList(), DogForm( lat: fieldLatitude, long: fieldLogitude,  )],
       items: [
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.home),

@@ -1,5 +1,5 @@
 // ignore: file_names
-// ignore_for_file: file_names, non_constant_identifier_names, prefer_const_constructors
+// ignore_for_file: file_names, non_constant_identifier_names, prefer_const_constructors, prefer_typing_uninitialized_variables
 
 import 'dart:async';
 import 'dart:io';
@@ -9,10 +9,14 @@ import 'package:flutter/material.dart';
 //import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:location/location.dart' ;
-
 
 class DogForm extends StatefulWidget {
+  var lat;
+  var long;
+
+  DogForm({Key? key, required this.lat, required this.long}) : super(key: key);
+  //final double lat;
+  //final double long;
   @override
   _DogFormState createState() => _DogFormState();
 }
@@ -27,99 +31,10 @@ class _DogFormState extends State<DogForm> {
 
   String? _mySelection = 'Cavalier King Charles Spaniel';
 
-  
-Location location = Location();
-late bool _serviceEnabled;
-late PermissionStatus _permissionGranted;
-late LocationData _locationData;
-late double? fieldLatitude;
-late double? fieldLogitude;
-
   @override
   void initState() {
     super.initState();
-
-    getfieldlocation();
   }
-
-  Future<void> getfieldlocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-    _locationData = await location.getLocation();
-    setState(() {
-       fieldLatitude = _locationData.latitude;
-       fieldLogitude = _locationData.longitude;
-      print(fieldLatitude);print(fieldLogitude);
-    });
-  }
-
-  // Future<bool> _handleLocationPermission() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnabled) {
-  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  //         content: Text(
-  //             'Location services are disabled. Please enable the services')));
-  //     return false;
-  //   }
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(content: Text('Location permissions are denied')));
-  //       return false;
-  //     }
-  //   }
-  //   if (permission == LocationPermission.deniedForever) {
-  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  //         content: Text(
-  //             'Location permissions are permanently denied, we cannot request permissions.')));
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  // Future<void> _getCurrentPosition() async {
-  //   final hasPermission = await _handleLocationPermission();
-
-  //   if (!hasPermission) return;
-  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-  //       .then((Position position) {
-  //     setState(() => _currentPosition = position);
-  //     _getAddressFromLatLng(_currentPosition!);
-  //   }).catchError((e) {
-  //     debugPrint(e);
-  //   });
-  // }
-
-  // Future<void> _getAddressFromLatLng(Position position) async {
-  //   await placemarkFromCoordinates(position.latitude, position.longitude)
-  //       .then((List<Placemark> placemarks) {
-  //     Placemark place = placemarks[0];
-  //     setState(() {
-  //       _currentAddress =
-  //           '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-  //     });
-  //   }).catchError((e) {
-  //     debugPrint(e);
-  //   });
-  // }
 
   void addToDo(String controllername, String controllerage,
       String breedSelection, ParseFileBase parsefile) async {
@@ -243,14 +158,11 @@ late double? fieldLogitude;
             SizedBox(
               height: 20,
             ),
-            Text('LAT: $fieldLatitude'),
-            Text('LNG: $fieldLogitude'),
+            Text('LAT: ${widget.lat}'),
+            Text('LNG: ${widget.long}'),
+
             ///Text('ADDRESS: ${_currentAddress ?? "na"}'),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: getfieldlocation,
-              child: const Text("Get Current Location"),
-            ),
             GestureDetector(
               child: pickedFile != null
                   ? Container(

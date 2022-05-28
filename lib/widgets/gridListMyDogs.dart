@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 
 class gridListDogs extends StatelessWidget {
-  const gridListDogs({Key? key}) : super(key: key);
+  var lat;
+  var long;
+  gridListDogs({Key? key, this.lat, this.long}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +22,10 @@ class gridListDogs extends StatelessWidget {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               child: Icon(Icons.add),
-               onPressed: () {
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DogForm()),
+                  MaterialPageRoute(builder: (context) => DogForm(lat: lat, long: long)),
                 );
               },
             ),

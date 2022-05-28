@@ -15,6 +15,7 @@ import 'big_text.dart';
 import 'dimensions.dart';
 import 'icon_and_text_widget.dart';
 
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -30,11 +31,14 @@ class _MainPageState extends State<MainPage> {
 
   String _query = '';
 
+
+
   @override
   void initState() {
     //_filterList.clear();
     super.initState();
     _filterList.isEmpty ? fetchData(AppConstants.APIBASE_URL) : _filterList;
+   
   }
 
   _MainPageState() {
