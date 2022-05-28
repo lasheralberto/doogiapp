@@ -22,79 +22,82 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
   Widget build(BuildContext context) {
     const title = 'Grid List';
 
-    return FutureBuilder<List<ParseObject>>(
-      future: getTodo(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Center(
-              child: Container(
-                  width: 100,
-                  height: 100,
-                  child: const CircularProgressIndicator()),
-            );
-          default:
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text("Error..."),
+    return Scaffold(
+      appBar: AppBar(),
+      body: FutureBuilder<List<ParseObject>>(
+        future: getTodo(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Center(
+                child: Container(
+                    width: 100,
+                    height: 100,
+                    child: const CircularProgressIndicator()),
               );
-            }
-            if (!snapshot.hasData) {
-              return const Center(
-                child: Text("No Data..."),
-              );
-            } else {
-              return ListView.builder(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    //*************************************
-                    //Get Parse Object Values
-                    final varTodo = snapshot.data![index];
-                    final varTitle = varTodo.get<String>('title')!;
-                    final varBreed = varTodo.get<String>('Breed');
-                    final varImg = varTodo.get<ParseFileBase>('DogImg')!;
-                    final varDone = varTodo.get<bool>('done')!;
-                  
-
-                    //*************************************
-
-                    return ListTile(
-                      title: Text(varTitle),
-                      subtitle: Text(varBreed as String),
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                        child: Image.network(varImg.url as String),),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          
-                          // IconButton(
-                          //   icon: const Icon(
-                          //     Icons.delete_outline,
-                          //     color: Colors.blue,
-                          //   ),
-                          //   onPressed: () async {
-                          //     await deleteTodo(varTodo.objectId!);
-                          //     setState(() {
-                          //       final snackBar = SnackBar(
-                          //         content: Text("Todo deleted!"),
-                          //         duration: Duration(seconds: 1),
-                          //       );
-                          //       ScaffoldMessenger.of(context)
-                          //         ..removeCurrentSnackBar()
-                          //         ..showSnackBar(snackBar);
-                          //     });
-                          //   },
-                          // )
-                        ],
-                      ),
-                    );
-                  });
-            }
-        }
-      },
+            default:
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text("Error..."),
+                );
+              }
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: Text("No Data..."),
+                );
+              } else {
+                return ListView.builder(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      //*************************************
+                      //Get Parse Object Values
+                      final varTodo = snapshot.data![index];
+                      final varTitle = varTodo.get<String>('title')!;
+                      final varBreed = varTodo.get<String>('Breed');
+                      final varImg = varTodo.get<ParseFileBase>('DogImg')!;
+                      final varDone = varTodo.get<bool>('done')!;
+                    
+    
+                      //*************************************
+    
+                      return ListTile(
+                        title: Text(varTitle),
+                        subtitle: Text(varBreed as String),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(40)),
+                          child: Image.network(varImg.url as String),),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            
+                            // IconButton(
+                            //   icon: const Icon(
+                            //     Icons.delete_outline,
+                            //     color: Colors.blue,
+                            //   ),
+                            //   onPressed: () async {
+                            //     await deleteTodo(varTodo.objectId!);
+                            //     setState(() {
+                            //       final snackBar = SnackBar(
+                            //         content: Text("Todo deleted!"),
+                            //         duration: Duration(seconds: 1),
+                            //       );
+                            //       ScaffoldMessenger.of(context)
+                            //         ..removeCurrentSnackBar()
+                            //         ..showSnackBar(snackBar);
+                            //     });
+                            //   },
+                            // )
+                          ],
+                        ),
+                      );
+                    });
+              }
+          }
+        },
+      ),
     );
   }
 }

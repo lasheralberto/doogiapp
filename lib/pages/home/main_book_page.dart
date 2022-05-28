@@ -1,22 +1,13 @@
 import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/pages/home/book_body.dart';
-import 'package:ebook/utils/main.dart';
 import 'package:ebook/widgets/DogForm.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/MainPage.dart';
-import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/constants.dart';
-import 'package:ebook/widgets/dimensions.dart';
-import 'package:ebook/widgets/gridListMyDogs.dart';
-import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ebook/utils/main.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:ebook/widgets/MainPage.dart';
-import 'package:ebook/models/listas.dart';
-import 'package:ebook/pages/home/main_settings.dart';
 import 'package:location/location.dart' ;
+
 
 class MainBookPage extends StatefulWidget {
   const MainBookPage({Key? key}) : super(key: key);
@@ -26,12 +17,14 @@ class MainBookPage extends StatefulWidget {
 
 class _MainBookPageState extends State<MainBookPage> {
   final _controller = PersistentTabController(initialIndex: 0);
-    Location location = Location();
+
+Location location = Location();
 late bool _serviceEnabled;
 late PermissionStatus _permissionGranted;
 late LocationData _locationData;
 var fieldLatitude;
 var fieldLogitude;
+
 
   Future<void> getfieldlocation() async {
     _serviceEnabled = await location.serviceEnabled();

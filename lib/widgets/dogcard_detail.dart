@@ -23,7 +23,6 @@ class DogCardDetails extends StatefulWidget {
   final dynamic maxWeigthMale;
   final dynamic maxWeigthFemale;
 
-
   DogCardDetails({
     Key? key,
     required this.imgparam,
@@ -55,6 +54,7 @@ class _DogCardDetailsState extends State<DogCardDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Column(
@@ -83,8 +83,9 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                   ElevatedButton(
                       onPressed: () {
                         setState(() {
-                        _visiblePhysical = false;
-                      });},
+                          _visiblePhysical = false;
+                        });
+                      },
                       child: Text('Behavior info'),
                       style: ButtonStyle(
                           shape:
@@ -93,12 +94,15 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                                       borderRadius:
                                           BorderRadius.circular(160.0),
                                       side: BorderSide(color: Colors.white))))),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   ElevatedButton(
                       onPressed: () {
-                      setState(() {
-                        _visiblePhysical = true;
-                      });},
+                        setState(() {
+                          _visiblePhysical = true;
+                        });
+                      },
                       child: Text('Physical info'),
                       style: ButtonStyle(
                           shape:
@@ -107,12 +111,11 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                                       borderRadius:
                                           BorderRadius.circular(160.0),
                                       side: BorderSide(color: Colors.white))))),
-                  
                 ],
               ),
             ),
-            _visiblePhysical == true?
-            PhysicalCardInfoDog(
+            _visiblePhysical == true
+                ? PhysicalCardInfoDog(
                     minLifeExp: widget.minLifeExp,
                     maxLifeExp: widget.maxLifeExp,
                     maxHeigthMale: widget.maxHeigthMale,
@@ -129,7 +132,6 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                     trainability: widget.trainability,
                     energy: widget.energy,
                     barking: widget.barking)
-                
           ],
         ),
       ),

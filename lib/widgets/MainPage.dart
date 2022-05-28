@@ -15,7 +15,6 @@ import 'big_text.dart';
 import 'dimensions.dart';
 import 'icon_and_text_widget.dart';
 
-
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -28,17 +27,13 @@ class _MainPageState extends State<MainPage> {
   List<dynamic> glossarListOnSearch = [];
   bool _firstSearch = true;
   final List<String> _filterList = [];
-
   String _query = '';
-
-
 
   @override
   void initState() {
     //_filterList.clear();
     super.initState();
     _filterList.isEmpty ? fetchData(AppConstants.APIBASE_URL) : _filterList;
-   
   }
 
   _MainPageState() {
@@ -61,26 +56,26 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            shadowColor: Colors.white,
-            backgroundColor: Colors.white,
-            leading: Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: Image.network(AppConstants.APPLOGO),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  tooltip:
-                      MaterialLocalizations.of(context).openAppDrawerTooltip,
-                );
-              },
-            ),
-            title: Text('MyApp')),
-        backgroundColor: Colors.white,
-        body: Column(children: [
+      appBar: AppBar(
+          shadowColor: Colors.white,
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Image.network(AppConstants.APPLOGO),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          title: Text('MyApp')),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
           Container(
-            margin: const EdgeInsets.only(top: 15, bottom: 15),
+            margin: const EdgeInsets.only(top: 5, bottom: 5),
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,17 +95,23 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           Expanded(
-              child: _firstSearch == true
-                  //textController.text.isEmpty
-                  ? const SingleChildScrollView(
-                      child: BookPageBody(),
-                    )
-                  : SingleChildScrollView(
-                      child: foundDog(
+            child: _firstSearch == true
+                //textController.text.isEmpty
+                ? const SingleChildScrollView(
+                    child: 
+                    BookPageBody(),
+                  )
+                : SingleChildScrollView(
+                    child: 
+                    foundDog(
                       filterlist: _filterList,
                       glossarlist: glossarListOnSearch,
                       query: _query,
-                    )))
-        ]));
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }

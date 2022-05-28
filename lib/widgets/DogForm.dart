@@ -37,7 +37,7 @@ class _DogFormState extends State<DogForm> {
   }
 
   void addToDo(String controllername, String controllerage,
-      String breedSelection, ParseFileBase parsefile) async {
+      String breedSelection,double lat, double long, ParseFileBase parsefile) async {
     if (controllername.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty Name"),
@@ -52,7 +52,7 @@ class _DogFormState extends State<DogForm> {
       ));
       return;
     }
-    await saveTodo(controllername, controllerage, breedSelection, parsefile);
+    await saveTodo(controllername, controllerage,lat, long, breedSelection, parsefile);
 
     setState(() {
       DogsNameController.clear();
@@ -211,8 +211,8 @@ class _DogFormState extends State<DogForm> {
                       DogsNameController.text,
                       DogsAgeController.text,
                       _mySelection as String,
-                      //_userLocation!.latitude.toString(),
-                      //_userLocation!.longitude.toString(),
+                      widget.lat,
+                      widget.long,
                       parseFile);
 
                   setState(() {
@@ -244,19 +244,23 @@ class _DogFormState extends State<DogForm> {
   }
 }
 
-Future<void> saveTodo(String title, String DogsAge, String breedselection,
+
+Future<void> saveTodo(String title, String DogsAge, double lat , double long, String breedselection,
     ParseFileBase parseFile) async {
-  ParseUser? currentUser = await ParseUser.currentUser();
+
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+
+
   await Future.delayed(Duration(seconds: 1), () {});
   final todo = ParseObject('Todo')
     ..set('UserId', currentUser!.objectId)
-    ..set('UserMail', currentUser.emailAddress)
+    ..set('UserMail', currentUser.username)
     ..set('Breed', breedselection)
     ..set('title', title)
     ..set('Age', DogsAge)
     ..set('DogImg', parseFile)
-    //..set('latitude', latitudeUser.toString())
-    //..set('longitude', longitudeUser.toString())
+    ..set('latitude', lat)
+    ..set('longitude', long)
     ..set('done', false);
   await todo.save();
 }
