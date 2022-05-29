@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:convert';
 
 class DogClass {
   Id? _id;
@@ -64,93 +63,93 @@ class DogClass {
       dynamic minWeightFemale,
       List<Urls2>? urls2}) {
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (breed != null) {
-      this._breed = breed;
+      _breed = breed;
     }
     if (origin != null) {
-      this._origin = origin;
+      _origin = origin;
     }
     if (url != null) {
-      this._url = url;
+      _url = url;
     }
     if (img != null) {
-      this._img = img;
+      _img = img;
     }
 
     if (wikiDescr != null) {
-      this._wikiDescr = wikiDescr;
+      _wikiDescr = wikiDescr;
     }
 
     if (goodWithChildren != null) {
-      this._goodWithChildren = goodWithChildren;
+      _goodWithChildren = goodWithChildren;
     }
     if (goodWithOtherDogs != null) {
-      this._goodWithOtherDogs = goodWithOtherDogs;
+      _goodWithOtherDogs = goodWithOtherDogs;
     }
     if (shedding != null) {
-      this._shedding = shedding;
+      _shedding = shedding;
     }
     if (grooming != null) {
-      this._grooming = grooming;
+      _grooming = grooming;
     }
     if (drooling != null) {
-      this._drooling = drooling;
+      _drooling = drooling;
     }
     if (coatLength != null) {
-      this._coatLength = coatLength;
+      _coatLength = coatLength;
     }
     if (goodWithStrangers != null) {
-      this._goodWithStrangers = goodWithStrangers;
+      _goodWithStrangers = goodWithStrangers;
     }
     if (playfulness != null) {
-      this._playfulness = playfulness;
+      _playfulness = playfulness;
     }
     if (protectiveness != null) {
-      this._protectiveness = protectiveness;
+      _protectiveness = protectiveness;
     }
     if (trainability != null) {
-      this._trainability = trainability;
+      _trainability = trainability;
     }
     if (energy != null) {
-      this._energy = energy;
+      _energy = energy;
     }
     if (barking != null) {
-      this._barking = barking;
+      _barking = barking;
     }
     if (minLifeExpectancy != null) {
-      this._minLifeExpectancy = minLifeExpectancy;
+      _minLifeExpectancy = minLifeExpectancy;
     }
     if (maxLifeExpectancy != null) {
-      this._maxLifeExpectancy = maxLifeExpectancy;
+      _maxLifeExpectancy = maxLifeExpectancy;
     }
     if (maxHeightMale != null) {
-      this._maxHeightMale = maxHeightMale;
+      _maxHeightMale = maxHeightMale;
     }
     if (maxHeightFemale != null) {
-      this._maxHeightFemale = maxHeightFemale;
+      _maxHeightFemale = maxHeightFemale;
     }
     if (maxWeightMale != null) {
-      this._maxWeightMale = maxWeightMale;
+      _maxWeightMale = maxWeightMale;
     }
     if (maxWeightFemale != null) {
-      this._maxWeightFemale = maxWeightFemale;
+      _maxWeightFemale = maxWeightFemale;
     }
     if (minHeightMale != null) {
-      this._minHeightMale = minHeightMale;
+      _minHeightMale = minHeightMale;
     }
     if (minHeightFemale != null) {
-      this._minHeightFemale = minHeightFemale;
+      _minHeightFemale = minHeightFemale;
     }
     if (minWeightMale != null) {
-      this._minWeightMale = minWeightMale;
+      _minWeightMale = minWeightMale;
     }
     if (minWeightFemale != null) {
-      this._minWeightFemale = minWeightFemale;
+      _minWeightFemale = minWeightFemale;
     }
     if (urls2 != null) {
-      this._urls2 = urls2;
+      _urls2 = urls2;
     }
   }
 
@@ -265,7 +264,7 @@ class Id {
 
   Id({String? oid}) {
     if (oid != null) {
-      this._oid = oid;
+      _oid = oid;
     }
   }
 

@@ -1,18 +1,10 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ebook/models/dogsmodel.dart';
-import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/pages/books/popularbooksdetails.dart';
 import 'package:ebook/widgets/app_column.dart';
-import 'package:ebook/widgets/small_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ebook/pages/home/book_body.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'big_text.dart';
 import 'dimensions.dart';
-import 'icon_and_text_widget.dart';
 import 'dart:math';
 
 class ListCard extends StatelessWidget {

@@ -22,13 +22,13 @@ final List<IconData> iconos = [
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.home),
+      icon: const Icon(CupertinoIcons.home),
       title: ("Home"),
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(CupertinoIcons.settings),
+      icon: const Icon(CupertinoIcons.settings),
       title: ("Settings"),
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,

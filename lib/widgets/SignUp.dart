@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, file_names
 
-import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/pages/home/main_book_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class SignUp extends StatefulWidget {
@@ -29,7 +27,7 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
+                SizedBox(
                   height: 350,
                   child: Image.network(
                       'https://ik.imagekit.io/aml28/DogiApp__2__zJl1hYcXv.png?ik-sdk-version=javascript-1.4.3&updatedAt=1652993161226'),

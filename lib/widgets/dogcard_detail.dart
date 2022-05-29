@@ -23,7 +23,7 @@ class DogCardDetails extends StatefulWidget {
   final dynamic maxWeigthMale;
   final dynamic maxWeigthFemale;
 
-  DogCardDetails({
+  const DogCardDetails({
     Key? key,
     required this.imgparam,
     required this.param_good_children,
@@ -47,7 +47,7 @@ class DogCardDetails extends StatefulWidget {
 }
 
 class _DogCardDetailsState extends State<DogCardDetails> {
-  bool _visibleBehavior = false;
+  final bool _visibleBehavior = false;
 
   bool _visiblePhysical = false;
 

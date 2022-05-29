@@ -11,7 +11,6 @@ import 'package:ebook/widgets/dogcard_detail.dart';
 import 'package:ebook/widgets/exp_text_widget.dart';
 import 'package:ebook/widgets/icon_and_text_widget.dart';
 import 'package:ebook/widgets/small_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 

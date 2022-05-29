@@ -14,6 +14,6 @@ class _MainSettingsState extends State<MainSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

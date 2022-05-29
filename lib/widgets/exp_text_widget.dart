@@ -1,11 +1,10 @@
 import 'package:ebook/widgets/dimensions.dart';
 import 'package:ebook/widgets/small_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
-  ExpandableText({Key? key, required this.text}) : super(key: key);
+  const ExpandableText({Key? key, required this.text}) : super(key: key);
 
   @override
   State<ExpandableText> createState() => _ExpandableTextState();

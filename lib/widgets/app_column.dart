@@ -1,11 +1,9 @@
 import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ebook/pages/home/book_body.dart';
 
 import 'big_text.dart';
 import 'dimensions.dart';
-import 'icon_and_text_widget.dart';
 
 class AppColumn extends StatelessWidget {
   final bool? sizedBoxHeaderText;

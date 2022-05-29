@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:ebook/models/dogsmodel.dart';
 import 'package:ebook/models/urldogmodel.dart';
 import 'package:http/http.dart' as http;
-import 'package:ebook/models/fetchdata.dart';
 
 
 List<dynamic> BreedList = [];

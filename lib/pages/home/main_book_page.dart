@@ -70,7 +70,7 @@ var fieldLogitude;
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows: true,
       decoration: NavBarDecoration(
-        border: Border.all(color: Colors.blueGrey),
+        border: Border.all(color: const Color.fromARGB(255, 95, 126, 141)),
         borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
       ),
@@ -89,7 +89,7 @@ var fieldLogitude;
       ),
       navBarStyle: NavBarStyle.style9,
       controller: _controller,
-      screens:  [MainPage(), const DogsAdoptionList(), DogForm( lat: fieldLatitude, long: fieldLogitude,  )],
+      screens:  [const MainPage(), DogsAdoptionList(lat: fieldLatitude, long: fieldLogitude,), ],
       items: [
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.home),
@@ -98,14 +98,8 @@ var fieldLogitude;
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.heart_circle_fill),
+          icon: const Icon(CupertinoIcons.heart_circle_fill),
           title: ("Adopt"),
-          activeColorPrimary: CupertinoColors.activeBlue,
-          inactiveColorPrimary: CupertinoColors.systemGrey,
-        ),
-        PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.person_alt_circle_fill),
-          title: ("MyDogs"),
           activeColorPrimary: CupertinoColors.activeBlue,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),

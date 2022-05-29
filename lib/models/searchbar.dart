@@ -1,6 +1,5 @@
 // This function is called whenever the text field changes
 import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/pages/home/main_book_page.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,7 +109,7 @@ class _MySearchBarState extends State<MySearchBar>
       height: 100.0,
 
       ///if the rtl is true, search bar will be from right to left
-      alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
+      alignment: widget.rtl ? Alignment.centerRight : const Alignment(-1.0, 0.0),
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
@@ -122,7 +121,7 @@ class _MySearchBarState extends State<MySearchBar>
           /// can add custom color or the color will be white
           color: widget.color,
           borderRadius: BorderRadius.circular(30.0),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black26,
               spreadRadius: -10.0,
@@ -141,9 +140,9 @@ class _MySearchBarState extends State<MySearchBar>
               curve: Curves.easeOut,
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     /// can add custom color or the color will be white
                     color: widget.color,
@@ -170,9 +169,7 @@ class _MySearchBarState extends State<MySearchBar>
                       },
 
                       ///suffixIcon is of type Icon
-                      child: widget.suffixIcon != null
-                          ? widget.suffixIcon
-                          : Icon(
+                      child: widget.suffixIcon ?? const Icon(
                               Icons.close,
                               size: 20.0,
                             ),
@@ -198,7 +195,7 @@ class _MySearchBarState extends State<MySearchBar>
               ///Using Animated opacity to change the opacity of th textField while expanding
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 child: Container(
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topCenter,
@@ -208,7 +205,7 @@ class _MySearchBarState extends State<MySearchBar>
                     controller: widget.textController,
                     inputFormatters: widget.inputFormatters,
                     focusNode: focusNode,
-                    cursorRadius: Radius.circular(10.0),
+                    cursorRadius: const Radius.circular(10.0),
                     cursorWidth: 2.0,
                     onChanged: (value) => runFilter(value),
 
@@ -228,7 +225,7 @@ class _MySearchBarState extends State<MySearchBar>
                       isDense: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: widget.helpText,
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Color(0xff5B5B5B),
                         fontSize: 17.0,
                         fontWeight: FontWeight.w500,
@@ -257,7 +254,7 @@ class _MySearchBarState extends State<MySearchBar>
                 ///prefixIcon is of type Icon
                 icon: widget.prefixIcon != null
                     ? toggle == 1
-                        ? Icon(Icons.arrow_back_ios)
+                        ? const Icon(Icons.arrow_back_ios)
                         : widget.prefixIcon!
                     : Icon(
                         toggle == 1 ? Icons.arrow_back_ios : Icons.search,
@@ -271,8 +268,9 @@ class _MySearchBarState extends State<MySearchBar>
                         toggle = 1;
                         setState(() {
                           ///if the autoFocus is true, the keyboard will pop open, automatically
-                          if (widget.autoFocus)
+                          if (widget.autoFocus) {
                             FocusScope.of(context).requestFocus(focusNode);
+                          }
                         });
 
                         ///forward == expand

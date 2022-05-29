@@ -4,10 +4,7 @@
 
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/dimensions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppCart extends StatelessWidget{
 

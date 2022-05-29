@@ -5,7 +5,6 @@ import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/dimensions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:ebook/models/ItemsToLoad.dart';
 import 'package:flutter/material.dart';
 import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
@@ -36,7 +35,7 @@ class _BookPageBodyState extends State<BookPageBody> {
   Future _loadMoreItems() async {
     //cuando se llame iterará hasta la pos 10, returning False hasta que no llegue
     final totalItems = itemsLoad.length;
-    await Future.delayed(Duration(seconds: 1), () {
+    await Future.delayed(const Duration(seconds: 1), () {
       for (var i = 0; i < _numItemsPage; i++) {
         itemsLoad.add(Item(totalItems + i + 1));
       }
@@ -47,6 +46,7 @@ class _BookPageBodyState extends State<BookPageBody> {
   @override
   void initState() {
     super.initState();
+    fetchData(AppConstants.APIBASE_URL);
 
     _initialLoad = Future.delayed(const Duration(seconds: 3), () {
       // List items = [];
@@ -57,7 +57,7 @@ class _BookPageBodyState extends State<BookPageBody> {
       _hasMoreItems = true;
     });
 
-    fetchData(AppConstants.APIBASE_URL);
+    
 
     pageController.addListener(() {
       //get current page value
@@ -139,9 +139,10 @@ class _BookPageBodyState extends State<BookPageBody> {
                       itemCount: () => itemsLoad.length,
                       separatorBuilder: (_, __) => const Divider(),
                       itemBuilder: (BuildContext context, int index) {
-                        final itemtoLoad = itemsLoad[index];
-                        if ((_loadingMore ?? false) &&
-                            index == itemsLoad.length ) { ///-1
+                        //final itemtoLoad = itemsLoad[index];
+                        if (_loadingMore ?? false) 
+                           // && index == itemsLoad.length ) 
+                            { ///-1
                           return ListCard(
                             index: index,
                             doglist: BreedList,

@@ -6,7 +6,6 @@ import 'package:ebook/widgets/ListCard.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/foundSearchDog.dart';
 import 'package:ebook/widgets/small_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ebook/pages/home/book_body.dart';
 //import 'package:anim_search_bar/anim_search_bar.dart';
@@ -70,7 +69,7 @@ class _MainPageState extends State<MainPage> {
               );
             },
           ),
-          title: Text('MyApp')),
+          title: const Text('MyApp')),
       backgroundColor: Colors.white,
       body: Column(
         children: [

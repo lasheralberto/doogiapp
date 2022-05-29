@@ -1,16 +1,13 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
-import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/widgets/DogForm.dart';
-import 'package:ebook/widgets/constants.dart';
-import 'package:ebook/widgets/SignUp.dart';
 import 'package:flutter/material.dart';
-import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
- import 'package:flutter/services.dart';
 
 class DogsAdoptionList extends StatefulWidget {
-  const DogsAdoptionList({Key? key}) : super(key: key);
+  var lat;
+  var long;
+  DogsAdoptionList({Key? key, required this.lat, required this.long}) : super(key: key);
 
   @override
   State<DogsAdoptionList> createState() => _DogsAdoptionListState();
@@ -24,6 +21,15 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
 
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () { 
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DogForm(lat: widget.lat, long: widget.long),
+            ));
+         },),
       body: FutureBuilder<List<ParseObject>>(
         future: getTodo(),
         builder: (context, snapshot) {
@@ -31,7 +37,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return Center(
-                child: Container(
+                child: SizedBox(
                     width: 100,
                     height: 100,
                     child: const CircularProgressIndicator()),
@@ -70,7 +76,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
                           child: Image.network(varImg.url as String),),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: const [
                             
                             // IconButton(
                             //   icon: const Icon(

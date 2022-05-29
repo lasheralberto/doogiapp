@@ -103,7 +103,7 @@ class _LoginPageeState extends State<LoginPage> {
           title: const Text("Success!"),
           content: Text(message),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();

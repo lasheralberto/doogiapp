@@ -3,7 +3,6 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:geocoding/geocoding.dart';
 //import 'package:geolocator/geolocator.dart';
@@ -192,7 +191,7 @@ class _DogFormState extends State<DogForm> {
               },
             ),
             SizedBox(height: 16),
-            Container(
+            SizedBox(
               height: 50,
               child: ElevatedButton(
                 child: Text('Upload file'),

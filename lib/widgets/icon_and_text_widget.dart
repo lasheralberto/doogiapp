@@ -1,5 +1,4 @@
 import 'package:ebook/widgets/big_text.dart';
-import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class IconAndTextWidget extends StatelessWidget {

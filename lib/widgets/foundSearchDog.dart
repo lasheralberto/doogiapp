@@ -1,11 +1,9 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/widgets/ListCard.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/dimensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class foundDog extends StatelessWidget {
