@@ -1,16 +1,18 @@
 import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/widgets/DogForm.dart';
+import 'package:ebook/widgets/DogsAdoptionAll.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/MainPage.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:location/location.dart' ;
-
+import 'package:location/location.dart';
 
 class MainBookPage extends StatefulWidget {
-  const MainBookPage({Key? key}) : super(key: key);
+
+  var userEmail;
+  MainBookPage({Key? key, required this.userEmail}) : super(key: key);
   @override
   _MainBookPageState createState() => _MainBookPageState();
 }
@@ -18,13 +20,12 @@ class MainBookPage extends StatefulWidget {
 class _MainBookPageState extends State<MainBookPage> {
   final _controller = PersistentTabController(initialIndex: 0);
 
-Location location = Location();
-late bool _serviceEnabled;
-late PermissionStatus _permissionGranted;
-late LocationData _locationData;
-var fieldLatitude;
-var fieldLogitude;
-
+  Location location = Location();
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+  late LocationData _locationData;
+  var fieldLatitude;
+  var fieldLogitude;
 
   Future<void> getfieldlocation() async {
     _serviceEnabled = await location.serviceEnabled();
@@ -44,20 +45,18 @@ var fieldLogitude;
     }
     _locationData = await location.getLocation();
     setState(() {
-       fieldLatitude = _locationData.latitude;
-       fieldLogitude = _locationData.longitude;
-
+      fieldLatitude = _locationData.latitude;
+      fieldLogitude = _locationData.longitude;
     });
   }
 
   @override
   void initState() {
     super.initState();
-     getfieldlocation();
+    getfieldlocation();
     fetchData(AppConstants.APIBASE_URL);
+  }
 
-    }
-  
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
@@ -89,7 +88,15 @@ var fieldLogitude;
       ),
       navBarStyle: NavBarStyle.style9,
       controller: _controller,
-      screens:  [const MainPage(), DogsAdoptionList(lat: fieldLatitude, long: fieldLogitude,), ],
+      screens: [
+        const MainPage(),
+        DogsAdoptionAll(),
+        DogsAdoptionList(
+          lat: fieldLatitude,
+          long: fieldLogitude,
+          usermail: widget.userEmail ,
+        ),
+      ],
       items: [
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.home),
@@ -97,9 +104,16 @@ var fieldLogitude;
           activeColorPrimary: CupertinoColors.activeBlue,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
+        
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.heart_circle_fill),
           title: ("Adopt"),
+          activeColorPrimary: CupertinoColors.activeBlue,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(CupertinoIcons.heart_circle_fill),
+          title: ("My Dogs"),
           activeColorPrimary: CupertinoColors.activeBlue,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),

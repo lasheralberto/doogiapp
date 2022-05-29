@@ -147,7 +147,7 @@ class _LoginPageeState extends State<LoginPage> {
       showSuccess("User was successfully login!");
       Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return MainBookPage();
+                              return MainBookPage( userEmail: user.emailAddress);
                             },
                           ));
 

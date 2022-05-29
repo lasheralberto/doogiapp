@@ -86,11 +86,7 @@ class _SignUpState extends State<SignUp> {
                     child: const Text('Sign Up'),
                     onPressed: () {
                       doUserRegistration();
-                      Navigator.push(
-                        
-                        context,
-                        MaterialPageRoute(builder: (context) => MainBookPage()),
-                      );
+                      
                     },
                   ),
                 )
@@ -151,6 +147,11 @@ class _SignUpState extends State<SignUp> {
 
     if (response.success) {
       showSuccess();
+      Navigator.push(
+                        
+                        context,
+                        MaterialPageRoute(builder: (context) => MainBookPage(userEmail: user.emailAddress,)),
+                      );
     } else {
       showError(response.error!.message);
     }

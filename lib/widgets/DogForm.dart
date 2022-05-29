@@ -253,7 +253,7 @@ Future<void> saveTodo(String title, String DogsAge, double lat , double long, St
   await Future.delayed(Duration(seconds: 1), () {});
   final todo = ParseObject('Todo')
     ..set('UserId', currentUser!.objectId)
-    ..set('UserMail', currentUser.username)
+    ..set('UserMail', currentUser.emailAddress)
     ..set('Breed', breedselection)
     ..set('title', title)
     ..set('Age', DogsAge)
