@@ -52,7 +52,11 @@ dependencies:
   geocoding: ^2.0.4
   location: ^4.4.0
   location_web: ^3.1.1
-  #google_maps_flutter: ^2.1.6
+  flutter_facebook_auth: ^4.3.2
+  google_maps_flutter: ^2.1.6
+  flutter_map: ^0.14.0
+  latlong: ^0.6.1
+
 
 
 

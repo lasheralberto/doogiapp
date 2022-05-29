@@ -1,0 +1,4 @@
+Enter keystore password:  economiaUm94
+VzSiQcXRmi2kyjzcA+mYLEtbGVs=
+
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Alberto\.android\debug.keystore" | "C:\Users\Alberto\.android\openssl-0.9.8k_WIN32\bin\openssl" sha1 -binary | "C:\Users\Alberto\.android\openssl-0.9.8k_WIN32\bin\openssl" base64

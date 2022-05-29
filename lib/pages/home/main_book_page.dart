@@ -1,5 +1,4 @@
 import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/widgets/DogForm.dart';
 import 'package:ebook/widgets/DogsAdoptionAll.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/MainPage.dart';
@@ -10,7 +9,6 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:location/location.dart';
 
 class MainBookPage extends StatefulWidget {
-
   var userEmail;
   MainBookPage({Key? key, required this.userEmail}) : super(key: key);
   @override
@@ -90,11 +88,11 @@ class _MainBookPageState extends State<MainBookPage> {
       controller: _controller,
       screens: [
         const MainPage(),
-        DogsAdoptionAll(),
+        DogsAdoptionAll(lat: fieldLatitude, long: fieldLogitude),
         DogsAdoptionList(
           lat: fieldLatitude,
           long: fieldLogitude,
-          usermail: widget.userEmail ,
+          usermail: widget.userEmail,
         ),
       ],
       items: [
@@ -104,7 +102,6 @@ class _MainBookPageState extends State<MainBookPage> {
           activeColorPrimary: CupertinoColors.activeBlue,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-        
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.heart_circle_fill),
           title: ("Adopt"),

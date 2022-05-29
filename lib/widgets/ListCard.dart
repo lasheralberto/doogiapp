@@ -32,6 +32,10 @@ class ListCard extends StatelessWidget {
             margin: EdgeInsets.all(5),
             width: Dimensions.listViewImgSize,
             height: Dimensions.listViewImgSize,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white38,
+            ),
             child: Center(
               child: AspectRatio(
                 aspectRatio: 1,
@@ -44,10 +48,6 @@ class ListCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white38,
             ),
           ),
 

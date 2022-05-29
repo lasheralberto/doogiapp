@@ -86,14 +86,14 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                           _visiblePhysical = false;
                         });
                       },
-                      child: Text('Behavior info'),
                       style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(160.0),
-                                      side: BorderSide(color: Colors.white))))),
+                                      side: BorderSide(color: Colors.white)))),
+                      child: Text('Behavior info')),
                   SizedBox(
                     width: 20,
                   ),
@@ -103,14 +103,14 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                           _visiblePhysical = true;
                         });
                       },
-                      child: Text('Physical info'),
                       style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(160.0),
-                                      side: BorderSide(color: Colors.white))))),
+                                      side: BorderSide(color: Colors.white)))),
+                      child: Text('Physical info')),
                 ],
               ),
             ),

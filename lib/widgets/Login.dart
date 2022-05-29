@@ -67,14 +67,14 @@ class _LoginPageeState extends State<LoginPage> {
                 ),
                 Container(
                   height: 50,
-                  child: TextButton(
+                  child: ElevatedButton(
                       child: const Text('Login'),
                       onPressed: () {
                         // isLoggedIn == false ? () => doUserLogin() : null ;
                         doUserLogin();
-
                       }),
                 ),
+              
                 SizedBox(
                   height: 5,
                 ),
@@ -146,19 +146,17 @@ class _LoginPageeState extends State<LoginPage> {
     if (response.success) {
       showSuccess("User was successfully login!");
       Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return MainBookPage( userEmail: user.emailAddress);
-                            },
-                          ));
+        builder: (context) {
+          return MainBookPage(userEmail: user.emailAddress);
+        },
+      ));
 
       setState(() {
         isLoggedIn = true;
       });
-      
     } else {
       showError(response.error!.message);
     }
-
   }
 
   void doUserLogout() async {

@@ -1,32 +1,44 @@
 // ignore_for_file: file_names, camel_case_types
 
-import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/widgets/DogForm.dart';
-import 'package:ebook/widgets/constants.dart';
+import 'package:ebook/widgets/TomTomMap.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class gridListDogs extends StatelessWidget {
-
-  const gridListDogs({Key? key}) : super(key: key);
+  var lat;
+  var long;
+  gridListDogs({Key? key, required this.lat , required this.long}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const title = 'Grid List';
 
     return Scaffold(
-      appBar: AppBar(title: Text('Adopt'),),
+      floatingActionButton: ElevatedButton(
+        child: Text('Map'),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TomTomMap(lat: lat , long: long),
+              ));
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      appBar: AppBar(
+        title: const Text('Adopt'),
+      ),
       body: FutureBuilder<List<ParseObject>>(
           future: getAllDogs(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return Center(
+                return const Center(
                   child: SizedBox(
                       width: 100,
                       height: 100,
-                      child: const CircularProgressIndicator()),
+                      child: CircularProgressIndicator()),
                 );
               default:
                 if (snapshot.hasError) {
@@ -50,7 +62,6 @@ class gridListDogs extends StatelessWidget {
                         final varTitle = varTodo.get<String>('title')!;
                         final varBreed = varTodo.get<String>('Breed');
                         final varImg = varTodo.get<ParseFileBase>('DogImg')!;
-                        
 
                         //*************************************
                         return Card(
@@ -63,12 +74,13 @@ class gridListDogs extends StatelessWidget {
                                     height: 10,
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
-                                            image: NetworkImage(varImg.url as String),
+                                            image: NetworkImage(
+                                                varImg.url as String),
                                             fit: BoxFit.cover)),
                                     child: Container(
                                         alignment: Alignment.bottomRight,
                                         padding: const EdgeInsets.all(12),
-                                        child: Text(varTitle ,
+                                        child: Text(varTitle,
                                             style: const TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
@@ -90,7 +102,7 @@ class gridListDogs extends StatelessWidget {
 }
 
 Future<List<ParseObject>> getAllDogs() async {
-  await Future.delayed(Duration(seconds: 2), () {});
+  await Future.delayed(const Duration(seconds: 2), () {});
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject('Todo'));
   final ParseResponse apiResponse = await queryTodo.query();
@@ -103,7 +115,7 @@ Future<List<ParseObject>> getAllDogs() async {
 }
 
 Future<void> updateTodo(String id, bool done) async {
-  await Future.delayed(Duration(seconds: 1), () {});
+  await Future.delayed(const Duration(seconds: 1), () {});
   var todo = ParseObject('Todo')
     ..objectId = id
     ..set('done', done);
@@ -111,7 +123,7 @@ Future<void> updateTodo(String id, bool done) async {
 }
 
 Future<void> deleteTodo(String id) async {
-  await Future.delayed(Duration(seconds: 1), () {});
+  await Future.delayed(const Duration(seconds: 1), () {});
   var todo = ParseObject('Todo')..objectId = id;
   await todo.delete();
 }

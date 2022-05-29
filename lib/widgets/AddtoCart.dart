@@ -63,12 +63,12 @@ Widget build(BuildContext context) {
                   bottom: Dimensions.height20,
                   right: Dimensions.height20,
                   left: Dimensions.height20),
-              child: BigText(
-                text: 'Add to cart',
-              ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
                   color: Colors.white),
+              child: BigText(
+                text: 'Add to cart',
+              ),
             )
           ],
         ),

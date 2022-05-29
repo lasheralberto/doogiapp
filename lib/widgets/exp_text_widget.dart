@@ -43,7 +43,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                       height: 1.8,
                       size: Dimensions.font16,
                       text: hiddenText
-                          ? (firstHalf + '...')
+                          ? ('$firstHalf...')
                           : (firstHalf + secondHald)),
                   InkWell(
                     onTap: () {

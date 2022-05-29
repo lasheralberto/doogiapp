@@ -194,7 +194,6 @@ class _DogFormState extends State<DogForm> {
             SizedBox(
               height: 50,
               child: ElevatedButton(
-                child: Text('Upload file'),
                 style: ElevatedButton.styleFrom(primary: Colors.blue),
                 onPressed: () async {
                   setState(() {
@@ -234,6 +233,7 @@ class _DogFormState extends State<DogForm> {
                       ),
                     );
                 },
+                child: Text('Upload file'),
               ),
             ),
           ],
