@@ -14,7 +14,7 @@ class TomTomMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LatLng tomtomHQ = LatLng(lat, long);
+    final LatLng tomtomCenter = LatLng(lat, long);
     return MaterialApp(
       title: "TomTom Map",
       home: Scaffold(
@@ -22,13 +22,29 @@ class TomTomMap extends StatelessWidget {
             child: Stack(
           children: <Widget>[
             FlutterMap(
-              options: MapOptions(center: tomtomHQ, zoom: 9.0),
+              options: MapOptions(center: tomtomCenter, zoom: 1.0),
               layers: [
-                new TileLayerOptions(
+                TileLayerOptions(
+                  minNativeZoom: 1.0,
                   urlTemplate: "https://api.tomtom.com/map/1/tile/basic/main/"
                       "{z}/{x}/{y}.png?key={apiKey}",
+                  attributionBuilder: (_) {
+                    return Text("© OpenStreetMap contributors");
+                  },
                   additionalOptions: {"apiKey": TOMTOM_APIKEY},
-                )
+                ),
+                MarkerLayerOptions(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: tomtomCenter,
+                      builder: (ctx) => Container(
+                        child: Icon(Icons.location_on),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             )
           ],
