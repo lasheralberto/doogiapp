@@ -14,9 +14,21 @@ class gridListDogs extends StatelessWidget {
     const title = 'Grid List';
 
     return Scaffold(
-      floatingActionButton: ElevatedButton.icon(
-        icon: Icon(Icons.map)
-        label: Text('Map'),
+      floatingActionButton: ElevatedButton(
+        
+        child: Wrap(
+        children: const <Widget>[
+        Icon(
+            Icons.map,
+            color: Colors.pink,
+            size: 24.0,
+        ),
+        SizedBox(
+            width:10,
+        ),
+        Text("Mapa", style:TextStyle(fontSize:20)),
+        ],
+    ),
         onPressed: () {
           Navigator.push(
               context,
@@ -25,7 +37,7 @@ class gridListDogs extends StatelessWidget {
               ));
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         title: const Text('Adopt'),
       ),

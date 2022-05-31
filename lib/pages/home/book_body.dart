@@ -31,7 +31,6 @@ class _BookPageBodyState extends State<BookPageBody> {
   late final int _maxItems = BreedList.length;
   final int _numItemsPage = 3;
   Future? _initialLoad;
-  late dogs_fetched Future<DogClass>;
 
   Future _loadMoreItems() async {
     //cuando se llame iterará hasta la pos 10, returning False hasta que no llegue
@@ -47,12 +46,12 @@ class _BookPageBodyState extends State<BookPageBody> {
   @override
   void initState() {
     super.initState();
-    dogs_fetched = fetchData(AppConstants.APIBASE_URL);
+    //fetchData(AppConstants.APIBASE_URL);
 
     _initialLoad = Future.delayed(const Duration(seconds: 3), () {
       // List items = [];
       itemsLoad = <Item>[];
-      for (var i = 0; i < _numItemsPage; i++) {
+      for (var i = 1; i < _numItemsPage; i++) {
         itemsLoad.add(Item(i + 1));
       }
       _hasMoreItems = true;
@@ -112,7 +111,7 @@ class _BookPageBodyState extends State<BookPageBody> {
                   BigText(text: 'Breed List'),
                 ])),
         FutureBuilder(
-            future: dogs_fetched,
+            future: fetchData(AppConstants.APIBASE_URL),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 

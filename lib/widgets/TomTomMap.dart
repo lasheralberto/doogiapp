@@ -3,6 +3,7 @@ import "package:flutter_map/flutter_map.dart";
 import "package:http/http.dart" as http;
 import "dart:convert" as convert;
 import 'package:latlong2/latlong.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class TomTomMap extends StatelessWidget {
   var lat;
@@ -18,6 +19,7 @@ class TomTomMap extends StatelessWidget {
     return MaterialApp(
       title: "TomTom Map",
       home: Scaffold(
+        appBar: AppBar(title: Text('Dogs map')),
         body: Center(
             child: Stack(
           children: <Widget>[
@@ -40,7 +42,7 @@ class TomTomMap extends StatelessWidget {
                       height: 80.0,
                       point: tomtomCenter,
                       builder: (ctx) => Container(
-                        child: Icon(Icons.location_on),
+                        child: Icon(Icons.local_activity_rounded),
                       ),
                     ),
                   ],
@@ -51,5 +53,19 @@ class TomTomMap extends StatelessWidget {
         )),
       ),
     );
+  }
+}
+
+Future<List<ParseObject>> getAllDogsLocation() async {
+  await Future.delayed(const Duration(seconds: 2), () {});
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject('Todo'));
+  queryTodo.includeObject(['latitude', 'longitude']);
+  final ParseResponse apiResponse = await queryTodo.query();
+
+  if (apiResponse.success && apiResponse.results != null) {
+    return apiResponse.results as List<ParseObject>;
+  } else {
+    return [];
   }
 }

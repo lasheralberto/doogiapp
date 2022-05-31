@@ -103,7 +103,7 @@ class _MainBookPageState extends State<MainBookPage> {
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.heart_circle_fill),
+          icon: const Icon(CupertinoIcons.list_number),
           title: ("Adopt"),
           activeColorPrimary: CupertinoColors.activeBlue,
           inactiveColorPrimary: CupertinoColors.systemGrey,
