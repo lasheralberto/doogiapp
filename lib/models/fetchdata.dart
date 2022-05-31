@@ -13,6 +13,7 @@ List<dynamic> glossarList = [];
 fetchData(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
+  await Future.delayed(Duration(seconds:2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
     BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
