@@ -14,8 +14,9 @@ class gridListDogs extends StatelessWidget {
     const title = 'Grid List';
 
     return Scaffold(
-      floatingActionButton: ElevatedButton(
-        child: Text('Map'),
+      floatingActionButton: ElevatedButton.icon(
+        icon: Icon(Icons.map)
+        label: Text('Map'),
         onPressed: () {
           Navigator.push(
               context,
