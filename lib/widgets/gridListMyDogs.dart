@@ -1,13 +1,15 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:ebook/widgets/TomTomMap.dart';
+import 'package:ebook/widgets/longPressGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class gridListDogs extends StatelessWidget {
   var lat;
   var long;
-  gridListDogs({Key? key, required this.lat , required this.long}) : super(key: key);
+  gridListDogs({Key? key, required this.lat, required this.long})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,25 +17,24 @@ class gridListDogs extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: ElevatedButton(
-        
         child: Wrap(
-        children: const <Widget>[
-        Icon(
-            Icons.map,
-            color: Colors.pink,
-            size: 24.0,
+          children: const <Widget>[
+            Icon(
+              Icons.map,
+              color: Colors.pink,
+              size: 24.0,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Mapa", style: TextStyle(fontSize: 20)),
+          ],
         ),
-        SizedBox(
-            width:10,
-        ),
-        Text("Mapa", style:TextStyle(fontSize:20)),
-        ],
-    ),
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TomTomMap(lat: lat , long: long),
+                builder: (context) => TomTomMap(lat: lat, long: long),
               ));
         },
       ),
@@ -65,19 +66,66 @@ class gridListDogs extends StatelessWidget {
                   );
                 } else {
                   return GridView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        //*************************************
-                        //Get Parse Object Values
-                        final varTodo = snapshot.data![index];
-                        final varTitle = varTodo.get<String>('title')!;
-                        final varBreed = varTodo.get<String>('Breed');
-                        final varImg = varTodo.get<ParseFileBase>('DogImg')!;
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      //*************************************
+                      //Get Parse Object Values
+                      final varTodo = snapshot.data![index];
+                      final varTitle = varTodo.get<String>('title')!;
+                      final varBreed = varTodo.get<String>('Breed');
+                      final varAge = varTodo.get<String>('Age');
+                      final varImg = varTodo.get<ParseFileBase>('DogImg')!;
 
-                        //*************************************
-                        return Card(
+                      //*************************************
+                      return GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: Card(
+                                    shadowColor: Colors.blue,
+                                    elevation: 16,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(80)),
+                                    child: SafeArea(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          const SizedBox(height: 20),
+                                          Center(child: Text('$varTitle')),
+                                          const SizedBox(height: 20),
+                                          Center(
+                                              child: Text(
+                                            'Age: $varAge ',
+                                            textAlign: TextAlign.center,
+                                          )),
+                                          const SizedBox(height: 20),
+                                          const ListTile(
+                                            leading: Icon(Icons.message),
+                                            title: Text('Messages'),
+                                          ),
+                                          const ListTile(
+                                            leading: Icon(Icons.description),
+                                            title: Text('Description'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+
+                          //LongPressGridCard(index: index, Age: varAge);
+                        },
+                        child: Card(
                             elevation: 6,
                             margin: const EdgeInsets.all(12),
                             child: Padding(
@@ -97,16 +145,18 @@ class gridListDogs extends StatelessWidget {
                                             style: const TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white70))))));
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.0,
-                        crossAxisSpacing: 0.0,
-                        mainAxisSpacing: 5,
-                        mainAxisExtent: 264,
-                      ));
+                                                color: Colors.white70)))))),
+                      );
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.0,
+                      crossAxisSpacing: 0.0,
+                      mainAxisSpacing: 5,
+                      mainAxisExtent: 264,
+                    ),
+                  );
                 }
             }
           }),
