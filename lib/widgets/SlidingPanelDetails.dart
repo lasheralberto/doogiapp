@@ -17,6 +17,7 @@ class SlidingPanelDescription extends StatelessWidget {
   final double? rigthPosition;
   final double? bottomPosition;
   final double? topPosition;
+  final PanelState? panelstate;
 
   final PanelController _pc1 = PanelController();
 
@@ -33,6 +34,7 @@ class SlidingPanelDescription extends StatelessWidget {
     this.rigthPosition,
     this.bottomPosition,
     this.topPosition,
+    this.panelstate
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class SlidingPanelDescription extends StatelessWidget {
       child: SlidingUpPanel(
           controller: _pc1,
           snapPoint: 0.9,
-          defaultPanelState: PanelState.OPEN,
+          defaultPanelState: panelstate as PanelState,
           backdropTapClosesPanel: true,
           borderRadius: BorderRadius.circular(100),
           maxHeight: MediaQuery.of(context).size.height * 60 / 100,

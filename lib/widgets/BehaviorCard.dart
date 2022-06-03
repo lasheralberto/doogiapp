@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class BehaviorCard extends StatelessWidget {
-  final String imgparam;
+  //final String imgparam;
   final int param_good_children;
   final int param_good_dogs;
   final int good_with_strangers;
@@ -14,11 +15,12 @@ class BehaviorCard extends StatelessWidget {
   final int energy;
   final int barking;
 
+
   const BehaviorCard(
       // ignore: non_constant_identifier_names
       {
     Key? key,
-    required this.imgparam,
+    //required this.imgparam,
     required this.param_good_children,
     required this.param_good_dogs,
     required this.good_with_strangers,
@@ -26,7 +28,7 @@ class BehaviorCard extends StatelessWidget {
     required this.protectiveness,
     required this.trainability,
     required this.energy,
-    required this.barking,
+    required this.barking, 
   }) : super(key: key);
 
   @override
@@ -229,24 +231,3 @@ class BehaviorCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

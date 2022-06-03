@@ -1,6 +1,8 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'package:ebook/widgets/GridAllCards.dart';
 import 'package:ebook/widgets/TomTomMap.dart';
+import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/longPressGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -77,6 +79,7 @@ class gridListDogs extends StatelessWidget {
                       final varBreed = varTodo.get<String>('Breed');
                       final varAge = varTodo.get<String>('Age');
                       final varImg = varTodo.get<ParseFileBase>('DogImg')!;
+                      final varDogDesc = varTodo.get<String>('DogDescription')!;
 
                       //*************************************
                       return GestureDetector(
@@ -84,68 +87,17 @@ class gridListDogs extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(
-                                  child: Card(
-                                    shadowColor: Colors.blue,
-                                    elevation: 16,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(80)),
-                                    child: SafeArea(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          const SizedBox(height: 20),
-                                          Center(child: Text('$varTitle')),
-                                          const SizedBox(height: 20),
-                                          Center(
-                                              child: Text(
-                                            'Age: $varAge ',
-                                            textAlign: TextAlign.center,
-                                          )),
-                                          const SizedBox(height: 20),
-                                          const ListTile(
-                                            leading: Icon(Icons.message),
-                                            title: Text('Messages'),
-                                          ),
-                                          const ListTile(
-                                            leading: Icon(Icons.description),
-                                            title: Text('Description'),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                return LongPressGridCard(
+                                  index: index,
+                                  Age: varAge,
+                                  title: varTitle,
+                                  img: varImg,
+                                  breed: varBreed,
+                                  description: varDogDesc,
                                 );
                               });
-
-                          //LongPressGridCard(index: index, Age: varAge);
                         },
-                        child: Card(
-                            elevation: 6,
-                            margin: const EdgeInsets.all(12),
-                            child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Container(
-                                    width: double.infinity,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                varImg.url as String),
-                                            fit: BoxFit.cover)),
-                                    child: Container(
-                                        alignment: Alignment.bottomRight,
-                                        padding: const EdgeInsets.all(12),
-                                        child: Text(varTitle,
-                                            style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white70)))))),
+                        child: GridAllCards(  image: varImg.url, title: varTitle,)
                       );
                     },
                     gridDelegate:

@@ -23,6 +23,7 @@ class DogForm extends StatefulWidget {
 class _DogFormState extends State<DogForm> {
   final DogsNameController = TextEditingController();
   final DogsAgeController = TextEditingController();
+  final DogsDescriptionController = TextEditingController();
   PickedFile? pickedFile;
   bool isLoading = false;
   late ParseFileBase parseFile;
@@ -35,8 +36,14 @@ class _DogFormState extends State<DogForm> {
     super.initState();
   }
 
-  void addToDo(String controllername, String controllerage,
-      String breedSelection,double lat, double long, ParseFileBase parsefile) async {
+  void addToDo(
+      String controllername,
+      String controllerage,
+      String breedSelection,
+      double lat,
+      double long,
+      ParseFileBase parsefile,
+      String dogdesc) async {
     if (controllername.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty Name"),
@@ -51,11 +58,13 @@ class _DogFormState extends State<DogForm> {
       ));
       return;
     }
-    await saveTodo(controllername, controllerage,lat, long, breedSelection, parsefile);
+    await saveTodo(controllername, controllerage, lat, long, breedSelection,
+        parsefile, dogdesc);
 
     setState(() {
       DogsNameController.clear();
       DogsAgeController.clear();
+      DogsDescriptionController.clear();
     });
   }
 
@@ -63,7 +72,7 @@ class _DogFormState extends State<DogForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Parse Todo List"),
+        title: const Text("Adoption Form"),
         backgroundColor: Colors.blueAccent,
         centerTitle: true,
       ),
@@ -102,6 +111,34 @@ class _DogFormState extends State<DogForm> {
                         decoration: InputDecoration(
                             labelText: "Dog's Age",
                             labelStyle: TextStyle(color: Colors.blueAccent)),
+                      ),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+                padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        minLines: 5,
+                        maxLines: null,
+                        autocorrect: true,
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: DogsDescriptionController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                            ),
+                            labelText: "Dog's Description",
+                            labelStyle: TextStyle(
+                              color: Colors.blueAccent,
+                            )),
                       ),
                     ),
                   ],
@@ -173,8 +210,9 @@ class _DogFormState extends State<DogForm> {
                   : Container(
                       width: 250,
                       height: 250,
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.blue)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue, width: 4),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Center(
                         child: Text('Click here to pick image from Gallery'),
                       ),
@@ -211,7 +249,8 @@ class _DogFormState extends State<DogForm> {
                       _mySelection as String,
                       widget.lat,
                       widget.long,
-                      parseFile);
+                      parseFile,
+                      DogsDescriptionController.text);
 
                   setState(() {
                     isLoading = false;
@@ -243,12 +282,9 @@ class _DogFormState extends State<DogForm> {
   }
 }
 
-
-Future<void> saveTodo(String title, String DogsAge, double lat , double long, String breedselection,
-    ParseFileBase parseFile) async {
-
+Future<void> saveTodo(String title, String DogsAge, double lat, double long,
+    String breedselection, ParseFileBase parseFile, String description) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
-
 
   await Future.delayed(Duration(seconds: 1), () {});
   final todo = ParseObject('Todo')
@@ -260,6 +296,7 @@ Future<void> saveTodo(String title, String DogsAge, double lat , double long, St
     ..set('DogImg', parseFile)
     ..set('latitude', lat)
     ..set('longitude', long)
+    ..set('DogDescription', description)
     ..set('done', false);
   await todo.save();
 }

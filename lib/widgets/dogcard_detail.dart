@@ -4,6 +4,7 @@
 
 import 'package:ebook/widgets/BehaviorCard.dart';
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'physicalCard.dart';
 
 class DogCardDetails extends StatefulWidget {
@@ -22,6 +23,7 @@ class DogCardDetails extends StatefulWidget {
   final dynamic maxHeigthFemale;
   final dynamic maxWeigthMale;
   final dynamic maxWeigthFemale;
+  final ParseFile? imgParamGrid;
 
   const DogCardDetails({
     Key? key,
@@ -40,6 +42,7 @@ class DogCardDetails extends StatefulWidget {
     required this.maxHeigthFemale,
     required this.maxWeigthMale,
     required this.maxWeigthFemale,
+     this.imgParamGrid
   }) : super(key: key);
 
   @override
@@ -123,7 +126,6 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                     maxWeigthMale: widget.maxWeigthMale,
                     maxWeigthFemale: widget.maxWeigthFemale)
                 : BehaviorCard(
-                    imgparam: widget.imgparam,
                     param_good_children: widget.param_good_children,
                     param_good_dogs: widget.param_good_dogs,
                     good_with_strangers: widget.good_with_strangers,
