@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
+import '../models/genderFormModel.dart';
+
 class DogForm extends StatefulWidget {
   var lat;
   var long;
