@@ -11,9 +11,10 @@ class personalDogDetail extends StatelessWidget {
   final String Age;
   var img;
   final String? description;
+  var breed;
 
   personalDogDetail({
-    Key? key, required this.title, required this.Age, this.img, this.description,
+    Key? key, required this.title, required this.Age, this.img, this.description, this.breed
   }) : super(key: key);
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +36,14 @@ class personalDogDetail extends StatelessWidget {
         Container(),
          
         SlidingPanelDescription(
+          screen: 'personal_detail',
           panelstate: PanelState.CLOSED,
           leftPosition: 0,
           rigthPosition: 0,
           bottomPosition: 80,
           topPosition: Dimensions.popularBookIMGSize,
           firstJsonParam: title,
+          secondJsonParam: breed ,
           descriptionText: description,
           
         )

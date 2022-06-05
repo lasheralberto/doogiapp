@@ -71,7 +71,7 @@ class SlidingPanelDescription extends StatelessWidget {
                 child: Column(children: [
                   SizedBox(height: Dimensions.height10),
                   BigText(text: firstJsonParam),
-                  SmallText(text: 'Description'),
+                  SmallText(text: screen == 'personal_detail' ? secondJsonParam as String : ''),
                   BigText(
                     text: '',
                     size: Dimensions.font26,
