@@ -18,24 +18,26 @@ class SlidingPanelDescription extends StatelessWidget {
   final double? bottomPosition;
   final double? topPosition;
   final PanelState? panelstate;
+  final String? screen;
 
   final PanelController _pc1 = PanelController();
 
   bool _visible = true;
   final bool _physicalCard = true;
 
-  SlidingPanelDescription({
-    Key? key,
-    required this.firstJsonParam,
-    this.secondJsonParam,
-    this.imgParam,
-    this.descriptionText,
-    this.leftPosition,
-    this.rigthPosition,
-    this.bottomPosition,
-    this.topPosition,
-    this.panelstate
-  }) : super(key: key);
+  SlidingPanelDescription(
+      {Key? key,
+      required this.firstJsonParam,
+      this.secondJsonParam,
+      this.imgParam,
+      this.descriptionText,
+      this.leftPosition,
+      this.rigthPosition,
+      this.bottomPosition,
+      this.topPosition,
+      this.panelstate,
+      this.screen})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +82,7 @@ class SlidingPanelDescription extends StatelessWidget {
                     mainAxisSize: MainAxisSize
                         .min, // this will take space as minimum as posible(to center)
                     children: <Widget>[
+                      screen == 'dogcard_detail' ?
                       ElevatedButton(
                         child: Text('More info'),
                         onPressed: () {
@@ -91,7 +94,7 @@ class SlidingPanelDescription extends StatelessWidget {
                             _visible = true;
                           }
                         },
-                      ),
+                      ) : SizedBox()
                     ],
                   ),
                   SizedBox(

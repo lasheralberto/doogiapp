@@ -38,10 +38,11 @@ class personalDogDetail extends StatelessWidget {
           panelstate: PanelState.CLOSED,
           leftPosition: 0,
           rigthPosition: 0,
-          bottomPosition: 0,
+          bottomPosition: 80,
           topPosition: Dimensions.popularBookIMGSize,
           firstJsonParam: title,
           descriptionText: description,
+          
         )
       ]),
     );

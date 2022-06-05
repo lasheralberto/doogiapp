@@ -6,7 +6,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import "package:flutter_map/flutter_map.dart";
-import "package:latlong/latlong.dart"; 
+import "package:latlong/latlong.dart";
 import "package:http/http.dart" as http;
 import "dart:convert" as convert;
 
@@ -22,11 +22,9 @@ Future<void> main() async {
   const keyClientKey = '23fX637JXhjdB8cDGMPxu82dzzrKFeJDcYuZbUxp';
   const keyParseServerUrl = 'https://parseapi.back4app.com';
   //////////////////BACK4APP KEYS/////////////////////////////////////
-  
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
-
 
   runApp(const MyApp());
 }
@@ -38,11 +36,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
+  // This widget is the root of your application
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

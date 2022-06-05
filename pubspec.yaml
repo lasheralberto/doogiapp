@@ -55,7 +55,7 @@ dependencies:
   flutter_facebook_auth: ^4.3.2
   flutter_map: ^0.14.0
   latlong: ^0.6.1
-
+  geocode: 1.0.1
 
 
 

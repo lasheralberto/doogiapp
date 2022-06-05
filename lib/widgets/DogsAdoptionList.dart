@@ -8,8 +8,14 @@ class DogsAdoptionList extends StatefulWidget {
   var lat;
   var long;
   var usermail;
+  var city;
+
   DogsAdoptionList(
-      {Key? key, required this.lat, required this.long, required this.usermail})
+      {Key? key,
+      required this.lat,
+      required this.long,
+      required this.usermail,
+      this.city})
       : super(key: key);
 
   @override
@@ -17,13 +23,15 @@ class DogsAdoptionList extends StatefulWidget {
 }
 
 class _DogsAdoptionListState extends State<DogsAdoptionList> {
-  bool checkBoxPress = false;
+
   @override
   Widget build(BuildContext context) {
     const title = 'Grid List';
 
     return Scaffold(
-      appBar: AppBar(title: Text('My dogs for adoption'),),
+      appBar: AppBar(
+        title: Text('My dogs for adoption'),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -31,7 +39,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    DogForm(lat: widget.lat, long: widget.long),
+                    DogForm(lat: widget.lat, long: widget.long, city: widget.city,),
               ));
         },
       ),

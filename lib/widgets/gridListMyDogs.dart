@@ -10,7 +10,8 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 class gridListDogs extends StatelessWidget {
   var lat;
   var long;
-  gridListDogs({Key? key, required this.lat, required this.long})
+  var city;
+  gridListDogs({Key? key, required this.lat, required this.long, this.city})
       : super(key: key);
 
   @override
@@ -80,25 +81,29 @@ class gridListDogs extends StatelessWidget {
                       final varAge = varTodo.get<String>('Age');
                       final varImg = varTodo.get<ParseFileBase>('DogImg')!;
                       final varDogDesc = varTodo.get<String>('DogDescription')!;
+                      final varGender = varTodo.get<String>('Gender')!;
 
                       //*************************************
                       return GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return LongPressGridCard(
-                                  index: index,
-                                  Age: varAge,
-                                  title: varTitle,
-                                  img: varImg,
-                                  breed: varBreed,
-                                  description: varDogDesc,
-                                );
-                              });
-                        },
-                        child: GridAllCards(  image: varImg.url, title: varTitle,)
-                      );
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LongPressGridCard(
+                                    index: index,
+                                    Age: varAge,
+                                    title: varTitle,
+                                    img: varImg,
+                                    breed: varBreed,
+                                    description: varDogDesc,
+                                  );
+                                });
+                          },
+                          child: GridAllCards(
+                            image: varImg.url,
+                            title: varTitle,
+                            gender: varGender,
+                          ));
                     },
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(

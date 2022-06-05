@@ -5,6 +5,7 @@ import 'package:ebook/widgets/MainPage.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocode/geocode.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:location/location.dart';
 
@@ -19,11 +20,13 @@ class _MainBookPageState extends State<MainBookPage> {
   final _controller = PersistentTabController(initialIndex: 0);
 
   Location location = Location();
+  GeoCode geoCode = GeoCode();
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
   var fieldLatitude;
   var fieldLogitude;
+  var addressCity;
 
   Future<void> getfieldlocation() async {
     _serviceEnabled = await location.serviceEnabled();
@@ -42,11 +45,24 @@ class _MainBookPageState extends State<MainBookPage> {
       }
     }
     _locationData = await location.getLocation();
+    Address address = await geoCode.reverseGeocoding(
+        latitude: _locationData.latitude as double,
+        longitude: _locationData.longitude as double);
+
     setState(() {
       fieldLatitude = _locationData.latitude;
       fieldLogitude = _locationData.longitude;
+      addressCity = address.city;
     });
   }
+
+  // Future<String> _getAddress(double? lat, double? lang) async {
+  //   if (lat == null || lang == null) return "";
+  //   GeoCode geoCode = GeoCode();
+  //   Address address =
+  //       await geoCode.reverseGeocoding(latitude: lat, longitude: lang);
+  //   return "${address.city}";
+  // }
 
   @override
   void initState() {
@@ -93,6 +109,7 @@ class _MainBookPageState extends State<MainBookPage> {
           lat: fieldLatitude,
           long: fieldLogitude,
           usermail: widget.userEmail,
+          city: addressCity,
         ),
       ],
       items: [

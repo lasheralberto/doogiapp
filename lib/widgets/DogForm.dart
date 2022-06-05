@@ -4,16 +4,19 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-//import 'package:geocoding/geocoding.dart';
+import 'package:geocoding/geocoding.dart';
 //import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class DogForm extends StatefulWidget {
   var lat;
   var long;
+  var city;
 
-  DogForm({Key? key, required this.lat, required this.long}) : super(key: key);
+  DogForm({Key? key, required this.lat, required this.long, this.city})
+      : super(key: key);
   //final double lat;
   //final double long;
   @override
@@ -24,12 +27,16 @@ class _DogFormState extends State<DogForm> {
   final DogsNameController = TextEditingController();
   final DogsAgeController = TextEditingController();
   final DogsDescriptionController = TextEditingController();
+  final DogsGenderController = TextEditingController();
+
+
   PickedFile? pickedFile;
   bool isLoading = false;
   late ParseFileBase parseFile;
   final List<DropdownMenuItem> breeds = [];
 
   String? _mySelection = 'Cavalier King Charles Spaniel';
+  String? _mySelectionGender = 'Male';
 
   @override
   void initState() {
@@ -43,7 +50,8 @@ class _DogFormState extends State<DogForm> {
       double lat,
       double long,
       ParseFileBase parsefile,
-      String dogdesc) async {
+      String dogdesc,
+      String Gender) async {
     if (controllername.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty Name"),
@@ -70,6 +78,8 @@ class _DogFormState extends State<DogForm> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adoption Form"),
@@ -194,8 +204,54 @@ class _DogFormState extends State<DogForm> {
             SizedBox(
               height: 20,
             ),
-            Text('LAT: ${widget.lat}'),
-            Text('LNG: ${widget.long}'),
+            Container(
+              padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          alignedDropdown: true,
+                          child: DropdownButton<String>(
+                            isDense: true,
+                            hint: const Text('Select Gender'),
+                            value: _mySelectionGender,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _mySelectionGender = newValue;
+                              });
+                            },
+                            items: _genderOpts.map((Map map) {
+                              return DropdownMenuItem<String>(
+                                value: map["gender"],
+                                // value: _mySelection,
+                                child: Row(
+                                  children: <Widget>[
+                                    IconTheme(
+                                        data: IconThemeData(
+                                            color: _mySelectionGender == 'Male'
+                                                ? Colors.blue
+                                                : Colors.pink),
+                                        child: Icon(_mySelectionGender == 'Male'
+                                            ? Icons.male
+                                            : Icons.female)),
+                                    Container(
+                                        margin: const EdgeInsets.only(left: 10),
+                                        child: Text(map["gender"])),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+
+            Text(widget.city.toString()),
+            //Text('LNG: ${widget.long}'),
 
             ///Text('ADDRESS: ${_currentAddress ?? "na"}'),
             const SizedBox(height: 32),
@@ -250,7 +306,8 @@ class _DogFormState extends State<DogForm> {
                       widget.lat,
                       widget.long,
                       parseFile,
-                      DogsDescriptionController.text);
+                      DogsDescriptionController.text,
+                      _mySelectionGender as String);
 
                   setState(() {
                     isLoading = false;
@@ -272,7 +329,7 @@ class _DogFormState extends State<DogForm> {
                       ),
                     );
                 },
-                child: Text('Upload file'),
+                child: Text('Submit'),
               ),
             ),
           ],
@@ -297,9 +354,15 @@ Future<void> saveTodo(String title, String DogsAge, double lat, double long,
     ..set('latitude', lat)
     ..set('longitude', long)
     ..set('DogDescription', description)
+    ..set('Gender', Gender)
     ..set('done', false);
   await todo.save();
 }
+
+final List<Map> _genderOpts = [
+  {'gender': 'Male', 'imgGender': Icons.male},
+  {'gender': 'Female', 'imgGender': Icons.female}
+];
 
 final List<Map> _mybreedList = [
   {

@@ -97,6 +97,7 @@ class PopularBookDetails extends StatelessWidget {
           topPosition: Dimensions.popularBookIMGSize,
           firstJsonParam: firstJsonParam,
           descriptionText: descriptionText,
+          screen: 'dogcard_detail',
         )
       ]),
     );
