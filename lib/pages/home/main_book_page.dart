@@ -45,16 +45,18 @@ class _MainBookPageState extends State<MainBookPage> {
       }
     }
     _locationData = await location.getLocation();
-    Address address = await geoCode.reverseGeocoding(
-        latitude: _locationData.latitude as double,
-        longitude: _locationData.longitude as double);
+    // Address address = await geoCode.reverseGeocoding(
+    //     latitude: _locationData.latitude as double,
+    //     longitude: _locationData.longitude as double);
 
     setState(() {
       fieldLatitude = _locationData.latitude;
       fieldLogitude = _locationData.longitude;
-      addressCity = address.city;
+      
+      //addressCity = address.city;
     });
   }
+  
 
   // Future<String> _getAddress(double? lat, double? lang) async {
   //   if (lat == null || lang == null) return "";
@@ -109,7 +111,7 @@ class _MainBookPageState extends State<MainBookPage> {
           lat: fieldLatitude,
           long: fieldLogitude,
           usermail: widget.userEmail,
-          city: addressCity,
+         
         ),
       ],
       items: [

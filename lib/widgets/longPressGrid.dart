@@ -8,8 +8,6 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import '../pages/books/popularbooksdetails.dart';
 import 'big_text.dart';
 
-
-
 class LongPressGridCard extends StatelessWidget {
   final int index;
   final String Age;

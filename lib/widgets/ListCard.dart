@@ -16,7 +16,26 @@ class ListCard extends StatelessWidget {
 
   ListCard({Key? key, required this.index, required this.doglist})
       : super(key: key);
-
+        // SizedBox(
+        //   height: Dimensions.pageView,
+        //   child: PageView.builder(
+        //       //depende de dos parámetros el builder. Position cogerá desde el index 0 al itemcount.
+        //       itemCount: items.length,
+        //       controller: pageController,
+        //       itemBuilder: (context, position) {
+        //         return _buildPageItem(position);
+        //       }),
+        // ),
+        // DotsIndicator(
+        //   dotsCount: items.length,
+        //   position: _currPageValue,
+        //   decorator: DotsDecorator(
+        //     size: const Size.square(9.0),
+        //     activeSize: const Size(18.0, 9.0),
+        //     activeShape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(Dimensions.radius20)),
+        //   ),
+        // ),
   @override
   Widget build(BuildContext context) {
     //int randomNumber =  Random().nextInt(10);

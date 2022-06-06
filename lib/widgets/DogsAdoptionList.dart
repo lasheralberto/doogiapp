@@ -2,27 +2,41 @@
 
 import 'package:ebook/widgets/DogForm.dart';
 import 'package:flutter/material.dart';
+import 'package:geocode/geocode.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class DogsAdoptionList extends StatefulWidget {
   var lat;
   var long;
   var usermail;
-  var city;
 
-  DogsAdoptionList(
-      {Key? key,
-      required this.lat,
-      required this.long,
-      required this.usermail,
-      this.city})
-      : super(key: key);
+  DogsAdoptionList({
+    Key? key,
+    required this.lat,
+    required this.long,
+    required this.usermail,
+  }) : super(key: key);
 
   @override
   State<DogsAdoptionList> createState() => _DogsAdoptionListState();
 }
 
 class _DogsAdoptionListState extends State<DogsAdoptionList> {
+  var city;
+  var country;
+  Future<void> GetAddressFromLatLong(lat, long) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+    Placemark place = placemarks[0];
+    String? cityname = place.administrativeArea;
+    String? countryName = place.country;
+    //'${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    setState(() {
+      city = cityname;
+      country = countryName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +49,16 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
+          GetAddressFromLatLong(widget.lat, widget.long);
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    DogForm(lat: widget.lat, long: widget.long, city: widget.city,),
+                builder: (context) => DogForm(
+                  lat: widget.lat,
+                  long: widget.long,
+                  city: city,
+                  country: country,
+                ),
               ));
         },
       ),
@@ -76,7 +95,6 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
                       final varTitle = varTodo.get<String>('title')!;
                       final varBreed = varTodo.get<String>('Breed');
                       final varImg = varTodo.get<ParseFileBase>('DogImg')!;
-                      final varDone = varTodo.get<bool>('done')!;
 
                       //*************************************
 

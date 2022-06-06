@@ -16,8 +16,14 @@ class DogForm extends StatefulWidget {
   var lat;
   var long;
   var city;
+  var country;
 
-  DogForm({Key? key, required this.lat, required this.long, this.city})
+  DogForm(
+      {Key? key,
+      required this.lat,
+      required this.long,
+      this.city,
+      this.country})
       : super(key: key);
   //final double lat;
   //final double long;
@@ -26,11 +32,11 @@ class DogForm extends StatefulWidget {
 }
 
 class _DogFormState extends State<DogForm> {
+  List<Placemark> nameCity = [];
   final DogsNameController = TextEditingController();
   final DogsAgeController = TextEditingController();
   final DogsDescriptionController = TextEditingController();
   final DogsGenderController = TextEditingController();
-
 
   PickedFile? pickedFile;
   bool isLoading = false;
@@ -41,9 +47,10 @@ class _DogFormState extends State<DogForm> {
   String? _mySelectionGender = 'Male';
 
   @override
-  void initState() {
-    super.initState();
-  }
+  // Future<void> initState() async {
+  //   super.initState();
+
+  // }
 
   void addToDo(
       String controllername,
@@ -69,7 +76,7 @@ class _DogFormState extends State<DogForm> {
       return;
     }
     await saveTodo(controllername, controllerage, lat, long, breedSelection,
-        parsefile, dogdesc);
+        parsefile, dogdesc, Gender);
 
     setState(() {
       DogsNameController.clear();
@@ -80,269 +87,296 @@ class _DogFormState extends State<DogForm> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Adoption Form"),
-        backgroundColor: Colors.blueAccent,
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        autocorrect: true,
-                        textCapitalization: TextCapitalization.sentences,
-                        controller: DogsNameController,
-                        decoration: InputDecoration(
-                            labelText: "Dog's Name",
-                            labelStyle: TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-                padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        autocorrect: true,
-                        textCapitalization: TextCapitalization.sentences,
-                        controller: DogsAgeController,
-                        decoration: InputDecoration(
-                            labelText: "Dog's Age",
-                            labelStyle: TextStyle(color: Colors.blueAccent)),
-                      ),
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-                padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        minLines: 5,
-                        maxLines: null,
-                        autocorrect: true,
-                        textCapitalization: TextCapitalization.sentences,
-                        controller: DogsDescriptionController,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                            ),
-                            labelText: "Dog's Description",
-                            labelStyle: TextStyle(
-                              color: Colors.blueAccent,
-                            )),
-                      ),
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton<String>(
-                            isDense: true,
-                            hint: const Text('Select Breed'),
-                            value: _mySelection,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                _mySelection = newValue;
-                              });
-                            },
-                            items: _mybreedList.map((Map map) {
-                              return DropdownMenuItem<String>(
-                                value: map["breed"],
-                                // value: _mySelection,
-                                child: Row(
-                                  children: <Widget>[
-                                    ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      child: Image.network(
-                                        map["img"],
-                                        width: 25,
-                                      ),
-                                    ),
-                                    Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Text(map["breed"])),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton<String>(
-                            isDense: true,
-                            hint: const Text('Select Gender'),
-                            value: _mySelectionGender,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                _mySelectionGender = newValue;
-                              });
-                            },
-                            items: _genderOpts.map((Map map) {
-                              return DropdownMenuItem<String>(
-                                value: map["gender"],
-                                // value: _mySelection,
-                                child: Row(
-                                  children: <Widget>[
-                                    IconTheme(
-                                        data: IconThemeData(
-                                            color: _mySelectionGender == 'Male'
-                                                ? Colors.blue
-                                                : Colors.pink),
-                                        child: Icon(_mySelectionGender == 'Male'
-                                            ? Icons.male
-                                            : Icons.female)),
-                                    Container(
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Text(map["gender"])),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-            ),
-
-            Text(widget.city.toString()),
-            //Text('LNG: ${widget.long}'),
-
-            ///Text('ADDRESS: ${_currentAddress ?? "na"}'),
-            const SizedBox(height: 32),
-            GestureDetector(
-              child: pickedFile != null
-                  ? Container(
-                      width: 250,
-                      height: 250,
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.blue)),
-                      child: Image.file(File(pickedFile!.path)))
-                  : Container(
-                      width: 250,
-                      height: 250,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue, width: 4),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Center(
-                        child: Text('Click here to pick image from Gallery'),
-                      ),
-                    ),
-              onTap: () async {
-                PickedFile? image =
-                    await ImagePicker().getImage(source: ImageSource.gallery);
-
-                if (image != null) {
-                  setState(() {
-                    pickedFile = image;
-                  });
-                }
-              },
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
-                onPressed: () async {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  //Flutter Mobile/Desktop
-                  parseFile = ParseFile(File(pickedFile!.path));
-
-                  ParseUser? currentUser = await ParseUser.currentUser();
-                  await Future.delayed(Duration(seconds: 1), () {});
-
-                  addToDo(
-                      DogsNameController.text,
-                      DogsAgeController.text,
-                      _mySelection as String,
-                      widget.lat,
-                      widget.long,
-                      parseFile,
-                      DogsDescriptionController.text,
-                      _mySelectionGender as String);
-
-                  setState(() {
-                    isLoading = false;
-                    pickedFile = null;
-                  });
-
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Save file with success on Back4app',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        duration: Duration(seconds: 3),
-                        backgroundColor: Colors.blue,
-                      ),
-                    );
-                },
-                child: Text('Submit'),
-              ),
-            ),
-          ],
+        appBar: AppBar(
+          title: const Text("Adoption Form"),
+          backgroundColor: Colors.blueAccent,
+          centerTitle: true,
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          autocorrect: true,
+                          textCapitalization: TextCapitalization.sentences,
+                          controller: DogsNameController,
+                          decoration: InputDecoration(
+                              labelText: "Dog's Name",
+                              labelStyle: TextStyle(color: Colors.blueAccent)),
+                        ),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          autocorrect: true,
+                          textCapitalization: TextCapitalization.sentences,
+                          controller: DogsAgeController,
+                          decoration: InputDecoration(
+                              labelText: "Dog's Age",
+                              labelStyle: TextStyle(color: Colors.blueAccent)),
+                        ),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          keyboardType: TextInputType.multiline,
+                          minLines: 5,
+                          maxLines: null,
+                          autocorrect: true,
+                          textCapitalization: TextCapitalization.sentences,
+                          controller: DogsDescriptionController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0)),
+                              ),
+                              labelText: "Dog's Description",
+                              labelStyle: TextStyle(
+                                color: Colors.blueAccent,
+                              )),
+                        ),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                              isDense: true,
+                              hint: const Text('Select Breed'),
+                              value: _mySelection,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _mySelection = newValue;
+                                });
+                              },
+                              items: _mybreedList.map((Map map) {
+                                return DropdownMenuItem<String>(
+                                  value: map["breed"],
+                                  // value: _mySelection,
+                                  child: Row(
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        child: Image.network(
+                                          map["img"],
+                                          width: 25,
+                                        ),
+                                      ),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(map["breed"])),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                              isDense: true,
+                              hint: const Text('Select Gender'),
+                              value: _mySelectionGender,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _mySelectionGender = newValue;
+                                });
+                              },
+                              items: _genderOpts.map((Map map) {
+                                return DropdownMenuItem<String>(
+                                  value: map["gender"],
+                                  // value: _mySelection,
+                                  child: Row(
+                                    children: <Widget>[
+                                      IconTheme(
+                                          data: IconThemeData(
+                                              color:
+                                                  _mySelectionGender == 'Male'
+                                                      ? Colors.blue
+                                                      : Colors.pink),
+                                          child: Icon(
+                                              _mySelectionGender == 'Male'
+                                                  ? Icons.male
+                                                  : Icons.female)),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(map["gender"])),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+              ),
+              SizedBox(height: 20,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconTheme(
+                      data: IconThemeData(
+                        color: Colors.red,
+                      ),
+                      child: Icon(Icons.location_pin)),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(widget.city.toString() +
+                      ', ' +
+                      widget.country.toString()),
+                ],
+              ),
+
+              ///Text('ADDRESS: ${_currentAddress ?? "na"}'),
+              const SizedBox(height: 32),
+              GestureDetector(
+                child: pickedFile != null
+                    ? Container(
+                        width: 250,
+                        height: 250,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blue)),
+                        child: Image.file(File(pickedFile!.path)))
+                    : Container(
+                        width: 200,
+                        height: 150,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blue, width: 4),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Center(
+                          child: Text('Add Image'),
+                        ),
+                      ),
+                onTap: () async {
+                  PickedFile? image =
+                      await ImagePicker().getImage(source: ImageSource.gallery);
+
+                  //var image = await ImagePicker().pickMultiImage();
+
+                  if (image != null) {
+                    setState(() {
+                      pickedFile = image;
+                    });
+                  }
+                },
+              ),
+              SizedBox(height: 16),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.blue),
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    //Flutter Mobile/Desktop
+                    parseFile = ParseFile(File(pickedFile!.path));
+
+                    ParseUser? currentUser = await ParseUser.currentUser();
+                    await Future.delayed(Duration(seconds: 1), () {});
+
+                    addToDo(
+                        DogsNameController.text,
+                        DogsAgeController.text,
+                        _mySelection as String,
+                        widget.lat,
+                        widget.long,
+                        parseFile,
+                        DogsDescriptionController.text,
+                        _mySelectionGender as String);
+
+                    setState(() {
+                      isLoading = false;
+                      pickedFile = null;
+                    });
+
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Save file with success on Back4app',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          duration: Duration(seconds: 3),
+                          backgroundColor: Colors.blue,
+                        ),
+                      );
+                  },
+                  child: Text('Submit'),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
-Future<void> saveTodo(String title, String DogsAge, double lat, double long,
-    String breedselection, ParseFileBase parseFile, String description) async {
+Future<void> saveTodo(
+    String title,
+    String DogsAge,
+    double lat,
+    double long,
+    String breedselection,
+    ParseFileBase parseFile,
+    String description,
+    gender) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
 
   await Future.delayed(Duration(seconds: 1), () {});
@@ -356,8 +390,7 @@ Future<void> saveTodo(String title, String DogsAge, double lat, double long,
     ..set('latitude', lat)
     ..set('longitude', long)
     ..set('DogDescription', description)
-    ..set('Gender', Gender)
-    ..set('done', false);
+    ..set('Gender', gender);
   await todo.save();
 }
 
