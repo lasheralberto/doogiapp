@@ -82,6 +82,8 @@ class gridListDogs extends StatelessWidget {
                       final varImg = varTodo.get<ParseFileBase>('DogImg')!;
                       final varDogDesc = varTodo.get<String>('DogDescription')!;
                       final varGender = varTodo.get<String>('Gender')!;
+                      final varCity = varTodo.get<String>('CityName')!;
+                      final varCountryName = varTodo.get<String>('CountryName')!;
 
                       //*************************************
                       return GestureDetector(
@@ -103,6 +105,8 @@ class gridListDogs extends StatelessWidget {
                             image: varImg.url,
                             title: varTitle,
                             gender: varGender,
+                            city: varCity,
+                            country: varCountryName
                           ));
                     },
                     gridDelegate:

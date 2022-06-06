@@ -13,39 +13,50 @@ class personalDogDetail extends StatelessWidget {
   final String? description;
   var breed;
 
-  personalDogDetail({
-    Key? key, required this.title, required this.Age, this.img, this.description, this.breed
-  }) : super(key: key);
+  personalDogDetail(
+      {Key? key,
+      required this.title,
+      required this.Age,
+      this.img,
+      this.description,
+      this.breed})
+      : super(key: key);
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-        Positioned(
-          child: SizedBox(
-            width: double.maxFinite,
-              height: MediaQuery.of(context).size.height,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(img as String) ) ,
+      body: Stack(children: [
+        Stack(children: [
+          //   Container(
+          //   height: MediaQuery.of(context).size.height * 0.3,
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: NetworkImage(img as String) ) ,
+          //   ),
+          // ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                img,
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 3,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-        ),
-        Container(),
-         
+        ]),
         SlidingPanelDescription(
           screen: 'personal_detail',
-          panelstate: PanelState.CLOSED,
+          panelstate: PanelState.OPEN,
           leftPosition: 0,
           rigthPosition: 0,
           bottomPosition: 80,
           topPosition: Dimensions.popularBookIMGSize,
           firstJsonParam: title,
-          secondJsonParam: breed ,
+          secondJsonParam: breed,
           descriptionText: description,
-          
         )
       ]),
     );

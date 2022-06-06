@@ -60,7 +60,9 @@ class _DogFormState extends State<DogForm> {
       double long,
       ParseFileBase parsefile,
       String dogdesc,
-      String Gender) async {
+      String Gender,
+      String city,
+      String country) async {
     if (controllername.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Empty Name"),
@@ -76,7 +78,7 @@ class _DogFormState extends State<DogForm> {
       return;
     }
     await saveTodo(controllername, controllerage, lat, long, breedSelection,
-        parsefile, dogdesc, Gender);
+        parsefile, dogdesc, Gender, city, country);
 
     setState(() {
       DogsNameController.clear();
@@ -260,7 +262,9 @@ class _DogFormState extends State<DogForm> {
                       ),
                     ]),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,14 +334,17 @@ class _DogFormState extends State<DogForm> {
                     await Future.delayed(Duration(seconds: 1), () {});
 
                     addToDo(
-                        DogsNameController.text,
-                        DogsAgeController.text,
-                        _mySelection as String,
-                        widget.lat,
-                        widget.long,
-                        parseFile,
-                        DogsDescriptionController.text,
-                        _mySelectionGender as String);
+                      DogsNameController.text,
+                      DogsAgeController.text,
+                      _mySelection as String,
+                      widget.lat,
+                      widget.long,
+                      parseFile,
+                      DogsDescriptionController.text,
+                      _mySelectionGender as String,
+                      widget.city,
+                      widget.country,
+                    );
 
                     setState(() {
                       isLoading = false;
@@ -376,7 +383,9 @@ Future<void> saveTodo(
     String breedselection,
     ParseFileBase parseFile,
     String description,
-    gender) async {
+    String gender,
+    String city,
+    String country) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
 
   await Future.delayed(Duration(seconds: 1), () {});
@@ -390,7 +399,10 @@ Future<void> saveTodo(
     ..set('latitude', lat)
     ..set('longitude', long)
     ..set('DogDescription', description)
-    ..set('Gender', gender);
+    ..set('Gender', gender)
+    ..set('CityName', city)
+    ..set('CountryName', country);
+
   await todo.save();
 }
 
