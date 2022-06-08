@@ -24,26 +24,33 @@ fetchData(url) async {
   }
 }
 
-fetchDataDogApi(url) async {
+fetchDataParam(url, param) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
+  await Future.delayed(Duration(seconds:2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
-    BreedUrlList = jsonDecoded.map((data) => DogUrl.fromJson(data)).toList();
-    return jsonDecoded;
+    BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
+    
+    return BreedList.where(
+
+      (dog)=> dog.breed.toLowerCase().contains(param.toLowerCase())
+
+      );
   } else {
     throw Exception('Failed to load data');
   }
 }
 
-runFilter(String enteredKeyword) {
+
+runFilter(dynamic listadogs , String enteredKeyword) {
   List<dynamic> results = [];
   if (enteredKeyword.isEmpty) {
     // if the search field is empty or only contains white-space, we'll display all users
-    results = BreedList;
+    results = listadogs;
   } else {
-    results = BreedList.where((dog) =>
-            dog["breed"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+    results = listadogs.where((dog) =>
+            dog.breed.toLowerCase().contains(enteredKeyword.toLowerCase()))
         .toList();
     // we use the toLowerCase() method to make it case-insensitive
   }

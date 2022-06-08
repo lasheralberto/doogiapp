@@ -32,7 +32,8 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     //_filterList.clear();
     super.initState();
-    _filterList.isEmpty ? fetchData(AppConstants.APIBASE_URL) : _filterList;
+    _filterList.isEmpty ? fetchData(AppConstants.APIBASE_URL) : 
+                          fetchDataParam(AppConstants.APIBASE_URL, _query);
   }
 
   _MainPageState() {
@@ -94,20 +95,22 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           Expanded(
-            child: _firstSearch == true
+            child: 
+                //_firstSearch == true
                 //textController.text.isEmpty
-                ? const SingleChildScrollView(
+                //? 
+                const SingleChildScrollView(
                     child: 
                     BookPageBody(),
                   )
-                : SingleChildScrollView(
-                    child: 
-                    foundDog(
-                      filterlist: _filterList,
-                      glossarlist: glossarListOnSearch,
-                      query: _query,
-                    ),
-                  ),
+                // : SingleChildScrollView(
+                //     child: 
+                //     foundDog(
+                //       filterlist: _filterList,
+                //       glossarlist: glossarListOnSearch,
+                //       query: _query,
+                //     ),
+                //   ),
           ),
         ],
       ),
