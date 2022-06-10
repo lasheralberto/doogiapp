@@ -10,7 +10,7 @@ List<dynamic> BreedList = [];
 List<dynamic> BreedUrlList = [];
 List<dynamic> glossarList = [];
 
-fetchData(url) async {
+Future<List<dynamic>> fetchData(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
   await Future.delayed(Duration(seconds:2));

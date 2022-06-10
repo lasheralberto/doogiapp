@@ -8,8 +8,8 @@ import 'package:ebook/widgets/foundSearchDog.dart';
 import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ebook/pages/home/book_body.dart';
-//import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'big_text.dart';
 import 'dimensions.dart';
 import 'icon_and_text_widget.dart';
@@ -22,56 +22,64 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Future<List<dynamic>>? futureData;
   TextEditingController textController = TextEditingController();
-  List<dynamic> glossarListOnSearch = [];
-  bool _firstSearch = true;
-  final List<String> _filterList = [];
-  String _query = '';
+  late SearchBar searchBar;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(title: const Text('Breed List'), actions: [
+      searchBar.getSearchAction(context),
+    ]);
+  }
+
+  List<dynamic> _filteredBreedList = [];
+
+  void set filter(String value) {
+    if (value.isEmpty) {
+      _filteredBreedList = BreedList;
+    } else {
+      String filter = value.toLowerCase();
+      _filteredBreedList =
+          BreedList.where((dog) => dog.breed.toLowerCase().contains(filter))
+              .toList();
+    }
+  }
 
   @override
   void initState() {
-    //_filterList.clear();
     super.initState();
-    _filterList.isEmpty ? fetchData(AppConstants.APIBASE_URL) : 
-                          fetchDataParam(AppConstants.APIBASE_URL, _query);
+    futureData = fetchData(AppConstants.APIBASE_URL);
   }
 
   _MainPageState() {
-    textController.addListener(() {
-      if (textController.text.isEmpty) {
-        setState(() {
-          _filterList.clear();
-          _firstSearch = true;
-          _query = '';
+    searchBar = SearchBar(
+        setState: setState,
+        buildDefaultAppBar: buildAppBar,
+        onCleared: () {
+          setState(() {
+            filter = '';
+          });
+        },
+        onChanged: (String value) {
+          setState(() {
+            filter = value;
+          });
+        },
+        onClosed: () {
+          setState(() {
+            filter = '';
+          });
         });
-      } else {
-        setState(() {
-          _firstSearch = false;
-          _query = textController.text;
-        });
-      }
-    });
+    filter = '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          shadowColor: Colors.white,
-          backgroundColor: Colors.white,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Image.network(AppConstants.APPLOGO),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-          title: const Text('MyApp')),
       backgroundColor: Colors.white,
+      appBar: searchBar.build(context),
+      key: _scaffoldKey,
       body: Column(
         children: [
           Container(
@@ -90,28 +98,36 @@ class _MainPageState extends State<MainPage> {
                             BorderRadius.circular(Dimensions.radius20),
                         color: Colors.white),
                   ),
-                )
+                ),
               ],
             ),
           ),
           Expanded(
-            child: 
-                //_firstSearch == true
-                //textController.text.isEmpty
-                //? 
-                const SingleChildScrollView(
-                    child: 
-                    BookPageBody(),
-                  )
-                // : SingleChildScrollView(
-                //     child: 
-                //     foundDog(
-                //       filterlist: _filterList,
-                //       glossarlist: glossarListOnSearch,
-                //       query: _query,
-                //     ),
-                //   ),
-          ),
+              child: FutureBuilder(
+                  future: futureData,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          itemCount: _filteredBreedList.isEmpty
+                              ? BreedList.length
+                              : _filteredBreedList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return SingleChildScrollView(
+                                child: (_filteredBreedList.isEmpty)
+                                    ? BookPageBody(
+                                        breedlist: BreedList,
+                                        index: index,
+                                      )
+                                    : BookPageBody(
+                                        breedlist: _filteredBreedList,
+                                        index: index,
+                                      ));
+                          });
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return SafeArea(child: CircularProgressIndicator());
+                  })),
         ],
       ),
     );

@@ -207,7 +207,7 @@ class _MySearchBarState extends State<MySearchBar>
                     focusNode: focusNode,
                     cursorRadius: const Radius.circular(10.0),
                     cursorWidth: 2.0,
-                    onChanged: (value) => runFilter(value),
+                   // onChanged: (value) => runFilter(value),
 
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed

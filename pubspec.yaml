@@ -56,6 +56,7 @@ dependencies:
   flutter_map: ^0.14.0
   latlong: ^0.6.1
   geocode: 1.0.1
+  flutter_search_bar: ^2.1.0
 
 
 
