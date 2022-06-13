@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class SimpleImagePicker extends StatefulWidget {
-  var pickedFile;
-
-  SimpleImagePicker({Key? key, required this.pickedFile}) : super(key: key);
+  //var pickedFile;
+  SimpleImagePicker({
+    Key? key,
+    //required this.pickedFile
+  }) : super(key: key);
 
   @override
   State<SimpleImagePicker> createState() => _SimpleImagePickerState();
@@ -15,30 +18,81 @@ class SimpleImagePicker extends StatefulWidget {
 
 class _SimpleImagePickerState extends State<SimpleImagePicker> {
   @override
+  var pickedFile;
+  var parseFile;
+
+  void addImg(ParseFileBase img) async {
+    await saveUserImg(img);
+    
+  }
+
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: widget.pickedFile != null
-          ? Container(
-              width: 250,
-              height: 250,
-              decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-              child: Image.file(File(widget.pickedFile!.path)))
-          : Container(
-              width: 250,
-              height: 250,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 4),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Center(
-                child: Text('Click here to pick image from Gallery'),
-              ),
-            ),
-      onTap: () async {
-        PickedFile? image =
-            await ImagePicker().getImage(source: ImageSource.gallery);
-        // var image = await ImagePicker().pickMultiImage();
-        
-      },
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(
+            child: pickedFile != null
+                ? Container(
+                    width: 250,
+                    height: 250,
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.blue)),
+                    child: Image.file(File(pickedFile!.path)))
+                : Container(
+                    width: 250,
+                    height: 250,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue, width: 4),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Center(
+                      child: Text('Click here to pick image from Gallery'),
+                    ),
+                  ),
+            onTap: () async {
+              var image =
+                  await ImagePicker().getImage(source: ImageSource.gallery);
+              if (image != null) {
+                setState(() {
+                  pickedFile = image;
+                  parseFile = ParseFile(File(pickedFile!.path));
+                });
+              }
+            },
+          ),
+          SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
+                onPressed: () async {
+                  //Flutter Mobile/Desktop
+                  parseFile = ParseFile(File(pickedFile!.path));
+    
+                  await Future.delayed(Duration(seconds: 1), () {});
+                  addImg(parseFile);
+                  Navigator.of(context).pop();
+                  
+                },
+                child: Text('Submit'),
+              ))
+        ],
+      ),
     );
   }
+}
+
+Future<void> saveUserImg(
+  ParseFileBase parseFile,
+) async {
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+
+  await Future.delayed(Duration(seconds: 2), () {});
+  final todo = ParseObject('UserImg')
+    //..set('objectId', currentUser!.objectId)
+    ..set('emailUser', currentUser!.emailAddress)
+    ..set('UserImage', parseFile);
+
+  await todo.save();
 }

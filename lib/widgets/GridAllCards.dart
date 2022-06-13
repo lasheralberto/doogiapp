@@ -26,7 +26,8 @@ class GridAllCards extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                   bottom: 60, right: 5, left: 5, top: 5), //bordes interiores
-              child: Stack(children: [
+              child: Stack(
+                children: [
                 Container(
                   width: double.infinity,
                   height: 200,

@@ -18,7 +18,6 @@ class MainBookPage extends StatefulWidget {
 
 class _MainBookPageState extends State<MainBookPage> {
   final _controller = PersistentTabController(initialIndex: 0);
-
   Location location = Location();
   GeoCode geoCode = GeoCode();
   late bool _serviceEnabled;
@@ -45,32 +44,17 @@ class _MainBookPageState extends State<MainBookPage> {
       }
     }
     _locationData = await location.getLocation();
-    // Address address = await geoCode.reverseGeocoding(
-    //     latitude: _locationData.latitude as double,
-    //     longitude: _locationData.longitude as double);
 
     setState(() {
       fieldLatitude = _locationData.latitude;
       fieldLogitude = _locationData.longitude;
-      
-      //addressCity = address.city;
     });
   }
-  
-
-  // Future<String> _getAddress(double? lat, double? lang) async {
-  //   if (lat == null || lang == null) return "";
-  //   GeoCode geoCode = GeoCode();
-  //   Address address =
-  //       await geoCode.reverseGeocoding(latitude: lat, longitude: lang);
-  //   return "${address.city}";
-  // }
 
   @override
   void initState() {
     super.initState();
     getfieldlocation();
-    fetchData(AppConstants.APIBASE_URL);
   }
 
   @override

@@ -329,8 +329,7 @@ class _DogFormState extends State<DogForm> {
                     });
                     //Flutter Mobile/Desktop
                     parseFile = ParseFile(File(pickedFile!.path));
-
-                    ParseUser? currentUser = await ParseUser.currentUser();
+                    
                     await Future.delayed(Duration(seconds: 1), () {});
 
                     addToDo(
@@ -404,6 +403,7 @@ Future<void> saveTodo(
     ..set('CountryName', country);
 
   await todo.save();
+  
 }
 
 final List<Map> _genderOpts = [

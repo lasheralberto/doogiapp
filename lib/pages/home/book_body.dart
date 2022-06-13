@@ -22,13 +22,10 @@ class BookPageBody extends StatefulWidget {
 }
 
 class _BookPageBodyState extends State<BookPageBody> {
-  //pagecontroller hace que sea visible el anterior y el posterior slide en la pantalla
   Future<List<dynamic>>? futureData;
-
   @override
   void initState() {
     super.initState();
-    //futureData = fetchData(AppConstants.APIBASE_URL);
   }
 
   @override
