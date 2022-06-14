@@ -5,8 +5,9 @@ class DogsAdoptionAll extends StatefulWidget {
   var lat;
   var long;
   var city;
+  var mail;
 
-  DogsAdoptionAll({Key? key, required this.lat, required this.long, this.city})
+  DogsAdoptionAll({Key? key, required this.lat, required this.long, this.city, required this.mail})
       : super(key: key);
 
   @override
@@ -18,6 +19,7 @@ class _DogsAdoptionAllState extends State<DogsAdoptionAll> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return gridListDogs(
+      mail: widget.mail,
       lat: widget.lat,
       long: widget.long,
     );

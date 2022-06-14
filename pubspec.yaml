@@ -39,7 +39,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   material_floating_search_bar: ^0.3.7
   provider: ^6.0.2
-  getwidget: ^2.0.5
+  getwidget: ^3.0.1
   flex_with_main_child: ^0.2.0
   transparent_image: ^2.0.0
   parse_server_sdk_flutter: ^3.1.0
@@ -57,7 +57,6 @@ dependencies:
   latlong: ^0.6.1
   geocode: 1.0.1
   flutter_search_bar: ^2.1.0
-
 
 
 dev_dependencies:

@@ -3,6 +3,8 @@ import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/loader/gf_loader.dart';
+import 'package:getwidget/types/gf_loader_type.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class UserImgProfile extends StatefulWidget {
@@ -37,10 +39,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
                   case ConnectionState.none:
                   case ConnectionState.waiting:
                     return const Center(
-                      child: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: CircularProgressIndicator()),
+                      child: GFLoader( ),
                     );
                   default:
                     if (snapshot.hasError) {
@@ -51,11 +50,10 @@ class _UserImgProfileState extends State<UserImgProfile> {
                     if (snapshot.data!.isNotEmpty) {
                       final varUserImg = snapshot.data![0];
                       final varImg = varUserImg.get<ParseFileBase>('UserImage');
-                      return CircleAvatar(
-                        backgroundColor: Colors.white70,
-                        minRadius: 60.0,
+                      return Container(
+                        decoration: BoxDecoration(shape: BoxShape.circle),
                         child: CircleAvatar(
-                            radius: 80.0,
+                            radius: 60.0,
                             backgroundImage:
                                 NetworkImage(varImg!.url.toString())),
                       );
@@ -77,9 +75,10 @@ class _UserImgProfileState extends State<UserImgProfile> {
             height: 10,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             
             children: [
-              SizedBox(width: 20,),
+             // SizedBox(width: MediaQuery.of(context).size.width/4,),
               FutureBuilder<List<ParseObject>>(
                   future: getCountDogs2(widget.usermail),
                   builder: (context, snapshot) {
@@ -87,10 +86,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
                       case ConnectionState.none:
                       case ConnectionState.waiting:
                         return const Center(
-                          child: SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: CircularProgressIndicator()),
+                          child: GFLoader( ),
                         );
                       default:
                         if (snapshot.hasError) {
@@ -143,10 +139,7 @@ class _UserDogListState extends State<UserDogList> {
               case ConnectionState.none:
               case ConnectionState.waiting:
                 return Center(
-                  child: SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: const CircularProgressIndicator()),
+                  child: GFLoader( ),
                 );
               default:
                 if (snapshot.hasError) {
@@ -177,9 +170,11 @@ class _UserDogListState extends State<UserDogList> {
                         return ListTile(
                           title: Text(varTitle),
                           subtitle: Text(varBreed as String),
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
-                            child: Image.network(varImg.url as String),
+                          leading: Container(
+                      
+                            //borderRadius: BorderRadius.all(Radius.circular(40)),
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: CircleAvatar(backgroundImage: NetworkImage(varImg.url as String) ,) ,
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,

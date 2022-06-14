@@ -90,7 +90,7 @@ class _MainBookPageState extends State<MainBookPage> {
       controller: _controller,
       screens: [
         const MainPage(),
-        DogsAdoptionAll(lat: fieldLatitude, long: fieldLogitude),
+        DogsAdoptionAll(lat: fieldLatitude, long: fieldLogitude, mail: widget.userEmail),
         DogsAdoptionList(
           lat: fieldLatitude,
           long: fieldLogitude,
