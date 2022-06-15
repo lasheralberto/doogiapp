@@ -27,13 +27,7 @@ class personalDogDetail extends StatelessWidget {
       appBar: AppBar(),
       body: Stack(children: [
         Stack(children: [
-          //   Container(
-          //   height: MediaQuery.of(context).size.height * 0.3,
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: NetworkImage(img as String) ) ,
-          //   ),
-          // ),
+ 
           Align(
             alignment: Alignment.topCenter,
             child: ClipRRect(

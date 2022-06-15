@@ -17,6 +17,8 @@ class _ExpandableTextState extends State<ExpandableText> {
   bool hiddenText = true;
   double textHeight = Dimensions.screenHeight / 2;
 
+ 
+
   @override
   //create method
   void initState() {
@@ -26,6 +28,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       firstHalf = widget.text.substring(0, textHeight.toInt());
       secondHald =
           widget.text.substring(textHeight.toInt() + 1, widget.text.length);
+
     } else {
       firstHalf = widget.text;
       secondHald = '';
@@ -34,6 +37,7 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
         child: secondHald.isEmpty
             ? SmallText(size: Dimensions.font16, height: 1.8, text: firstHalf)

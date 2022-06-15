@@ -55,6 +55,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
     const title = 'Grid List';
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: Text('My dogs for adoption'), 
       actions: <Widget>[
         IconButton(

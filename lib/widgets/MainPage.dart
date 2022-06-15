@@ -125,7 +125,9 @@ class _MainPageState extends State<MainPage> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return SafeArea(child: CircularProgressIndicator());
+                    return SafeArea(child: SizedBox(
+                      height: 30,
+                      child: CircularProgressIndicator()));
                   })),
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:ebook/widgets/ContainerPickSingleImage.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/big_text.dart';
+import 'package:ebook/widgets/personalDogDetail.dart';
+import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
@@ -19,74 +21,38 @@ class UserImgProfile extends StatefulWidget {
 }
 
 class _UserImgProfileState extends State<UserImgProfile> {
-
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white70,
-      elevation: 10,
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SimpleImagePicker()));
-            },
-            child: FutureBuilder<List<ParseObject>>(
-              future: getUserImg(widget.usermail),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                  case ConnectionState.waiting:
-                    return const Center(
-                      child: GFLoader( ),
-                    );
-                  default:
-                    if (snapshot.hasError) {
-                      return const Center(
-                        child: Text("Error..."),
-                      );
-                    }
-                    if (snapshot.data!.isNotEmpty) {
-                      final varUserImg = snapshot.data![0];
-                      final varImg = varUserImg.get<ParseFileBase>('UserImage');
-                      return Container(
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: CircleAvatar(
-                            radius: 60.0,
-                            backgroundImage:
-                                NetworkImage(varImg!.url.toString())),
-                      );
-                    } else {
-                      return const CircleAvatar(
-                        backgroundColor: Colors.white70,
-                        minRadius: 60.0,
-                        child: CircleAvatar(
-                            radius: 80.0,
-                            backgroundImage: NetworkImage(
-                                'https://ik.imagekit.io/aml28/Google_Contacts_icon.svg_O1-1-E_wH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654901242362')),
-                      );
-                    }
-                }
-              },
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 1.2,
+      height: MediaQuery.of(context).size.width / 1.6,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        color: Colors.white,
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10, left: 10),
+          child: Column(
             children: [
-             // SizedBox(width: MediaQuery.of(context).size.width/4,),
-              FutureBuilder<List<ParseObject>>(
-                  future: getCountDogs2(widget.usermail),
+              SmallText(text: widget.usermail),
+              SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SimpleImagePicker()));
+                },
+                child: FutureBuilder<List<ParseObject>>(
+                  future: getUserImg(widget.usermail),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
                       case ConnectionState.waiting:
                         return const Center(
-                          child: GFLoader( ),
+                          child: GFLoader(),
                         );
                       default:
                         if (snapshot.hasError) {
@@ -94,22 +60,80 @@ class _UserImgProfileState extends State<UserImgProfile> {
                             child: Text("Error..."),
                           );
                         }
-                        if (!snapshot.hasData) {
-                          return Text('0');
+                        if (snapshot.data!.isNotEmpty) {
+                          final varUserImg = snapshot.data![0];
+                          final varImg =
+                              varUserImg.get<ParseFileBase>('UserImage');
+                          return Container(
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: CircleAvatar(
+                                radius: 60.0,
+                                backgroundImage:
+                                    NetworkImage(varImg!.url.toString())),
+                          );
                         } else {
-                          
-                          return Text(snapshot.data!.length.toString());
+                          return const CircleAvatar(
+                            backgroundColor: Colors.white70,
+                            minRadius: 60.0,
+                            child: CircleAvatar(
+                                radius: 80.0,
+                                backgroundImage: NetworkImage(
+                                    'https://ik.imagekit.io/aml28/Google_Contacts_icon.svg_O1-1-E_wH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654901242362')),
+                          );
                         }
                     }
-                  }),
-              SizedBox(width: 20,),
-              BigText(text: widget.usermail),
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // SizedBox(width: MediaQuery.of(context).size.width/4,),
+                  FutureBuilder<List<ParseObject>>(
+                      future: getCountDogs2(widget.usermail),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                          case ConnectionState.waiting:
+                            return const Center(
+                              child: GFLoader(),
+                            );
+                          default:
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Text("Error..."),
+                              );
+                            }
+                            if (!snapshot.hasData) {
+                              return Text('0');
+                            } else {
+                              return Column(
+                                children: [
+                                  BigText(text: 'Dogs for adoption'),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  BigText(
+                                      text: snapshot.data!.length.toString()),
+                                ],
+                              );
+                            }
+                        }
+                      }),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 0,
+              ),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -128,6 +152,9 @@ class UserDogList extends StatefulWidget {
 }
 
 class _UserDogListState extends State<UserDogList> {
+  bool _isEnable =
+      false; //_isEnable is the boolean variable and set it false, so we have to make it true when user tap on text
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -139,7 +166,7 @@ class _UserDogListState extends State<UserDogList> {
               case ConnectionState.none:
               case ConnectionState.waiting:
                 return Center(
-                  child: GFLoader( ),
+                  child: GFLoader(),
                 );
               default:
                 if (snapshot.hasError) {
@@ -163,41 +190,59 @@ class _UserDogListState extends State<UserDogList> {
                         final varTodo = snapshot.data![index];
                         final varTitle = varTodo.get<String>('title')!;
                         final varBreed = varTodo.get<String>('Breed');
+                        final varAge = varTodo.get<String>('Age');
+                        final varDesc = varTodo.get<String>('DogDescription');
                         final varImg = varTodo.get<ParseFileBase>('DogImg')!;
 
                         //*************************************
 
-                        return ListTile(
-                          title: Text(varTitle),
-                          subtitle: Text(varBreed as String),
-                          leading: Container(
-                      
-                            //borderRadius: BorderRadius.all(Radius.circular(40)),
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: CircleAvatar(backgroundImage: NetworkImage(varImg.url as String) ,) ,
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.delete_outline,
-                                  color: Colors.blue,
-                                ),
-                                onPressed: () async {
-                                  await deleteTodo(varTodo.objectId!);
-                                  setState(() {
-                                    final snackBar = SnackBar(
-                                      content: Text("Dog removed!"),
-                                      duration: Duration(seconds: 1),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                      ..removeCurrentSnackBar()
-                                      ..showSnackBar(snackBar);
-                                  });
-                                },
-                              )
-                            ],
+
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => personalDogDetail(
+                                        title: varTitle,
+                                        Age: varAge as String,
+                                        description: varDesc,
+                                        img: varImg.url,
+                                        breed: varBreed)));
+                          },
+                          child: ListTile(
+                            title: Text(varTitle),
+                            subtitle: Text(varBreed as String),
+                            leading: Container(
+                              //borderRadius: BorderRadius.all(Radius.circular(40)),
+                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(varImg.url as String),
+                              ),
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete_outline,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () async {
+                                    await deleteTodo(varTodo.objectId!);
+                                    setState(() {
+                                      final snackBar = SnackBar(
+                                        content: Text("Dog removed!"),
+                                        duration: Duration(seconds: 1),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBar);
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         );
                       });

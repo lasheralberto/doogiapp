@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:ebook/widgets/MainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 //import 'package:geolocator/geolocator.dart';
@@ -166,13 +167,31 @@ class _DogFormState extends State<DogForm> {
                 height: 20,
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+                padding: const EdgeInsets.all(5),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Expanded(
+                      Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 45,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MainPage()));
+                              },
+                              child: Icon(
+                                Icons.search,
+                                size: 20,
+                              )),
+                        ),
+                      ),
+                      Container(
                         child: DropdownButtonHideUnderline(
                           child: ButtonTheme(
+                            height: MediaQuery.of(context).size.height / 4,
                             alignedDropdown: true,
                             child: DropdownButton<String>(
                               isDense: true,
@@ -329,7 +348,7 @@ class _DogFormState extends State<DogForm> {
                     });
                     //Flutter Mobile/Desktop
                     parseFile = ParseFile(File(pickedFile!.path));
-                    
+
                     await Future.delayed(Duration(seconds: 1), () {});
 
                     addToDo(
@@ -403,7 +422,6 @@ Future<void> saveTodo(
     ..set('CountryName', country);
 
   await todo.save();
-  
 }
 
 final List<Map> _genderOpts = [
