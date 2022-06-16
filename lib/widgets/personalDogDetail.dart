@@ -12,14 +12,19 @@ class personalDogDetail extends StatelessWidget {
   var img;
   final String? description;
   var breed;
+  var screen;
 
   personalDogDetail(
+
       {Key? key,
+
       required this.title,
       required this.Age,
       this.img,
       this.description,
-      this.breed})
+      this.breed,
+      required this.screen
+      })
       : super(key: key);
 
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class personalDogDetail extends StatelessWidget {
           ),
         ]),
         SlidingPanelDescription(
-          screen: 'personal_detail',
+          screen: screen,
           panelstate: PanelState.OPEN,
           leftPosition: 0,
           rigthPosition: 0,

@@ -76,6 +76,7 @@ class LongPressGridCard extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => personalDogDetail(
+                            screen: 'All',
                             title: title,
                             Age: Age,
                             description: description,

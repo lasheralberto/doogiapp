@@ -203,6 +203,7 @@ class _UserDogListState extends State<UserDogList> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => personalDogDetail(
+                                      screen: 'personal_detailForm',
                                         title: varTitle,
                                         Age: varAge as String,
                                         description: varDesc,

@@ -32,7 +32,6 @@ class DogsAdoptionList extends StatefulWidget {
 class _DogsAdoptionListState extends State<DogsAdoptionList> {
   //initState(): This is the first method called when the widget is created but after constructor call.
 
-
   var city;
   var country;
 
@@ -56,8 +55,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('My dogs for adoption'), 
-      actions: <Widget>[
+      appBar: AppBar(title: Text('My dogs for adoption'), actions: <Widget>[
         IconButton(
           icon: Icon(
             Icons.refresh,
@@ -78,8 +76,9 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
         height: 50,
         child: FittedBox(
           child: FloatingActionButton(
-            
-            child: Icon(Icons.add,),
+            child: Icon(
+              Icons.add,
+            ),
             onPressed: () {
               GetAddressFromLatLong(widget.lat, widget.long);
               Navigator.push(
@@ -129,12 +128,14 @@ Future<List<ParseObject>> getTodo(usermail) async {
   }
 }
 
-Future<void> updateTodo(String id, bool done) async {
+Future<void> updateTodo(usermail) async {
   await Future.delayed(Duration(seconds: 1), () {});
-  var todo = ParseObject('Todo')
-    ..objectId = id
-    ..set('done', done);
-  await todo.save();
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject('Todo'));
+  queryTodo.whereEqualTo('UserMail', usermail);
+  queryTodo.whereEqualTo('UserMail', usermail);
 }
 
 Future<void> deleteTodo(String id) async {

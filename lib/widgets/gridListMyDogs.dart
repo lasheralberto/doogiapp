@@ -35,45 +35,57 @@ class _gridListDogsState extends State<gridListDogs> {
     final Widget emptyBlock = GridAllCardsShimmer();
 
     return Scaffold(
-      floatingActionButton: ElevatedButton(
-        child: Wrap(
-          children: const <Widget>[
-            Icon(
-              Icons.map,
-              color: Colors.pink,
-              size: 24.0,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            child: Icon(
+              Icons.refresh,
+              color: Colors.white,
             ),
-            SizedBox(
-              width: 10,
-            ),
-            Text("Mapa", style: TextStyle(fontSize: 20)),
-          ],
-        ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    TomTomMap(lat: widget.lat, long: widget.long),
-              ));
-        },
+            onPressed: () {
+              setState(() {
+                //fetchData(AppConstants.APIBASE_URL);
+                getTodo(widget.mail);
+              });
+              // do something
+            },
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+          ),
+          Wrap(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue, width: 4),
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.map),
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              TomTomMap(lat: widget.lat, long: widget.long),
+                        ));
+                  },
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: AppBar(title: const Text('Adopt'), actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.refresh,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            setState(() {
-              //fetchData(AppConstants.APIBASE_URL);
-              getTodo(widget.mail);
-            });
-            // do something
-          },
-        )
-      ]),
+      appBar: AppBar(
+        title: const Text('Adopt'),
+      ),
       body: FutureBuilder<List<ParseObject>>(
           future: getAllDogs(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
