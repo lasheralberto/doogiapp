@@ -24,6 +24,21 @@ Future<List<dynamic>> fetchData(url) async {
   }
 }
 
+Future<List<dynamic>> fetchDataFor(url) async {
+  var client = http.Client();
+  final response = await client.get(Uri.parse(url));
+  await Future.delayed(Duration(seconds:2));
+  if (response.statusCode == 200) {
+    var jsonDecoded = json.decode(response.body);
+    for (var k in jsonDecoded.keys){
+      BreedList.add({jsonDecoded[k]});
+    }
+    return BreedList;
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+
 fetchDataParam(url, param) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
