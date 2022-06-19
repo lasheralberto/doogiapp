@@ -405,6 +405,7 @@ Future<void> saveTodo(
     String city,
     String country) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+  var concatid = currentUser!.objectId! + title;
 
   await Future.delayed(Duration(seconds: 1), () {});
   final todo = ParseObject('Todo')
@@ -419,7 +420,9 @@ Future<void> saveTodo(
     ..set('DogDescription', description)
     ..set('Gender', gender)
     ..set('CityName', city)
-    ..set('CountryName', country);
+    ..set('CountryName', country)
+    ..set('concatId', concatid.toString())
+    ;
 
   await todo.save();
 }

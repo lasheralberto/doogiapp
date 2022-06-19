@@ -64,7 +64,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
           onPressed: () {
             setState(() {
               //fetchData(AppConstants.APIBASE_URL);
-              getTodo(widget.usermail);
+              var l = getTodo(widget.usermail);
             });
             // do something
           },
@@ -99,11 +99,13 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
-          child: Column(children: [
-            UserImgProfile(usermail: widget.usermail),
-            UserDogList(
-              usermail: widget.usermail,
-            )
+          child: 
+          Column(
+            children: [
+                UserImgProfile(usermail: widget.usermail), //<----------------------------------
+                UserDogList(
+                  usermail: widget.usermail,
+                )
           ]),
         ),
       ),
@@ -135,7 +137,7 @@ Future<void> updateTodo(usermail) async {
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject('Todo'));
   queryTodo.whereEqualTo('UserMail', usermail);
-  queryTodo.whereEqualTo('UserMail', usermail);
+ 
 }
 
 Future<void> deleteTodo(String id) async {

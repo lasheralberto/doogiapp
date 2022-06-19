@@ -3,17 +3,19 @@
 import 'dart:convert';
 import 'package:ebook/models/dogsmodel.dart';
 import 'package:ebook/models/urldogmodel.dart';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 List<dynamic> BreedList = [];
 List<dynamic> BreedUrlList = [];
 List<dynamic> glossarList = [];
+List<dynamic> GridAllDogsList = [];
 
 Future<List<dynamic>> fetchData(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
-  await Future.delayed(Duration(seconds:2));
+  await Future.delayed(Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
     BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
@@ -24,36 +26,63 @@ Future<List<dynamic>> fetchData(url) async {
   }
 }
 
-fetchDataParam(url, param) async {
+Future<List<dynamic>> fetchDataFor(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
-  await Future.delayed(Duration(seconds:2));
+  await Future.delayed(Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
-    BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
-    
-    return BreedList.where(
+    BreedList = [for (var data in jsonDecoded) DogClass.fromJson(data)];
 
-      (dog)=> dog.breed.toLowerCase().contains(param.toLowerCase())
-
-      );
+    return BreedList;
   } else {
     throw Exception('Failed to load data');
   }
 }
 
+fetchDataParam(url, param) async {
+  var client = http.Client();
+  final response = await client.get(Uri.parse(url));
+  await Future.delayed(Duration(seconds: 2));
+  if (response.statusCode == 200) {
+    var jsonDecoded = json.decode(response.body);
+    BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
 
-runFilter(dynamic listadogs , String enteredKeyword) {
-  List<dynamic> results = [];
-  if (enteredKeyword.isEmpty) {
-    // if the search field is empty or only contains white-space, we'll display all users
-    results = listadogs;
+    return BreedList.where(
+        (dog) => dog.breed.toLowerCase().contains(param.toLowerCase()));
   } else {
-    results = listadogs.where((dog) =>
-            dog.breed.toLowerCase().contains(enteredKeyword.toLowerCase()))
-        .toList();
-    // we use the toLowerCase() method to make it case-insensitive
+    throw Exception('Failed to load data');
   }
-  return results;
 }
 
+Future<List<dynamic>> getAllDogsLocation() async {
+  await Future.delayed(const Duration(seconds: 2), () {});
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject('Todo'));
+  // queryTodo.includeObject(['latitude']);
+  final ParseResponse apiResponse = await queryTodo.query();
+
+  if (apiResponse.success && apiResponse.results != null) {
+    return apiResponse.results as List<ParseObject>;
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+
+Future<List<dynamic>> getAllDogs2() async {
+  await Future.delayed(const Duration(seconds: 2), () {});
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject('Todo'));
+  final ParseResponse apiResponse = await queryTodo.query();
+  var jsonResults = apiResponse.results;
+
+  if (apiResponse.success && apiResponse.results != null) {
+    //GridAllDogsList = jsonResults!;
+    //return apiResponse.results as List<ParseObject>;
+    //return GridAllDogsList;
+    GridAllDogsList = [for (var data in jsonResults!) DogClass.fromJson(data)];
+    return GridAllDogsList;
+  } else {
+    return [];
+  }
+}

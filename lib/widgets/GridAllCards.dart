@@ -65,7 +65,7 @@ class GridAllCards extends StatelessWidget {
               ),
               Row(
                 children: [
-                  IconTheme(
+                  const IconTheme(
                       data: IconThemeData(size: 15, color: Colors.red),
                       child: Icon(Icons.location_on)),
                   Positioned(
@@ -93,6 +93,7 @@ class GridAllCardsShimmer extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -106,7 +107,7 @@ class GridAllCardsShimmer extends StatelessWidget {
                   Container(
                       width: double.infinity,
                       height: 200,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(
                                 'https://ik.imagekit.io/aml28/Google_Contacts_icon.svg_O1-1-E_wH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1654901242362')),
@@ -119,12 +120,12 @@ class GridAllCardsShimmer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
-                children: [
+                children: const [
                   Positioned(
                     top: 10,
                     child: Text(
                       'Loading',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),
@@ -133,7 +134,7 @@ class GridAllCardsShimmer extends StatelessWidget {
                 ],
               ),
               Row(
-                children: [
+                children: const [
                   IconTheme(
                       data: IconThemeData(size: 15, color: Colors.red),
                       child: Icon(Icons.location_on)),
@@ -141,7 +142,7 @@ class GridAllCardsShimmer extends StatelessWidget {
                     top: 10,
                     child: Text(
                       '',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey),

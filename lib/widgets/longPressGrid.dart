@@ -27,77 +27,79 @@ class LongPressGridCard extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        shadowColor: Colors.blue,
-        elevation: 16,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 20),
-              Center(child: BigText(text: '$title')),
-              const SizedBox(height: 20),
-              // Center(
-              //     child: BigText(
-              //   text: 'Age: $Age ',
-              // )),
-              const SizedBox(height: 20),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PopularBookDetailsSimplified(
-                                index: 0,
-                                doglist:
-                                    BreedList.where((dog) => dog.breed == breed)
-                                        .toList()))
-                        //inputlist.where((o) => o['category_id'] == '1').toList();
-                        );
-                  },
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [Icon(Icons.info), Text('Breed info')],
+    return Container(
+      child: Center(
+        child: Card(
+          shadowColor: Colors.blue,
+          elevation: 16,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                Center(child: BigText(text: '$title')),
+                const SizedBox(height: 20),
+                // Center(
+                //     child: BigText(
+                //   text: 'Age: $Age ',
+                // )),
+                const SizedBox(height: 20),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PopularBookDetailsSimplified(
+                                  index: 0,
+                                  doglist:
+                                      BreedList.where((dog) => dog.breed == breed)
+                                          .toList()))
+                          //inputlist.where((o) => o['category_id'] == '1').toList();
+                          );
+                    },
+                    child: Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [Icon(Icons.info), Text('Breed info')],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => personalDogDetail(
-                            screen: 'All',
-                            title: title,
-                            Age: Age,
-                            description: description,
-                            img: img.url,
-                            breed: breed,
-                          ),
-                        ));
-                  },
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.description),
-                        Text('Dog Description')
-                      ],
+                const SizedBox(height: 20),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => personalDogDetail(
+                              screen: 'All',
+                              title: title,
+                              Age: Age,
+                              description: description,
+                              img: img.url,
+                              breed: breed,
+                            ),
+                          ));
+                    },
+                    child: Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.description),
+                          Text('Dog Description')
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

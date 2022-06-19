@@ -5,6 +5,7 @@ import 'package:ebook/widgets/dimensions.dart';
 import 'package:ebook/widgets/exp_text_widget.dart';
 import 'package:ebook/widgets/small_text.dart';
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -12,7 +13,7 @@ class SlidingPanelDescription extends StatefulWidget {
   final String firstJsonParam;
   final String? secondJsonParam;
   final String? imgParam;
-  final String? descriptionText;
+  late final String? descriptionText;
   final double? leftPosition;
   final double? rigthPosition;
   final double? bottomPosition;
@@ -42,19 +43,27 @@ class SlidingPanelDescription extends StatefulWidget {
 class _SlidingPanelDescriptionState extends State<SlidingPanelDescription> {
   final PanelController _pc1 = PanelController();
   late TextEditingController pc_edit_descr;
+  String editedText = '';
 
   bool editable = false;
   bool saveDescrButton = false;
-
   bool _visible = true;
+  bool textEdited = false;
 
   final bool _physicalCard = true;
+
+  void saveModifiedDescr(String descr) async {
+    await updateTodo(descr, widget.firstJsonParam);
+  }
 
   @override
   void initState() {
     // Initialize TextEditingController object with default text.
-    pc_edit_descr = TextEditingController(text: widget.descriptionText);
+    textEdited == false
+        ? pc_edit_descr = TextEditingController(text: widget.descriptionText)
+        : pc_edit_descr = TextEditingController(text: editedText);
 
+    //saveModifiedDescr(editedText);
     super.initState();
   }
 
@@ -163,17 +172,45 @@ class _SlidingPanelDescriptionState extends State<SlidingPanelDescription> {
                                     onPressed: () {
                                       setState(() {
                                         editable = false;
+                                        textEdited = true;
+                                        editedText = pc_edit_descr.text;
+
+                                        saveModifiedDescr(editedText);
                                       });
                                     })
                               ],
                             )
                           : SingleChildScrollView(
                               child: ExpandableText(
-                                  text: widget.descriptionText as String)
+                                  text: textEdited == false
+                                      ? widget.descriptionText as String
+                                      : editedText)
                               //'From Romeo and Juliet to King Lear to Macbeth to all of his stunning sonnets and other works, William Shakespeare’s top spot in the literary world has been solidified for centuries. Although his work is well-covered in many schools, famous Shakespeare quotes do not only belong in English courses for study. We can all appreciate his tongue-in-cheek observations about society and individuals’ behavior, as well as gain inspiration and wisdom from his quick-witted quips and smart sense of humor. Not only that, he can help us find beauty through language—including an appreciation for vulnerable declarations of love.'),
                               ))
                 ])),
           )),
     );
   }
+}
+
+Future<void> updateTodo(String description, String dogName) async {
+  ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
+
+  var concatid = currentUser!.objectId! + dogName;
+  
+  // QueryBuilder<ParseObject> queryTodo =
+  //     QueryBuilder<ParseObject>(ParseObject('Todo'));
+  // queryTodo.whereEqualTo('concatId', concatid.toString());
+  // final ParseResponse apiResponse = await queryTodo.query();
+
+  //queryTodo.find();
+  await Future.delayed(Duration(seconds: 1), () {});
+  final todo = ParseObject('Todo') 
+    ..objectId = currentUser.objectId
+ 
+    ..set('concatId', concatid)
+    ..set('DogDescription', description);
+    
+  await todo.save();
+  
 }

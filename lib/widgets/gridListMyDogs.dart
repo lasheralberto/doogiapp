@@ -4,6 +4,7 @@ import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/GridAllCards.dart';
 import 'package:ebook/widgets/TomTomMap.dart';
 import 'package:ebook/widgets/big_text.dart';
+import 'package:ebook/widgets/filterGridList.dart';
 import 'package:ebook/widgets/longPressGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart' as getwid;
@@ -39,7 +40,23 @@ class _gridListDogsState extends State<gridListDogs> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-            child: Icon(
+            heroTag: Text('Filter_but'),
+            child: const Icon(
+              Icons.filter_list_alt,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FilterGridList(),
+                  ));
+              // do something
+            },
+          ),
+          FloatingActionButton(
+            heroTag: Text('Refresh_but'),
+            child: const Icon(
               Icons.refresh,
               color: Colors.white,
             ),
@@ -92,10 +109,10 @@ class _gridListDogsState extends State<gridListDogs> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return Center(
-                  child: getwid.GFShimmer(
-                    child: emptyBlock,
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(),
+                  // child: getwid.GFShimmer(
+                  //child: emptyBlock,
                 );
               default:
                 if (snapshot.hasError) {

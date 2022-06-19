@@ -48,7 +48,8 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    futureData = fetchData(AppConstants.APIBASE_URL);
+    //futureData = fetchData(AppConstants.APIBASE_URL);
+    futureData = fetchDataFor(AppConstants.APIBASE_URL);
   }
 
   _MainPageState() {
@@ -125,9 +126,9 @@ class _MainPageState extends State<MainPage> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return SafeArea(child: SizedBox(
-                      height: 30,
-                      child: CircularProgressIndicator()));
+                    return SafeArea(
+                        child: SizedBox(
+                            height: 30, child: CircularProgressIndicator()));
                   })),
         ],
       ),

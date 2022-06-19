@@ -180,6 +180,8 @@ class _UserDogListState extends State<UserDogList> {
                   );
                 } else {
                   return ListView.builder(
+                      addAutomaticKeepAlives: false,
+                      addRepaintBoundaries: false,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
