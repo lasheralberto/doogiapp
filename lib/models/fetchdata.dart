@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'package:ebook/models/dogsmodel.dart';
-import 'package:ebook/models/urldogmodel.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -15,7 +14,7 @@ List<dynamic> GridAllDogsList = [];
 Future<List<dynamic>> fetchData(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
     BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
@@ -29,20 +28,10 @@ Future<List<dynamic>> fetchData(url) async {
 Future<List<dynamic>> fetchDataFor(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
-<<<<<<< HEAD
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
     BreedList = [for (var data in jsonDecoded) DogClass.fromJson(data)];
-
-=======
-  await Future.delayed(Duration(seconds:2));
-  if (response.statusCode == 200) {
-    var jsonDecoded = json.decode(response.body);
-    for (var k in jsonDecoded.keys){
-      BreedList.add({jsonDecoded[k]});
-    }
->>>>>>> aa250e56a3178e3c26de094b0d09234a9d9ea7fc
     return BreedList;
   } else {
     throw Exception('Failed to load data');
@@ -52,7 +41,7 @@ Future<List<dynamic>> fetchDataFor(url) async {
 fetchDataParam(url, param) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
     BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();

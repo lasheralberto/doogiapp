@@ -33,14 +33,14 @@ class _gridListDogsState extends State<gridListDogs> {
   Widget build(BuildContext context) {
     const title = 'Grid List';
 
-    final Widget emptyBlock = GridAllCardsShimmer();
+    const Widget emptyBlock = GridAllCardsShimmer();
 
     return Scaffold(
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-            heroTag: Text('Filter_but'),
+            heroTag: const Text('Filter_but'),
             child: const Icon(
               Icons.filter_list_alt,
               color: Colors.white,
@@ -49,13 +49,13 @@ class _gridListDogsState extends State<gridListDogs> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FilterGridList(),
+                    builder: (context) => const FilterGridList(),
                   ));
               // do something
             },
           ),
           FloatingActionButton(
-            heroTag: Text('Refresh_but'),
+            heroTag: const Text('Refresh_but'),
             child: const Icon(
               Icons.refresh,
               color: Colors.white,
@@ -80,7 +80,7 @@ class _gridListDogsState extends State<gridListDogs> {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.map),
+                  icon: const Icon(Icons.map),
                   color: Colors.white,
                   onPressed: () {
                     Navigator.push(

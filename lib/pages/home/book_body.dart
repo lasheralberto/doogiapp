@@ -1,14 +1,7 @@
-import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/models/listas.dart';
 import 'package:ebook/widgets/ListCard.dart';
 import 'package:ebook/widgets/big_text.dart';
-import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/dimensions.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-import 'package:ebook/models/ItemsToLoad.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:incrementally_loading_listview/incrementally_loading_listview.dart';
 
 // create client instance
 class BookPageBody extends StatefulWidget {

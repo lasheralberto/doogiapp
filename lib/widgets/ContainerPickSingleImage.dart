@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class SimpleImagePicker extends StatefulWidget {
   //var pickedFile;
-  SimpleImagePicker({
+  const SimpleImagePicker({
     Key? key,
     //required this.pickedFile
   }) : super(key: key);
@@ -26,6 +25,7 @@ class _SimpleImagePickerState extends State<SimpleImagePicker> {
     
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -46,8 +46,8 @@ class _SimpleImagePickerState extends State<SimpleImagePicker> {
                     height: 250,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.blue, width: 4),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Center(
+                        borderRadius: const BorderRadius.all(Radius.circular(20))),
+                    child: const Center(
                       child: Text('Click here to pick image from Gallery'),
                     ),
                   ),
@@ -70,12 +70,12 @@ class _SimpleImagePickerState extends State<SimpleImagePicker> {
                   //Flutter Mobile/Desktop
                   parseFile = ParseFile(File(pickedFile!.path));
     
-                  await Future.delayed(Duration(seconds: 1), () {});
+                  await Future.delayed(const Duration(seconds: 1), () {});
                   addImg(parseFile);
                   Navigator.of(context).pop();
                   
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ))
         ],
       ),
@@ -88,7 +88,7 @@ Future<void> saveUserImg(
 ) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
 
-  await Future.delayed(Duration(seconds: 2), () {});
+  await Future.delayed(const Duration(seconds: 2), () {});
   final todo = ParseObject('UserImg')
     //..set('objectId', currentUser!.objectId)
     ..set('emailUser', currentUser!.emailAddress)

@@ -9,6 +9,7 @@ class PopularBookDetailsSimplified extends StatelessWidget {
       {Key? key, required this.index, required this.doglist})
       : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return PopularBookDetails(
       firstJsonParam: doglist[index].breed ?? '',

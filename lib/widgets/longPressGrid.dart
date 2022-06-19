@@ -1,11 +1,8 @@
 import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/widgets/ListCard.dart';
 import 'package:ebook/widgets/PopularDetailsBreedSimplified.dart';
 import 'package:ebook/widgets/personalDogDetail.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import '../pages/books/popularbooksdetails.dart';
 import 'big_text.dart';
 
 class LongPressGridCard extends StatelessWidget {
@@ -16,7 +13,7 @@ class LongPressGridCard extends StatelessWidget {
   final String breed;
   final String? description;
 
-  LongPressGridCard(
+  const LongPressGridCard(
       {Key? key,
       required this.index,
       required this.Age,
@@ -40,7 +37,7 @@ class LongPressGridCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 20),
-                Center(child: BigText(text: '$title')),
+                Center(child: BigText(text: title)),
                 const SizedBox(height: 20),
                 // Center(
                 //     child: BigText(

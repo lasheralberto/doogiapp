@@ -13,7 +13,7 @@ class SlidingPanelDescription extends StatefulWidget {
   final String firstJsonParam;
   final String? secondJsonParam;
   final String? imgParam;
-  late final String? descriptionText;
+  final String? descriptionText;
   final double? leftPosition;
   final double? rigthPosition;
   final double? bottomPosition;
@@ -21,7 +21,7 @@ class SlidingPanelDescription extends StatefulWidget {
   final PanelState? panelstate;
   final String? screen;
 
-  SlidingPanelDescription(
+  const SlidingPanelDescription(
       {Key? key,
       required this.firstJsonParam,
       this.secondJsonParam,

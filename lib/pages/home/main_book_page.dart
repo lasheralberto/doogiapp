@@ -1,8 +1,6 @@
-import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/widgets/DogsAdoptionAll.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/MainPage.dart';
-import 'package:ebook/widgets/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocode/geocode.dart';

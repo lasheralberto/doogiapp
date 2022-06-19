@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class BehaviorCard extends StatelessWidget {
   //final String imgparam;

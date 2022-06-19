@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GridAllCards extends StatelessWidget {
@@ -17,6 +16,7 @@ class GridAllCards extends StatelessWidget {
       this.country})
       : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -89,7 +89,7 @@ class GridAllCards extends StatelessWidget {
 }
 
 class GridAllCardsShimmer extends StatelessWidget {
-  GridAllCardsShimmer({
+  const GridAllCardsShimmer({
     Key? key,
   }) : super(key: key);
 

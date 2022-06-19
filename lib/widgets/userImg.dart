@@ -3,10 +3,8 @@ import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/personalDogDetail.dart';
 import 'package:ebook/widgets/small_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
-import 'package:getwidget/types/gf_loader_type.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class UserImgProfile extends StatefulWidget {
@@ -35,7 +33,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
           child: Column(
             children: [
               SmallText(text: widget.usermail),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GestureDetector(
@@ -43,7 +41,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SimpleImagePicker()));
+                          builder: (context) => const SimpleImagePicker()));
                 },
                 child: FutureBuilder<List<ParseObject>>(
                   future: getUserImg(widget.usermail),
@@ -65,7 +63,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
                           final varImg =
                               varUserImg.get<ParseFileBase>('UserImage');
                           return Container(
-                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            decoration: const BoxDecoration(shape: BoxShape.circle),
                             child: CircleAvatar(
                                 radius: 60.0,
                                 backgroundImage:
@@ -85,7 +83,7 @@ class _UserImgProfileState extends State<UserImgProfile> {
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -108,12 +106,12 @@ class _UserImgProfileState extends State<UserImgProfile> {
                               );
                             }
                             if (!snapshot.hasData) {
-                              return Text('0');
+                              return const Text('0');
                             } else {
                               return Column(
                                 children: [
                                   BigText(text: 'Dogs for adoption'),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   BigText(
@@ -123,12 +121,12 @@ class _UserImgProfileState extends State<UserImgProfile> {
                             }
                         }
                       }),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 0,
               ),
             ],
@@ -152,7 +150,7 @@ class UserDogList extends StatefulWidget {
 }
 
 class _UserDogListState extends State<UserDogList> {
-  bool _isEnable =
+  final bool _isEnable =
       false; //_isEnable is the boolean variable and set it false, so we have to make it true when user tap on text
 
   @override
@@ -165,7 +163,7 @@ class _UserDogListState extends State<UserDogList> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return Center(
+                return const Center(
                   child: GFLoader(),
                 );
               default:
@@ -217,7 +215,7 @@ class _UserDogListState extends State<UserDogList> {
                             subtitle: Text(varBreed as String),
                             leading: Container(
                               //borderRadius: BorderRadius.all(Radius.circular(40)),
-                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              decoration: const BoxDecoration(shape: BoxShape.circle),
                               child: CircleAvatar(
                                 backgroundImage:
                                     NetworkImage(varImg.url as String),
@@ -234,7 +232,7 @@ class _UserDogListState extends State<UserDogList> {
                                   onPressed: () async {
                                     await deleteTodo(varTodo.objectId!);
                                     setState(() {
-                                      final snackBar = SnackBar(
+                                      const snackBar = SnackBar(
                                         content: Text("Dog removed!"),
                                         duration: Duration(seconds: 1),
                                       );
@@ -259,7 +257,7 @@ class _UserDogListState extends State<UserDogList> {
 }
 
 Future<Object> getCountDogs(usermail) async {
-  await Future.delayed(Duration(seconds: 2), () {});
+  await Future.delayed(const Duration(seconds: 2), () {});
 
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject('Todo'));
@@ -277,7 +275,7 @@ Future<Object> getCountDogs(usermail) async {
 }
 
 Future<List<ParseObject>> getCountDogs2(usermail) async {
-  await Future.delayed(Duration(seconds: 2), () {});
+  await Future.delayed(const Duration(seconds: 2), () {});
 
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject('Todo'));

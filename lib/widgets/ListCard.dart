@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
-import 'package:ebook/pages/books/popularbooksdetails.dart';
 import 'package:ebook/widgets/PopularDetailsBreedSimplified.dart';
 import 'package:ebook/widgets/app_column.dart';
 import 'package:flutter/material.dart';

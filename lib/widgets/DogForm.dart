@@ -8,10 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 //import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:location/location.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-
-import '../models/genderFormModel.dart';
 
 class DogForm extends StatefulWidget {
   var lat;
@@ -297,9 +294,7 @@ class _DogFormState extends State<DogForm> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(widget.city.toString() +
-                      ', ' +
-                      widget.country.toString()),
+                  Text('${widget.city}, ${widget.country}'),
                 ],
               ),
 
@@ -409,7 +404,7 @@ Future<void> saveTodo(
 
   await Future.delayed(Duration(seconds: 1), () {});
   final todo = ParseObject('Todo')
-    ..set('UserId', currentUser!.objectId)
+    ..set('UserId', currentUser.objectId)
     ..set('UserMail', currentUser.emailAddress)
     ..set('Breed', breedselection)
     ..set('title', title)

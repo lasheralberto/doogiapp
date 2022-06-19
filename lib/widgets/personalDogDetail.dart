@@ -1,7 +1,5 @@
 import 'package:ebook/widgets/SlidingPanelDetails.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'dimensions.dart';
@@ -27,6 +25,7 @@ class personalDogDetail extends StatelessWidget {
       })
       : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),

@@ -1,14 +1,9 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
-import 'package:ebook/models/fetchdata.dart';
-import 'package:ebook/widgets/ContainerPickSingleImage.dart';
 import 'package:ebook/widgets/DogForm.dart';
-import 'package:ebook/widgets/constants.dart';
 import 'package:ebook/widgets/userImg.dart';
 import 'package:flutter/material.dart';
-import 'package:geocode/geocode.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 var countDogs;
@@ -71,7 +66,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
         )
       ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         width: 50,
         height: 50,
         child: FittedBox(
@@ -95,7 +90,7 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(

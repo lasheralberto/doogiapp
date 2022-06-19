@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
 
   List<dynamic> _filteredBreedList = [];
 
-  void set filter(String value) {
+  set filter(String value) {
     if (value.isEmpty) {
       _filteredBreedList = BreedList;
     } else {
@@ -126,7 +126,7 @@ class _MainPageState extends State<MainPage> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return SafeArea(
+                    return const SafeArea(
                         child: SizedBox(
                             height: 30, child: CircularProgressIndicator()));
                   })),

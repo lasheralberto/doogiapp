@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FilterGridList extends StatefulWidget {
-  FilterGridList({
+  const FilterGridList({
     Key? key,
   }) : super(key: key);
 
@@ -17,12 +16,12 @@ class _FilterGridListState extends State<FilterGridList> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(title: Text('Filter')),
+        appBar: AppBar(title: const Text('Filter')),
         body: FilterChip(
           pressElevation: 15,
           selectedColor: selected == false ? Colors.green : Colors.red,
           checkmarkColor: Colors.deepOrange,
-          label: Text("Chip Unselected"),
+          label: const Text("Chip Unselected"),
           selected: false,
           onSelected: (bool value) {
             selected = true;

@@ -1,14 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ebook/widgets/Login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-import "package:flutter_map/flutter_map.dart";
-import "package:latlong/latlong.dart";
-import "package:http/http.dart" as http;
-import "dart:convert" as convert;
 
 //https://www.youtube.com/watch?v=7dAt-JMSCVQ
 //https://www.back4app.com/docs/flutter/parse-sdk/users/flutter-login

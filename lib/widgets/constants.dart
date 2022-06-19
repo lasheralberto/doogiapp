@@ -11,4 +11,5 @@ class AppConstants {
   static const APIBASE_PEXELS =
       '563492ad6f91700001000001356737a30d9a40b29fe9f4bd6f79ac25';
   static const APIBASE_PIXABAY = '26758136-8be125b976a03353be2e31972';
+  static const tomtomKey = 'e1DSA4HTcC8EAbME3OYAAWwO2FpHEPzW';
 }
