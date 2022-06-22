@@ -142,6 +142,8 @@ class _gridListDogsState extends State<gridListDogs> {
                       final varCity = varTodo.get<String>('CityName')!;
                       final varCountryName =
                           varTodo.get<String>('CountryName')!;
+                      final varlat = varTodo.get<double>('latitude');
+                      final varlong = varTodo.get<double>('longitude');
 
                       //*************************************
                       return GestureDetector(
@@ -156,6 +158,8 @@ class _gridListDogsState extends State<gridListDogs> {
                                     img: varImg,
                                     breed: varBreed,
                                     description: varDogDesc,
+                                    lat: varlat,
+                                    long: varlong
                                   );
                                 });
                           },

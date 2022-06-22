@@ -58,6 +58,9 @@ dependencies:
   geocode: 1.0.1
   flutter_search_bar: ^2.1.0
   animations: ^2.0.3
+  flutter_translate: ^4.0.2
+  flutter_bloc: ^8.0.1
+ 
  
 
 

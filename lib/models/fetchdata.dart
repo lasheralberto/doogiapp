@@ -10,6 +10,8 @@ List<dynamic> BreedList = [];
 List<dynamic> BreedUrlList = [];
 List<dynamic> glossarList = [];
 List<dynamic> GridAllDogsList = [];
+List<dynamic> allDogsInMap = [];
+var dogInMapCount;
 
 Future<List<dynamic>> fetchData(url) async {
   var client = http.Client();
@@ -61,6 +63,8 @@ Future<List<dynamic>> getAllDogsLocation() async {
   final ParseResponse apiResponse = await queryTodo.query();
 
   if (apiResponse.success && apiResponse.results != null) {
+    dogInMapCount = apiResponse.results!.length;
+
     return apiResponse.results as List<ParseObject>;
   } else {
     throw Exception('Failed to load data');

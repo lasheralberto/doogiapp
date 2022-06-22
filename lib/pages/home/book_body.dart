@@ -25,28 +25,7 @@ class _BookPageBodyState extends State<BookPageBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: [
-        //********************PARTE DE ARRIBA SCROLLABLE CARDS****************************************** */
-        // SizedBox(
-        //   height: Dimensions.pageView,
-        //   child: PageView.builder(
-        //       //depende de dos parámetros el builder. Position cogerá desde el index 0 al itemcount.
-        //       itemCount: items.length,
-        //       controller: pageController,
-        //       itemBuilder: (context, position) {
-        //         return _buildPageItem(position);
-        //       }),
-        // ),
-        // DotsIndicator(
-        //   dotsCount: items.length,
-        //   position: _currPageValue,
-        //   decorator: DotsDecorator(
-        //     size: const Size.square(9.0),
-        //     activeSize: const Size(18.0, 9.0),
-        //     activeShape: RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.circular(Dimensions.radius20)),
-        //   ),
-        // ),
-        //************************************************************** */
+
         SizedBox(height: Dimensions.height20),
         Container(
             margin: EdgeInsets.only(left: Dimensions.width20),

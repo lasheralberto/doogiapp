@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:ebook/pages/home/book_body.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:getwidget/components/loader/gf_loader.dart';
 import 'big_text.dart';
 import 'dimensions.dart';
 import 'icon_and_text_widget.dart';
@@ -126,9 +127,9 @@ class _MainPageState extends State<MainPage> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return const SafeArea(
-                        child: SizedBox(
-                            height: 30, child: CircularProgressIndicator()));
+                    return const Center(
+                  child: GFLoader(),
+                );
                   })),
         ],
       ),

@@ -11,18 +11,19 @@ class personalDogDetail extends StatelessWidget {
   final String? description;
   var breed;
   var screen;
+  var lat;
+  var long;
 
   personalDogDetail(
-
       {Key? key,
-
       required this.title,
       required this.Age,
       this.img,
       this.description,
       this.breed,
-      required this.screen
-      })
+      required this.screen,
+      this.lat,
+      this.long})
       : super(key: key);
 
   @override
@@ -31,7 +32,6 @@ class personalDogDetail extends StatelessWidget {
       appBar: AppBar(),
       body: Stack(children: [
         Stack(children: [
- 
           Align(
             alignment: Alignment.topCenter,
             child: ClipRRect(
@@ -55,6 +55,8 @@ class personalDogDetail extends StatelessWidget {
           firstJsonParam: title,
           secondJsonParam: breed,
           descriptionText: description,
+          lat: lat,
+          long: long
         )
       ]),
     );

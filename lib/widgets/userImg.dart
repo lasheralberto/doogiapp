@@ -63,7 +63,8 @@ class _UserImgProfileState extends State<UserImgProfile> {
                           final varImg =
                               varUserImg.get<ParseFileBase>('UserImage');
                           return Container(
-                            decoration: const BoxDecoration(shape: BoxShape.circle),
+                            decoration:
+                                const BoxDecoration(shape: BoxShape.circle),
                             child: CircleAvatar(
                                 radius: 60.0,
                                 backgroundImage:
@@ -193,9 +194,10 @@ class _UserDogListState extends State<UserDogList> {
                         final varAge = varTodo.get<String>('Age');
                         final varDesc = varTodo.get<String>('DogDescription');
                         final varImg = varTodo.get<ParseFileBase>('DogImg')!;
+                        final varLat = varTodo.get<double>('latitude');
+                        final varLong = varTodo.get<double>('longitude');
 
                         //*************************************
-
 
                         return GestureDetector(
                           onTap: () {
@@ -203,9 +205,11 @@ class _UserDogListState extends State<UserDogList> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => personalDogDetail(
-                                      screen: 'personal_detailForm',
+                                        screen: 'personal_detailForm',
                                         title: varTitle,
                                         Age: varAge as String,
+                                        lat: varLat,
+                                        long: varLong,
                                         description: varDesc,
                                         img: varImg.url,
                                         breed: varBreed)));
@@ -215,7 +219,8 @@ class _UserDogListState extends State<UserDogList> {
                             subtitle: Text(varBreed as String),
                             leading: Container(
                               //borderRadius: BorderRadius.all(Radius.circular(40)),
-                              decoration: const BoxDecoration(shape: BoxShape.circle),
+                              decoration:
+                                  const BoxDecoration(shape: BoxShape.circle),
                               child: CircleAvatar(
                                 backgroundImage:
                                     NetworkImage(varImg.url as String),

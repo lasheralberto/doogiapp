@@ -12,25 +12,37 @@ class LongPressGridCard extends StatelessWidget {
   final ParseFile img;
   final String breed;
   final String? description;
+  var lat;
+  var long;
 
-  const LongPressGridCard(
+  LongPressGridCard(
       {Key? key,
       required this.index,
       required this.Age,
       required this.title,
       required this.img,
       required this.breed,
-      this.description})
+      this.description,
+      this.lat,
+      this.long})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
+    return Align(
+      alignment: Alignment.center, //or choose another Alignment
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width/1.5,
+        height: MediaQuery.of(context).size.height/2.5 ,
         child: Card(
+              semanticContainer: true,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+          //margin: EdgeInsets.all(35),
           shadowColor: Colors.blue,
           elevation: 16,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
           child: SafeArea(
+            //minimum: EdgeInsets.all(100),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -45,31 +57,33 @@ class LongPressGridCard extends StatelessWidget {
                 // )),
                 const SizedBox(height: 20),
                 Center(
-                  child: InkWell(
-                    onTap: () {
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PopularBookDetailsSimplified(
-                                  index: 0,
-                                  doglist:
-                                      BreedList.where((dog) => dog.breed == breed)
-                                          .toList()))
-                          //inputlist.where((o) => o['category_id'] == '1').toList();
-                          );
+                              builder: (context) =>
+                                  PopularBookDetailsSimplified(
+                                      index: 0,
+                                      doglist: BreedList.where(
+                                              (dog) => dog.breed == breed)
+                                          .toList())));
                     },
-                    child: Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [Icon(Icons.info), Text('Breed info')],
-                      ),
+                    label: Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 4.0),
+                          child: Icon(Icons.read_more_sharp),
+                        ),
+                        Text("Breed info")
+                      ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Center(
-                  child: InkWell(
-                    onTap: () {
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -80,17 +94,19 @@ class LongPressGridCard extends StatelessWidget {
                               description: description,
                               img: img.url,
                               breed: breed,
+                              lat: lat,
+                              long: long,
                             ),
                           ));
                     },
-                    child: Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.description),
-                          Text('Dog Description')
-                        ],
-                      ),
+                    label: Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 4.0),
+                          child: Icon(Icons.info),
+                        ),
+                        Text("Dog info")
+                      ],
                     ),
                   ),
                 ),

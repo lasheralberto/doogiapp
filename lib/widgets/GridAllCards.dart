@@ -6,6 +6,8 @@ class GridAllCards extends StatelessWidget {
   var gender;
   var city;
   var country;
+  var lat;
+  var long;
 
   GridAllCards(
       {Key? key,
@@ -13,7 +15,10 @@ class GridAllCards extends StatelessWidget {
       required this.title,
       required this.gender,
       this.city,
-      this.country})
+      this.country,
+      this.lat,
+      this.long
+      })
       : super(key: key);
 
   @override

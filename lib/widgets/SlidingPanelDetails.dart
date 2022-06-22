@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
+import 'package:ebook/widgets/TomTomMap.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/dimensions.dart';
 import 'package:ebook/widgets/exp_text_widget.dart';
@@ -20,8 +21,10 @@ class SlidingPanelDescription extends StatefulWidget {
   final double? topPosition;
   final PanelState? panelstate;
   final String? screen;
+  var lat;
+  var long;
 
-  const SlidingPanelDescription(
+  SlidingPanelDescription(
       {Key? key,
       required this.firstJsonParam,
       this.secondJsonParam,
@@ -32,7 +35,9 @@ class SlidingPanelDescription extends StatefulWidget {
       this.bottomPosition,
       this.topPosition,
       this.panelstate,
-      this.screen})
+      this.screen,
+      this.lat,
+      this.long})
       : super(key: key);
 
   @override
@@ -101,7 +106,18 @@ class _SlidingPanelDescriptionState extends State<SlidingPanelDescription> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      BigText(text: widget.firstJsonParam),
+                      Expanded(child: BigText(text: widget.firstJsonParam)),
+                      FloatingActionButton(
+                          child: Icon(Icons.map_rounded),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TomTomMap(
+                                        screen: widget.screen,
+                                        lat: widget.lat,
+                                        long: widget.long)));
+                          })
                     ],
                   ),
                   SmallText(
@@ -197,7 +213,7 @@ Future<void> updateTodo(String description, String dogName) async {
   ParseUser? currentUser = await ParseUser.currentUser() as ParseUser?;
 
   var concatid = currentUser!.objectId! + dogName;
-  
+
   // QueryBuilder<ParseObject> queryTodo =
   //     QueryBuilder<ParseObject>(ParseObject('Todo'));
   // queryTodo.whereEqualTo('concatId', concatid.toString());
@@ -205,12 +221,10 @@ Future<void> updateTodo(String description, String dogName) async {
 
   //queryTodo.find();
   await Future.delayed(Duration(seconds: 1), () {});
-  final todo = ParseObject('Todo') 
+  final todo = ParseObject('Todo')
     ..objectId = currentUser.objectId
- 
     ..set('concatId', concatid)
     ..set('DogDescription', description);
-    
+
   await todo.save();
-  
 }
