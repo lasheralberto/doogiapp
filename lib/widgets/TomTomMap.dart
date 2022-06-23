@@ -35,6 +35,9 @@ class _TomTomMapState extends State<TomTomMap> {
     pageController = PageController(viewportFraction: 0.7, initialPage: _index);
 
     //mapController.move(LatLng(10.0, 10.0), 16.0);
+ 
+ 
+     
 
     futureLocs = getAllDogsLocation();
   }
@@ -69,6 +72,7 @@ class _TomTomMapState extends State<TomTomMap> {
                             child: Text("No Data..."),
                           );
                         } else {
+                          var nightorLight =  DateTime.now().hour < 8 ? "https://api.tomtom.com/map/1/tile/basic/night/" "{z}/{x}/{y}.png?key={apiKey}" : "https://api.tomtom.com/map/1/tile/basic/main/" "{z}/{x}/{y}.png?key={apiKey}";
                           return Stack(
                             children: [
                               FlutterMap(
@@ -81,8 +85,10 @@ class _TomTomMapState extends State<TomTomMap> {
                                     minNativeZoom: 1.0,
                                     backgroundColor: Colors.transparent,
                                     urlTemplate:
-                                        "https://api.tomtom.com/map/1/tile/basic/night/"
-                                        "{z}/{x}/{y}.png?key={apiKey}",
+                                        //"https://api.tomtom.com/map/1/tile/basic/night/"
+                                        
+                                        nightorLight.toString(),
+                                        //"{z}/{x}/{y}.png?key={apiKey}",
                                     //https://developer.tomtom.com/map-display-api/documentation/mapstyles/map-styles#available-map-styles
 
                                     attributionBuilder: (_) {

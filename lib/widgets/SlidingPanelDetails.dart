@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
+import 'package:ebook/widgets/MainPage.dart';
 import 'package:ebook/widgets/TomTomMap.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/dimensions.dart';
@@ -107,17 +108,26 @@ class _SlidingPanelDescriptionState extends State<SlidingPanelDescription> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(child: BigText(text: widget.firstJsonParam)),
-                      FloatingActionButton(
-                          child: Icon(Icons.map_rounded),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TomTomMap(
-                                        screen: widget.screen,
-                                        lat: widget.lat,
-                                        long: widget.long)));
-                          })
+                      widget.screen == 'dogcard_detail'
+                          ? FloatingActionButton(
+                              child: Icon(Icons.search_rounded),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MainPage()));
+                              })
+                          : FloatingActionButton(
+                              child: Icon(Icons.map_rounded),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TomTomMap(
+                                            screen: widget.screen,
+                                            lat: widget.lat,
+                                            long: widget.long)));
+                              })
                     ],
                   ),
                   SmallText(
