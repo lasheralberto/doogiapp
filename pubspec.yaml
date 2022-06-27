@@ -60,7 +60,10 @@ dependencies:
   animations: ^2.0.3
   flutter_translate: ^4.0.2
   flutter_bloc: ^8.0.1
- 
+  fluttericon: ^2.0.0
+  font_awesome_flutter: ^10.1.0
+  google_fonts: ^3.0.1
+  floating_search_bar: ^0.3.0
  
 
 

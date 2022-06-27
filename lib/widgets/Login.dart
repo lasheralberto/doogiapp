@@ -2,6 +2,7 @@
 
 import 'package:ebook/pages/home/main_book_page.dart';
 import 'package:ebook/widgets/SignUp.dart';
+import 'package:ebook/widgets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -28,7 +29,8 @@ class _LoginPageeState extends State<LoginPage> {
                 Container(
                   height: 350,
                   child: Image.network(
-                      'https://ik.imagekit.io/aml28/DogiApp__2__zJl1hYcXv.png?ik-sdk-version=javascript-1.4.3&updatedAt=1652993161226'),
+                      AppConstants.APPLOGO
+                    ),
                 ),
                 Center(
                   child:

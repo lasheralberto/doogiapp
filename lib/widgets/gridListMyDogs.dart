@@ -1,15 +1,20 @@
 // ignore_for_file: file_names, camel_case_types
 
+//https://app.brandmark.io/v3/
+
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/GridAllCards.dart';
 import 'package:ebook/widgets/TomTomMap.dart';
 import 'package:ebook/widgets/big_text.dart';
 import 'package:ebook/widgets/filterGridList.dart';
 import 'package:ebook/widgets/longPressGrid.dart';
+import 'package:ebook/widgets/searchBarUi.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart' as getwid;
 import 'package:getwidget/types/gf_loader_type.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class gridListDogs extends StatefulWidget {
   var lat;
@@ -29,10 +34,15 @@ class gridListDogs extends StatefulWidget {
 }
 
 class _gridListDogsState extends State<gridListDogs> {
+  Future<List<ParseObject>>? futuregetalldogs;
+  @override
+  void initState() {
+    super.initState();
+    futuregetalldogs = getAllDogs();
+  }
+
   @override
   Widget build(BuildContext context) {
-    const title = 'Grid List';
-
     const Widget emptyBlock = GridAllCardsShimmer();
 
     return Scaffold(
@@ -100,11 +110,11 @@ class _gridListDogsState extends State<gridListDogs> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: AppBar(
-        title: const Text('Adopt'),
-      ),
+      appBar: PreferredSize(
+          preferredSize: AppBar().preferredSize, child: searchBarUI()),
+      backgroundColor: Colors.white,
       body: FutureBuilder<List<ParseObject>>(
-          future: getAllDogs(),
+          future: futuregetalldogs,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -152,15 +162,14 @@ class _gridListDogsState extends State<gridListDogs> {
                                 context: context,
                                 builder: (context) {
                                   return LongPressGridCard(
-                                    index: index,
-                                    Age: varAge,
-                                    title: varTitle,
-                                    img: varImg,
-                                    breed: varBreed,
-                                    description: varDogDesc,
-                                    lat: varlat,
-                                    long: varlong
-                                  );
+                                      index: index,
+                                      Age: varAge,
+                                      title: varTitle,
+                                      img: varImg,
+                                      breed: varBreed,
+                                      description: varDogDesc,
+                                      lat: varlat,
+                                      long: varlong);
                                 });
                           },
                           child: GridAllCards(
