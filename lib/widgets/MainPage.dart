@@ -29,16 +29,17 @@ class _MainPageState extends State<MainPage> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text('Breed', 
-      //style: TextStyle(color: Colors.black) ,
-      ), 
-      elevation: 8,
-      //centerTitle: true,
-      //backgroundColor: Colors.white,
-      //shape: RoundedRectangleBorder(borderRadius:  BorderRadius.vertical(bottom: Radius.circular(30))),
-      actions: [
-      searchBar.getSearchAction(context),
-    ]);
+        title: const Text(
+          'Breed',
+          //style: TextStyle(color: Colors.black) ,
+        ),
+        elevation: 8,
+        //centerTitle: true,
+        //backgroundColor: Colors.white,
+        //shape: RoundedRectangleBorder(borderRadius:  BorderRadius.vertical(bottom: Radius.circular(30))),
+        actions: [
+          searchBar.getSearchAction(context),
+        ]);
   }
 
   List<dynamic> _filteredBreedList = [];
@@ -136,8 +137,8 @@ class _MainPageState extends State<MainPage> {
                       return Text("${snapshot.error}");
                     }
                     return const Center(
-                  child: GFLoader(),
-                );
+                      child: GFLoader(),
+                    );
                   })),
         ],
       ),

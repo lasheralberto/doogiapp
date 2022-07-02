@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'package:ebook/models/GridModel.dart';
 import 'package:ebook/models/dogsmodel.dart';
 
 import 'package:http/http.dart' as http;
@@ -82,7 +83,7 @@ Future<List<dynamic>> getAllDogs2() async {
     //GridAllDogsList = jsonResults!;
     //return apiResponse.results as List<ParseObject>;
     //return GridAllDogsList;
-    GridAllDogsList = [for (var data in jsonResults!) DogClass.fromJson(data)];
+    GridAllDogsList = [for (var data in jsonResults!) Result.fromJson(data)];
     return GridAllDogsList;
   } else {
     return [];

@@ -2,6 +2,7 @@
 
 //https://app.brandmark.io/v3/
 
+import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/GridAllCards.dart';
 import 'package:ebook/widgets/TomTomMap.dart';
@@ -10,6 +11,8 @@ import 'package:ebook/widgets/filterGridList.dart';
 import 'package:ebook/widgets/longPressGrid.dart';
 import 'package:ebook/widgets/searchBarUi.dart';
 import 'package:flutter/material.dart';
+import 'package:ebook/models/searchbar.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:getwidget/getwidget.dart' as getwid;
 import 'package:getwidget/types/gf_loader_type.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -34,11 +37,64 @@ class gridListDogs extends StatefulWidget {
 }
 
 class _gridListDogsState extends State<gridListDogs> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<ParseObject>>? futuregetalldogs;
+  late SearchBar searchBar;
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+        title: const Text(
+          'Breed',
+          //style: TextStyle(color: Colors.black) ,
+        ),
+        elevation: 8,
+        //centerTitle: true,
+        //backgroundColor: Colors.white,
+        //shape: RoundedRectangleBorder(borderRadius:  BorderRadius.vertical(bottom: Radius.circular(30))),
+        actions: [
+          searchBar.getSearchAction(context),
+        ]);
+  }
+
+  List<dynamic>? _filteredDogList = [] ;
+   set filter(String value) {
+    if (value.isEmpty) {
+      _filteredDogList = GridAllDogsList;
+    } else {
+      String filter = value.toLowerCase();
+      _filteredDogList =
+          GridAllDogsList.where((dog) => dog.title.toLowerCase().contains(filter))
+              .toList();
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
     futuregetalldogs = getAllDogs();
+  }
+
+    _gridListDogsState() {
+    searchBar = SearchBar(
+        setState: setState,
+        buildDefaultAppBar: buildAppBar,
+        onCleared: () {
+          setState(() {
+            filter = '';
+          });
+        },
+        onChanged: (String value) {
+          setState(() {
+            filter = value;
+          });
+        },
+        onClosed: () {
+          setState(() {
+            filter = '';
+          });
+        });
+    filter = '';
   }
 
   @override
@@ -110,8 +166,11 @@ class _gridListDogsState extends State<gridListDogs> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: PreferredSize(
-          preferredSize: AppBar().preferredSize, child: searchBarUI()),
+      appBar: searchBar.build(context),
+      key: _scaffoldKey,
+      //PreferredSize(
+          //preferredSize: 
+          //AppBar().preferredSize, child: searchBarUI()),
       backgroundColor: Colors.white,
       body: FutureBuilder<List<ParseObject>>(
           future: futuregetalldogs,
@@ -138,7 +197,7 @@ class _gridListDogsState extends State<gridListDogs> {
                   return GridView.builder(
                     shrinkWrap: true,
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    itemCount: snapshot.data!.length,
+                    itemCount: _filteredDogList!.isEmpty ? GridAllDogsList.length : _filteredDogList!.length,  // snapshot.data!.length,
                     itemBuilder: (context, index) {
                       //*************************************
                       //Get Parse Object Values
