@@ -72,6 +72,21 @@ Future<List<dynamic>> getAllDogsLocation() async {
   }
 }
 
+Future<List<ParseObject>> getAllDogs() async {
+  await Future.delayed(const Duration(seconds: 2), () {});
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject('Todo'));
+  final ParseResponse apiResponse = await queryTodo.query();
+
+  if (apiResponse.success && apiResponse.results != null) {
+    //GridAllDogsList = [for (var data in apiResponse.results!) Result.fromJson(data)];
+    return apiResponse.results as List<ParseObject>;
+  } else {
+    return [];
+  }
+}
+
+
 Future<List<dynamic>> getAllDogs2() async {
   await Future.delayed(const Duration(seconds: 2), () {});
   QueryBuilder<ParseObject> queryTodo =

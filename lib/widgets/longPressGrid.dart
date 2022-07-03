@@ -9,7 +9,7 @@ class LongPressGridCard extends StatelessWidget {
   final int index;
   final String Age;
   final String title;
-  final ParseFile img;
+  var img;
   final String breed;
   final String? description;
   var lat;
@@ -31,11 +31,11 @@ class LongPressGridCard extends StatelessWidget {
     return Align(
       alignment: Alignment.center, //or choose another Alignment
       child: SizedBox(
-        width: MediaQuery.of(context).size.width/1.5,
-        height: MediaQuery.of(context).size.height/2.5 ,
+        width: MediaQuery.of(context).size.width / 1.5,
+        height: MediaQuery.of(context).size.height / 2.5,
         child: Card(
-              semanticContainer: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           //margin: EdgeInsets.all(35),
           shadowColor: Colors.blue,
           elevation: 16,

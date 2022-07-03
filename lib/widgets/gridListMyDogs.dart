@@ -37,15 +37,28 @@ class gridListDogs extends StatefulWidget {
 }
 
 class _gridListDogsState extends State<gridListDogs> {
+  double start = 30.0;
+  double end = 50.0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<ParseObject>>? futuregetalldogs;
   late SearchBar searchBar;
+  List<dynamic> snapList = [];
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.filter_alt_rounded,
+              ),
+              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: const Text(
           'Breed',
-          //style: TextStyle(color: Colors.black) ,
         ),
         elevation: 8,
         //centerTitle: true,
@@ -56,18 +69,17 @@ class _gridListDogsState extends State<gridListDogs> {
         ]);
   }
 
-  List<dynamic>? _filteredDogList = [] ;
-   set filter(String value) {
+  List<dynamic>? _filteredDogList = [];
+  set filter(String value) {
     if (value.isEmpty) {
       _filteredDogList = GridAllDogsList;
     } else {
       String filter = value.toLowerCase();
-      _filteredDogList =
-          GridAllDogsList.where((dog) => dog.title.toLowerCase().contains(filter))
-              .toList();
+      _filteredDogList = snapList
+          .where((dog) => dog['title'].toLowerCase().contains(filter))
+          .toList();
     }
   }
-
 
   @override
   void initState() {
@@ -75,7 +87,7 @@ class _gridListDogsState extends State<gridListDogs> {
     futuregetalldogs = getAllDogs();
   }
 
-    _gridListDogsState() {
+  _gridListDogsState() {
     searchBar = SearchBar(
         setState: setState,
         buildDefaultAppBar: buildAppBar,
@@ -102,41 +114,28 @@ class _gridListDogsState extends State<gridListDogs> {
     const Widget emptyBlock = GridAllCardsShimmer();
 
     return Scaffold(
+      drawer: Drawer(
+        child: Column(children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 4,
+          ),
+          RangeSlider(
+            values: RangeValues(start, end),
+            labels: RangeLabels(start.toString(), end.toString()),
+            onChanged: (value) {
+              setState(() {
+                start = value.start;
+                end = value.end;
+              });
+            },
+            min: 10.0,
+            max: 80.0,
+          )
+        ]),
+      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FloatingActionButton(
-            heroTag: const Text('Filter_but'),
-            child: const Icon(
-              Icons.filter_list_alt,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FilterGridList(),
-                  ));
-              // do something
-            },
-          ),
-          FloatingActionButton(
-            heroTag: const Text('Refresh_but'),
-            child: const Icon(
-              Icons.refresh,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              setState(() {
-                //fetchData(AppConstants.APIBASE_URL);
-                getTodo(widget.mail);
-              });
-              // do something
-            },
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-          ),
           Wrap(
             children: <Widget>[
               Container(
@@ -169,8 +168,8 @@ class _gridListDogsState extends State<gridListDogs> {
       appBar: searchBar.build(context),
       key: _scaffoldKey,
       //PreferredSize(
-          //preferredSize: 
-          //AppBar().preferredSize, child: searchBarUI()),
+      //preferredSize:
+      //AppBar().preferredSize, child: searchBarUI()),
       backgroundColor: Colors.white,
       body: FutureBuilder<List<ParseObject>>(
           future: futuregetalldogs,
@@ -197,9 +196,12 @@ class _gridListDogsState extends State<gridListDogs> {
                   return GridView.builder(
                     shrinkWrap: true,
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    itemCount: _filteredDogList!.isEmpty ? GridAllDogsList.length : _filteredDogList!.length,  // snapshot.data!.length,
+                    itemCount: _filteredDogList!.isEmpty
+                        ? snapshot.data.length
+                        : _filteredDogList!.length, // snapshot.data!.length,
                     itemBuilder: (context, index) {
                       //*************************************
+                      snapList = snapshot.data;
                       //Get Parse Object Values
                       final varTodo = snapshot.data![index];
                       final varTitle = varTodo.get<String>('title')!;
@@ -220,23 +222,57 @@ class _gridListDogsState extends State<gridListDogs> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return LongPressGridCard(
-                                      index: index,
-                                      Age: varAge,
-                                      title: varTitle,
-                                      img: varImg,
-                                      breed: varBreed,
-                                      description: varDogDesc,
-                                      lat: varlat,
-                                      long: varlong);
+                                  return _filteredDogList!.isEmpty
+                                      ? LongPressGridCard(
+                                          index: index,
+                                          Age: varAge,
+                                          title: varTitle,
+                                          img: varImg,
+                                          breed: varBreed,
+                                          description: varDogDesc,
+                                          lat: varlat,
+                                          long: varlong)
+                                      : LongPressGridCard(
+                                          index: index,
+                                          Age: _filteredDogList![index]['Age']
+                                              .toString(),
+                                          title: _filteredDogList![index]
+                                                  ['title']
+                                              .toString(),
+                                          img: _filteredDogList![index]
+                                              ['DogImg'],
+                                          breed: _filteredDogList![index]
+                                                  ['Breed']
+                                              .toString(),
+                                          description: _filteredDogList![index]
+                                                  ['DogDescription']
+                                              .toString(),
+                                          lat: _filteredDogList![index]
+                                                  ['latitude']
+                                              .toString(),
+                                          long: _filteredDogList![index]
+                                                  ['longitude']
+                                              .toString(),
+                                        );
                                 });
                           },
-                          child: GridAllCards(
-                              image: varImg.url,
-                              title: varTitle,
-                              gender: varGender,
-                              city: varCity,
-                              country: varCountryName));
+                          child: _filteredDogList!.isEmpty
+                              ? GridAllCards(
+                                  image: varImg.url,
+                                  title: varTitle,
+                                  gender: varGender,
+                                  city: varCity,
+                                  country: varCountryName)
+                              : GridAllCards(
+                                  image: _filteredDogList![index]['DogImg']
+                                      ['url'],
+                                  title: _filteredDogList![index]['title']
+                                      .toString(),
+                                  gender: _filteredDogList![index]['Gender'],
+                                  city: _filteredDogList![index]['CityName'],
+                                  country: _filteredDogList![index]
+                                      ['CountryName'],
+                                ));
                     },
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -251,19 +287,6 @@ class _gridListDogsState extends State<gridListDogs> {
             }
           }),
     );
-  }
-}
-
-Future<List<ParseObject>> getAllDogs() async {
-  await Future.delayed(const Duration(seconds: 2), () {});
-  QueryBuilder<ParseObject> queryTodo =
-      QueryBuilder<ParseObject>(ParseObject('Todo'));
-  final ParseResponse apiResponse = await queryTodo.query();
-
-  if (apiResponse.success && apiResponse.results != null) {
-    return apiResponse.results as List<ParseObject>;
-  } else {
-    return [];
   }
 }
 
