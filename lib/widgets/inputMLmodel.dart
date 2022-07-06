@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class InputMLmodel extends StatefulWidget {
   const InputMLmodel({Key? key}) : super(key: key);
@@ -9,8 +10,26 @@ class InputMLmodel extends StatefulWidget {
 }
 
 class _InputMLmodelState extends State<InputMLmodel> {
-  String? _mySelectionFeat = 'barking';
-  int? _mySelectionValue = 1;
+  String? _mySelectionFeat1 = 'barking';
+  String? _mySelectionFeat2 = 'barking';
+  String? _mySelectionFeat3 = 'barking';
+  int? _mySelectionValue1 = 1;
+  int? _mySelectionValue2 = 1;
+  int? _mySelectionValue3 = 1;
+  var responsePred;
+
+  Future<http.Response> postML(String? feat1,String? feat2,String? feat3,int? val1,int? val2,int? val3) async {
+    var map = <String?, int?>{};
+    map[feat1] = val1;
+    map[feat2] = val2;
+    map[feat3] = val3;
+
+    return http.post(
+      Uri.parse(
+          'https://dogsbreedapp.herokuapp.com/postml/$val1/$val2/$val3/$feat1/$feat2/$feat3'),
+      body: map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +49,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                       alignedDropdown: true,
                       child: DropdownButton(
                           hint: const Text('Select Feature 1'),
-                          value: _mySelectionFeat,
+                          value: _mySelectionFeat1,
                           onChanged: (String? newValue) {
                             setState(
                               () {
-                                _mySelectionFeat = newValue;
+                                _mySelectionFeat1 = newValue;
                               },
                             );
                           },
@@ -55,11 +74,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                       alignedDropdown: true,
                       child: DropdownButton(
                           hint: const Text('Select Feature 1'),
-                          value: _mySelectionValue,
-                          onChanged: (newValue) {
+                          value: _mySelectionValue1,
+                          onChanged: (int? newValue) {
                             setState(
                               () {
-                                _mySelectionValue = newValue as int?;
+                                _mySelectionValue1 = newValue;
                               },
                             );
                           },
@@ -72,7 +91,6 @@ class _InputMLmodelState extends State<InputMLmodel> {
                   ),
                 ),
               ),
-
               Align(
                 alignment: AlignmentDirectional.topStart,
                 child: Expanded(
@@ -81,11 +99,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                       alignedDropdown: true,
                       child: DropdownButton(
                           hint: const Text('Select Feature 1'),
-                          value: _mySelectionFeat,
+                          value: _mySelectionFeat2,
                           onChanged: (String? newValue) {
                             setState(
                               () {
-                                _mySelectionFeat = newValue;
+                                _mySelectionFeat2 = newValue;
                               },
                             );
                           },
@@ -106,11 +124,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                       alignedDropdown: true,
                       child: DropdownButton(
                           hint: const Text('Select Feature 1'),
-                          value: _mySelectionValue,
-                          onChanged: (newValue) {
+                          value: _mySelectionValue2,
+                          onChanged: (int? newValue) {
                             setState(
                               () {
-                                _mySelectionValue = newValue as int?;
+                                _mySelectionValue2 = newValue;
                               },
                             );
                           },
@@ -123,7 +141,6 @@ class _InputMLmodelState extends State<InputMLmodel> {
                   ),
                 ),
               ),
-
               Align(
                 alignment: AlignmentDirectional.topStart,
                 child: Expanded(
@@ -132,11 +149,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                       alignedDropdown: true,
                       child: DropdownButton(
                           hint: const Text('Select Feature 1'),
-                          value: _mySelectionFeat,
+                          value: _mySelectionFeat3,
                           onChanged: (String? newValue) {
                             setState(
                               () {
-                                _mySelectionFeat = newValue;
+                                _mySelectionFeat3 = newValue;
                               },
                             );
                           },
@@ -156,11 +173,11 @@ class _InputMLmodelState extends State<InputMLmodel> {
                     child: ButtonTheme(
                       alignedDropdown: true,
                       child: DropdownButton(
-                          value: _mySelectionValue,
-                          onChanged: (newValue) {
+                          value: _mySelectionValue3,
+                          onChanged: (int? newValue) {
                             setState(
                               () {
-                                _mySelectionValue = newValue as int?;
+                                _mySelectionValue3 = newValue;
                               },
                             );
                           },
@@ -173,7 +190,21 @@ class _InputMLmodelState extends State<InputMLmodel> {
                   ),
                 ),
               ),
-
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: (() {
+                    postML(
+                        _mySelectionFeat1,
+                        _mySelectionFeat2,
+                        _mySelectionFeat3,
+                        _mySelectionValue1,
+                        _mySelectionValue2,
+                        _mySelectionValue3);
+                  }),
+                  child: Text('Post')),
+              Text(responsePred.toString())
             ],
           )),
     );
