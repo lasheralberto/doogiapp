@@ -24,10 +24,12 @@ class _InputMLmodelState extends State<InputMLmodel> {
     map[feat2] = val2;
     map[feat3] = val3;
 
-    return http.post(
+    var client = http.Client();
+
+    return client.post(
       Uri.parse(
           'https://dogsbreedapp.herokuapp.com/postml/$val1/$val2/$val3/$feat1/$feat2/$feat3'),
-      body: map,
+      //body: map,
     );
   }
 
