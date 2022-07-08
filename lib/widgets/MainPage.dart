@@ -91,7 +91,7 @@ class _MainPageState extends State<MainPage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const InputMLmodel()));
+                MaterialPageRoute(builder: (context) => InputMLmodel(breedlist: BreedList)));
           },
           child: const Icon(Icons.abc_sharp)),
       backgroundColor: Colors.white,
