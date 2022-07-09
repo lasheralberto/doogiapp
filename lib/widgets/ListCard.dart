@@ -10,10 +10,11 @@ import 'dart:math';
 class ListCard extends StatelessWidget {
   final int index;
   final List<dynamic> doglist;
+  final String? screen;
 
   Random random = Random();
 
-  ListCard({Key? key, required this.index, required this.doglist})
+  ListCard({Key? key, required this.index, required this.doglist, this.screen})
       : super(key: key);
 
   @override
@@ -22,10 +23,10 @@ class ListCard extends StatelessWidget {
     return Material(
       child: Container(
         margin: EdgeInsets.only(
-            top: Dimensions.height10,
+            top: screen == 'ML' ? 0.0 : Dimensions.height10,
             left: Dimensions.width20,
             right: Dimensions.width20,
-            bottom: Dimensions.height10),
+            bottom: screen == 'ML' ? 50.0 : Dimensions.height10),
         child: Row(
           children: [
             //container correspondiente a la imagen

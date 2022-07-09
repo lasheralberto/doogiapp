@@ -88,7 +88,7 @@ class PhysicalCardInfoDog extends StatelessWidget {
                           child: GFProgressBar(
                             lineHeight: 10,
                             width: MediaQuery.of(context).size.width / 4,
-                            percentage: (maxHeigthMale / 100) * 2,
+                            percentage: (maxHeigthMale > 100 ? maxHeigthMale/maxHeigthMale : maxHeigthMale / 100) * 1,
                             backgroundColor: Colors.pink,
                             progressBarColor: Colors.blue,
                             animation: true,
@@ -109,7 +109,7 @@ class PhysicalCardInfoDog extends StatelessWidget {
                           child: GFProgressBar(
                             lineHeight: 10,
                             width: MediaQuery.of(context).size.width / 4,
-                            percentage: (maxHeigthFemale / 100) * 2,
+                            percentage: (maxHeigthFemale > 100 ? maxHeigthFemale/maxHeigthFemale : maxHeigthFemale / 100) * 1,
                             backgroundColor: Colors.pink,
                             progressBarColor: Colors.blue,
                             animation: true,
@@ -130,7 +130,7 @@ class PhysicalCardInfoDog extends StatelessWidget {
                           child: GFProgressBar(
                             lineHeight: 10,
                             width: MediaQuery.of(context).size.width / 4,
-                            percentage: (maxWeigthMale / 100),
+                            percentage: (maxWeigthMale > 100 ? maxHeigthMale/maxWeigthMale : maxWeigthMale / 100),
                             backgroundColor: Colors.pink,
                             progressBarColor: Colors.blue,
                             animation: true,
@@ -151,7 +151,7 @@ class PhysicalCardInfoDog extends StatelessWidget {
                           child: GFProgressBar(
                             lineHeight: 10,
                             width: MediaQuery.of(context).size.width / 4,
-                            percentage: (maxWeigthFemale / 100),
+                            percentage: (maxWeigthFemale > 100 ? maxHeigthFemale/maxWeigthFemale : maxWeigthFemale / 100),
                             backgroundColor: Colors.pink,
                             progressBarColor: Colors.blue,
                             animation: true,

@@ -49,22 +49,15 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
     const title = 'Grid List';
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text('My dogs for adoption',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+      ),
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('My dogs for adoption'), actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.refresh,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            setState(() {
-              //fetchData(AppConstants.APIBASE_URL);
-              var l = getTodo(widget.usermail);
-            });
-            // do something
-          },
-        )
-      ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SizedBox(
         width: 50,
@@ -93,15 +86,55 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: 
-          Column(
-            children: [
-                UserImgProfile(usermail: widget.usermail), //<----------------------------------
-                UserDogList(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              
+            
+              pinned: true,
+              snap: true,
+              floating: true,
+              flexibleSpace: FlexibleSpaceBar(
+                
+                centerTitle: true,
+                background: UserImgProfile(
                   usermail: widget.usermail,
-                )
-          ]),
+                ),
+                 ),
+              expandedHeight: MediaQuery.of(context).size.height * 0.30,
+              actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    //fetchData(AppConstants.APIBASE_URL);
+                    var l = getTodo(widget.usermail);
+                  });
+                  // do something
+                },
+              )
+            ]),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white38,
+                ),
+                child: Column(children: [
+                  // //UserImgProfile(
+                  //     usermail:
+                  //         widget.usermail), //<----------------------------------
+                  UserDogList(
+                    usermail: widget.usermail,
+                  )
+                ]),
+              ),
+            ]))
+          ],
         ),
       ),
     );
@@ -132,7 +165,6 @@ Future<void> updateTodo(usermail) async {
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject('Todo'));
   queryTodo.whereEqualTo('UserMail', usermail);
- 
 }
 
 Future<void> deleteTodo(String id) async {
