@@ -21,20 +21,20 @@ class PopularBookDetails extends StatelessWidget {
   final String? imgParam;
   final ParseFile? imgParamGrid;
   final String descriptionText;
-  final int? param_good_children;
-  final int? param_good_dogs;
-  final int? good_with_strangers;
-  final int? playfulness;
-  final int? protectiveness;
-  final int? trainability;
-  final int? energy;
-  final int? barking;
-  final int? maxHeigthFemale;
-  final int? maxHeigthMale;
-  final int? maxLifeExp;
-  final int? maxWeigthFemale;
-  final int? maxWeigthMale;
-  final int? minLifeExp;
+  final dynamic param_good_children;
+  final dynamic param_good_dogs;
+  final dynamic good_with_strangers;
+  final dynamic playfulness;
+  final dynamic protectiveness;
+  final dynamic trainability;
+  final dynamic energy;
+  final dynamic barking;
+  final dynamic maxHeigthFemale;
+  final dynamic maxHeigthMale;
+  final dynamic maxLifeExp;
+  final dynamic maxWeigthFemale;
+  final dynamic maxWeigthMale;
+  final dynamic minLifeExp;
 
   bool physicalCard = true;
 

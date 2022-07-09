@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 List<dynamic> BreedList = [];
-List<dynamic> BreedUrlList = [];
+List<dynamic> BreedIdxList = [];
 List<dynamic> glossarList = [];
 List<dynamic> GridAllDogsList = [];
 List<dynamic> allDogsInMap = [];
@@ -41,16 +41,15 @@ Future<List<dynamic>> fetchDataFor(url) async {
   }
 }
 
-fetchDataParam(url, param) async {
+fetchDataIndex(url) async {
   var client = http.Client();
   final response = await client.get(Uri.parse(url));
   await Future.delayed(const Duration(seconds: 2));
   if (response.statusCode == 200) {
     var jsonDecoded = json.decode(response.body);
-    BreedList = jsonDecoded.map((data) => DogClass.fromJson(data)).toList();
+    BreedIdxList = [for (var data in jsonDecoded) DogClass.fromJson(data)];
 
-    return BreedList.where(
-        (dog) => dog.breed.toLowerCase().contains(param.toLowerCase()));
+    return BreedIdxList;
   } else {
     throw Exception('Failed to load data');
   }
@@ -85,7 +84,6 @@ Future<List<ParseObject>> getAllDogs() async {
     return [];
   }
 }
-
 
 Future<List<dynamic>> getAllDogs2() async {
   await Future.delayed(const Duration(seconds: 2), () {});

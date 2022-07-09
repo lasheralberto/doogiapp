@@ -5,11 +5,13 @@ import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/models/postMLModel.dart';
 import 'package:ebook/pages/home/book_body.dart';
 import 'package:ebook/widgets/ListCard.dart';
+import 'package:ebook/widgets/PopularDetailsBreedSimplified.dart';
 import 'package:ebook/widgets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:http/http.dart' as http;
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class InputMLmodel extends StatefulWidget {
   List<dynamic> breedlist;
@@ -23,21 +25,23 @@ class _InputMLmodelState extends State<InputMLmodel> {
   String? _mySelectionFeat1 = 'barking';
   String? _mySelectionFeat2 = 'barking';
   String? _mySelectionFeat3 = 'barking';
-  int? _mySelectionValue1 = 1;
-  int? _mySelectionValue2 = 1;
-  int? _mySelectionValue3 = 1;
+  double? _mySelectionValue1 = 1.0;
+  double? _mySelectionValue2 = 1.0;
+  double? _mySelectionValue3 = 1.0;
   var responsePred;
   List<dynamic> MLmodelList = [];
   bool ShowDogCard = false;
   Future<String>? futureML;
+  var idxBreedListPredicted;
+  SfRangeValues _values = const SfRangeValues(1.0, 5.0);
 
   void initState() {
     super.initState();
   }
 
-  Future<String?> postML(String? feat1, String? feat2, String? feat3, int? val1,
-      int? val2, int? val3) async {
-    var map = <String?, int?>{};
+  Future<String?> postML(String? feat1, String? feat2, String? feat3, double? val1,
+      double? val2, double? val3) async {
+    var map = <String?, double?>{};
     map[feat1] = val1;
     map[feat2] = val2;
     map[feat3] = val3;
@@ -53,10 +57,12 @@ class _InputMLmodelState extends State<InputMLmodel> {
       var map = json.decode(response.body);
       Map<dynamic, dynamic> map2 = map[0];
       var responsePredicted = map2['predicted_breeds'];
+      var idxPredicted = map2['predicted_value'];
 
       setState(() {
         responsePred = responsePredicted;
         ShowDogCard = true;
+        idxBreedListPredicted = idxPredicted;
       });
 
       return responsePredicted;
@@ -72,6 +78,7 @@ class _InputMLmodelState extends State<InputMLmodel> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
+          SizedBox(height: 20),
           Align(
             alignment: AlignmentDirectional.topStart,
             child: Expanded(
@@ -97,31 +104,20 @@ class _InputMLmodelState extends State<InputMLmodel> {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional.topStart,
-            child: Expanded(
-              child: DropdownButtonHideUnderline(
-                child: ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                      hint: const Text('Select Feature 1'),
-                      value: _mySelectionValue1,
-                      onChanged: (int? newValue) {
-                        setState(
-                          () {
-                            _mySelectionValue1 = newValue;
-                          },
-                        );
-                      },
-                      isDense: true,
-                      items: featValues
-                          .map((map) => DropdownMenuItem<int>(
-                              child: Text(map.toString()), value: map))
-                          .toList()),
-                ),
-              ),
-            ),
+          SfSlider(
+            min: 1,
+            max: 5,
+            value: _mySelectionValue1,
+            interval: 1,
+            showLabels: true,
+            onChanged: (dynamic value) {
+              setState(() {
+                _mySelectionValue1 = value;
+              });
+            },
           ),
+          SizedBox(height: 20),
+
           Align(
             alignment: AlignmentDirectional.topStart,
             child: Expanded(
@@ -147,31 +143,21 @@ class _InputMLmodelState extends State<InputMLmodel> {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional.topCenter,
-            child: Expanded(
-              child: DropdownButtonHideUnderline(
-                child: ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                      hint: const Text('Select Feature 1'),
-                      value: _mySelectionValue2,
-                      onChanged: (int? newValue) {
-                        setState(
-                          () {
-                            _mySelectionValue2 = newValue;
-                          },
-                        );
-                      },
-                      isDense: true,
-                      items: featValues
-                          .map((map) => DropdownMenuItem<int>(
-                              child: Text(map.toString()), value: map))
-                          .toList()),
-                ),
-              ),
-            ),
+                    SfSlider(
+            min: 1,
+            max: 5,
+            value: _mySelectionValue2,
+            interval: 1,
+            showLabels: true,
+            onChanged: (dynamic value) {
+              setState(() {
+                _mySelectionValue2 = value;
+              });
+            },
           ),
+
+          SizedBox(height: 20),
+
           Align(
             alignment: AlignmentDirectional.topStart,
             child: Expanded(
@@ -197,55 +183,43 @@ class _InputMLmodelState extends State<InputMLmodel> {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional.topStart,
-            child: Expanded(
-              child: DropdownButtonHideUnderline(
-                child: ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                      value: _mySelectionValue3,
-                      onChanged: (int? newValue) {
-                        setState(
-                          () {
-                            _mySelectionValue3 = newValue;
-                          },
-                        );
-                      },
-                      isDense: true,
-                      items: featValues
-                          .map((map) => DropdownMenuItem<int>(
-                              child: Text(map.toString()), value: map))
-                          .toList()),
-                ),
-              ),
-            ),
+          SfSlider(
+            min: 1,
+            max: 5,
+            value: _mySelectionValue3,
+            interval: 1,
+            showLabels: true,
+            onChanged: (dynamic value3) {
+              setState(() {
+                _mySelectionValue3 = value3;
+              });
+            },
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(
-              onPressed: (() {
-                postML(_mySelectionFeat1, _mySelectionFeat2, _mySelectionFeat3,
-                    _mySelectionValue1, _mySelectionValue2, _mySelectionValue3);
+              onPressed: (() async {
+                await postML(
+                    _mySelectionFeat1,
+                    _mySelectionFeat2,
+                    _mySelectionFeat3,
+                    _mySelectionValue1,
+                    _mySelectionValue2,
+                    _mySelectionValue3);
               }),
               child: Text('Post')),
-          SizedBox(
-            height: 20,
-          ),
-          Text('$responsePred'),
-          SizedBox(
-            height: 20,
-          ),
+
           ShowDogCard == false
-              ? Center(
+              ? const Center(
                   child: Text('Please select features and values'),
                 )
-              : ListCard(
-                  doglist: widget.breedlist.where((dog) => dog.breed
-                      .toLowerCase()
-                      .contains(responsePred.toString())).toList(),
-                  index: 0,
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: ListCard(
+                    doglist: BreedList,
+                    index: idxBreedListPredicted,
+                  ),
                 ),
         ],
       ),
