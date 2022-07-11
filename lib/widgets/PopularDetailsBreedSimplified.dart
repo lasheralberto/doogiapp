@@ -14,9 +14,11 @@ class PopularBookDetailsSimplified extends StatelessWidget {
     return PopularBookDetails(
       firstJsonParam: doglist[index].breed ?? '',
       secondJsonParam: doglist[index].origin ?? '',
-      imgParam: doglist[index].urls2[0].urlBreed.isEmpty
-          ? doglist[index].urls2[0].urlBreed[0]
-          : doglist[index].urls2[0].urlBreed[2],
+      imgParam: doglist[index].urls2[0].urlBreed[1],
+          
+      imgParam2: doglist[index].urls2[0].urlBreed[2] ,
+      imgParam3: doglist[index].urls2[0].urlBreed[3] ,
+
       //Random().nextInt(4)
       descriptionText: doglist[index].wikiDescr[0].contenido.toString(),
       barking: doglist[index].barking,

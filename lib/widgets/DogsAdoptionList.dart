@@ -89,34 +89,31 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              
-            
-              pinned: true,
-              snap: true,
-              floating: true,
-              flexibleSpace: FlexibleSpaceBar(
-                
-                centerTitle: true,
-                background: UserImgProfile(
-                  usermail: widget.usermail,
+                pinned: true,
+                snap: true,
+                floating: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background: UserImgProfile(
+                    usermail: widget.usermail,
+                  ),
                 ),
-                 ),
-              expandedHeight: MediaQuery.of(context).size.height * 0.30,
-              actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    //fetchData(AppConstants.APIBASE_URL);
-                    var l = getTodo(widget.usermail);
-                  });
-                  // do something
-                },
-              )
-            ]),
+                expandedHeight: MediaQuery.of(context).size.height * 0.30,
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        //fetchData(AppConstants.APIBASE_URL);
+                        var l = getTodo(widget.usermail);
+                      });
+                      // do something
+                    },
+                  )
+                ]),
             SliverList(
                 delegate: SliverChildListDelegate([
               Container(

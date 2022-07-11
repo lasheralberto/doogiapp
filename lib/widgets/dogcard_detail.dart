@@ -9,6 +9,8 @@ import 'physicalCard.dart';
 
 class DogCardDetails extends StatefulWidget {
   final String imgparam;
+  final String? imgparam2;
+  final String? imgparam3;
   final int param_good_children;
   final int param_good_dogs;
   final int good_with_strangers;
@@ -25,25 +27,27 @@ class DogCardDetails extends StatefulWidget {
   final dynamic maxWeigthFemale;
   final ParseFile? imgParamGrid;
 
-  const DogCardDetails({
-    Key? key,
-    required this.imgparam,
-    required this.param_good_children,
-    required this.param_good_dogs,
-    required this.good_with_strangers,
-    required this.playfulness,
-    required this.protectiveness,
-    required this.trainability,
-    required this.energy,
-    required this.barking,
-    required this.minLifeExp,
-    required this.maxLifeExp,
-    required this.maxHeigthMale,
-    required this.maxHeigthFemale,
-    required this.maxWeigthMale,
-    required this.maxWeigthFemale,
-     this.imgParamGrid
-  }) : super(key: key);
+  const DogCardDetails(
+      {Key? key,
+      required this.imgparam,
+      this.imgparam2,
+      this.imgparam3,
+      required this.param_good_children,
+      required this.param_good_dogs,
+      required this.good_with_strangers,
+      required this.playfulness,
+      required this.protectiveness,
+      required this.trainability,
+      required this.energy,
+      required this.barking,
+      required this.minLifeExp,
+      required this.maxLifeExp,
+      required this.maxHeigthMale,
+      required this.maxHeigthFemale,
+      required this.maxWeigthMale,
+      required this.maxWeigthFemale,
+      this.imgParamGrid})
+      : super(key: key);
 
   @override
   State<DogCardDetails> createState() => _DogCardDetailsState();
@@ -63,13 +67,40 @@ class _DogCardDetailsState extends State<DogCardDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                widget.imgparam,
-                width: 350,
-                height: 200,
-                fit: BoxFit.cover,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      widget.imgparam,
+                      width: 350,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      widget.imgparam2 as String,
+                      width: 350,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      widget.imgparam3 as String,
+                      width: 350,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(

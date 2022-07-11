@@ -19,6 +19,8 @@ class PopularBookDetails extends StatelessWidget {
   final String firstJsonParam;
   final String secondJsonParam;
   final String? imgParam;
+  final String? imgParam2;
+  final String? imgParam3;
   final ParseFile? imgParamGrid;
   final String descriptionText;
   final dynamic param_good_children;
@@ -42,7 +44,9 @@ class PopularBookDetails extends StatelessWidget {
     Key? key,
     required this.firstJsonParam,
     required this.secondJsonParam,
-     this.imgParam,
+    this.imgParam,
+    this.imgParam2,
+    this.imgParam3,
     required this.descriptionText,
     this.param_good_children,
     this.param_good_dogs,
@@ -57,7 +61,7 @@ class PopularBookDetails extends StatelessWidget {
     this.maxLifeExp,
     this.maxWeigthFemale,
     this.maxWeigthMale,
-    this.minLifeExp, 
+    this.minLifeExp,
     this.imgParamGrid,
   }) : super(key: key);
 
@@ -65,14 +69,15 @@ class PopularBookDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(fit: StackFit.loose,
-       children: [
+      body: Stack(fit: StackFit.loose, children: [
         Positioned(
           child: SizedBox(
               width: double.maxFinite / 2,
               height: MediaQuery.of(context).size.height,
               child: DogCardDetails(
                 imgparam: imgParam as String,
+                imgparam2: imgParam2 as String,
+                imgparam3: imgParam3 as String,
                 barking: barking as int,
                 energy: energy as int,
                 good_with_strangers: good_with_strangers as int,
@@ -89,7 +94,6 @@ class PopularBookDetails extends StatelessWidget {
                 minLifeExp: minLifeExp,
               )),
         ),
-        
         SlidingPanelDescription(
           leftPosition: 0,
           rigthPosition: 0,
