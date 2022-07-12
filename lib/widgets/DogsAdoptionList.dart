@@ -49,92 +49,115 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
     const title = 'Grid List';
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('My dogs for adoption',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-      ),
-      backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: 50,
-        height: 50,
-        child: FittedBox(
-          child: FloatingActionButton(
-            child: Icon(
-              Icons.add,
+      appBar: AppBar( title: Text('Dogs Adoption List'), backgroundColor: Colors.blue ,),
+        backgroundColor: Colors.white,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: SizedBox(
+          width: 50,
+          height: 50,
+          child: FittedBox(
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.add,
+              ),
+              onPressed: () {
+                GetAddressFromLatLong(widget.lat, widget.long);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DogForm(
+                        lat: widget.lat,
+                        long: widget.long,
+                        city: city,
+                        country: country,
+                      ),
+                    ));
+              },
             ),
-            onPressed: () {
-              GetAddressFromLatLong(widget.lat, widget.long);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DogForm(
-                      lat: widget.lat,
-                      long: widget.long,
-                      city: city,
-                      country: country,
-                    ),
-                  ));
-            },
           ),
         ),
-      ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-                pinned: true,
-                snap: true,
-                floating: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: UserImgProfile(
-                    usermail: widget.usermail,
-                  ),
-                ),
-                expandedHeight: MediaQuery.of(context).size.height * 0.30,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.refresh,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        //fetchData(AppConstants.APIBASE_URL);
-                        var l = getTodo(widget.usermail);
-                      });
-                      // do something
-                    },
-                  )
-                ]),
-            SliverList(
-                delegate: SliverChildListDelegate([
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.white38,
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: CustomScrollView(
+                  shrinkWrap: true,
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      snap: true,
+                      floating: true,
+                      flexibleSpace: FlexibleSpaceBar(
+                        centerTitle: true,
+                        background: UserImgProfile(
+                          usermail: widget.usermail,
+                        ),
+                      ),
+                      expandedHeight: MediaQuery.of(context).size.height * 0.30,
+                      
+                      actions: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(
+                              () {
+                                //fetchData(AppConstants.APIBASE_URL);
+                                var l = getTodo(widget.usermail);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        color: Colors.blue,
+                        height: 20,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(20.0),
+                                  topRight: const Radius.circular(20.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Column(
+                            children: [
+                              // //UserImgProfile(
+                              //     usermail:
+                              //         widget.usermail), //<----------------------------------
+                              UserDogList(
+                                usermail: widget.usermail,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                child: Column(children: [
-                  // //UserImgProfile(
-                  //     usermail:
-                  //         widget.usermail), //<----------------------------------
-                  UserDogList(
-                    usermail: widget.usermail,
-                  )
-                ]),
               ),
-            ]))
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+        ));
   }
 }
 

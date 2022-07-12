@@ -46,18 +46,20 @@ class _gridListDogsState extends State<gridListDogs> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                Icons.filter_alt_rounded,
-              ),
-              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
-        ),
-        title: const Text(
+        //leading:
+         //Builder(
+        //   builder: (BuildContext context) {
+        //     return IconButton(
+        //       icon: const Icon(
+        //         Icons.filter_alt_rounded,
+        //       ),
+        //       onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+        //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        //     );
+        //   },
+        // ),
+        title: const 
+        Text(
           'Breed',
         ),
         elevation: 8,

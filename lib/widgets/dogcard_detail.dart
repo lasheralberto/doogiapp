@@ -75,7 +75,7 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       widget.imgparam,
-                      width: 350,
+                      width: 320, 
                       height: 200,
                       fit: BoxFit.cover,
                     ),
@@ -85,7 +85,7 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       widget.imgparam2 as String,
-                      width: 350,
+                      width: 320,
                       height: 200,
                       fit: BoxFit.cover,
                     ),
@@ -95,7 +95,7 @@ class _DogCardDetailsState extends State<DogCardDetails> {
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       widget.imgparam3 as String,
-                      width: 350,
+                      width: 320,
                       height: 200,
                       fit: BoxFit.cover,
                     ),

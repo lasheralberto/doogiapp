@@ -21,7 +21,8 @@ class UserImgProfile extends StatefulWidget {
 class _UserImgProfileState extends State<UserImgProfile> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.blue,
       width: MediaQuery.of(context).size.width / 1.2,
       height: MediaQuery.of(context).size.width / 1.6,
       child: Card(
@@ -156,107 +157,127 @@ class _UserDogListState extends State<UserDogList> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        FutureBuilder<List<ParseObject>>(
-          future: getTodo(widget.usermail),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return const Center(
-                  child: GFLoader(),
-                );
-              default:
-                if (snapshot.hasError) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        //borderRadius: BorderRadius.circular(300),
+      ),
+      child: Column(
+        children: [
+          FutureBuilder<List<ParseObject>>(
+            future: getTodo(widget.usermail),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
                   return const Center(
-                    child: Text("Error..."),
+                    child: GFLoader(),
                   );
-                }
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: Text("No Data..."),
-                  );
-                } else {
-                  return ListView.builder(
-                      addAutomaticKeepAlives: false,
-                      addRepaintBoundaries: false,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        //*************************************
-                        //Get Parse Object Values
-                        final varTodo = snapshot.data![index];
-                        final varTitle = varTodo.get<String>('title')!;
-                        final varBreed = varTodo.get<String>('Breed');
-                        final varAge = varTodo.get<String>('Age');
-                        final varDesc = varTodo.get<String>('DogDescription');
-                        final varImg = varTodo.get<ParseFileBase>('DogImg')!;
-                        final varLat = varTodo.get<double>('latitude');
-                        final varLong = varTodo.get<double>('longitude');
+                default:
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("Error..."),
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text("No Data..."),
+                    );
+                  } else {
+                    return ListView.builder(
+                        addAutomaticKeepAlives: false,
+                        addRepaintBoundaries: false,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          //*************************************
+                          //Get Parse Object Values
+                          final varTodo = snapshot.data![index];
+                          final varTitle = varTodo.get<String>('title')!;
+                          final varBreed = varTodo.get<String>('Breed');
+                          final varAge = varTodo.get<String>('Age');
+                          final varDesc = varTodo.get<String>('DogDescription');
+                          final varImg = varTodo.get<ParseFileBase>('DogImg')!;
+                          final varLat = varTodo.get<double>('latitude');
+                          final varLong = varTodo.get<double>('longitude');
 
-                        //*************************************
+                          //*************************************
 
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => personalDogDetail(
-                                        screen: 'personal_detailForm',
-                                        title: varTitle,
-                                        Age: varAge as String,
-                                        lat: varLat,
-                                        long: varLong,
-                                        description: varDesc,
-                                        img: varImg.url,
-                                        breed: varBreed)));
-                          },
-                          child: ListTile(
-                            title: Text(varTitle),
-                            subtitle: Text(varBreed as String),
-                            leading: Container(
-                              //borderRadius: BorderRadius.all(Radius.circular(40)),
-                              decoration:
-                                  const BoxDecoration(shape: BoxShape.circle),
-                              child: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(varImg.url as String),
-                              ),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete_outline,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () async {
-                                    await deleteTodo(varTodo.objectId!);
-                                    setState(() {
-                                      const snackBar = SnackBar(
-                                        content: Text("Dog removed!"),
-                                        duration: Duration(seconds: 1),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                        ..removeCurrentSnackBar()
-                                        ..showSnackBar(snackBar);
-                                    });
-                                  },
-                                )
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 10),
+                                ),
                               ],
                             ),
-                          ),
-                        );
-                      });
-                }
-            }
-          },
-        ),
-      ],
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => personalDogDetail(
+                                            screen: 'personal_detailForm',
+                                            title: varTitle,
+                                            Age: varAge as String,
+                                            lat: varLat,
+                                            long: varLong,
+                                            description: varDesc,
+                                            img: varImg.url,
+                                            breed: varBreed)));
+                              },
+                              child: ListTile(
+                                title: Text(varTitle),
+                                subtitle: Text(varBreed as String),
+                                leading: Container(
+                                  //borderRadius: BorderRadius.all(Radius.circular(40)),
+                                  decoration:
+                                      const BoxDecoration(shape: BoxShape.circle),
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(varImg.url as String),
+                                  ),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete_outline,
+                                        color: Colors.blue,
+                                      ),
+                                      onPressed: () async {
+                                        await deleteTodo(varTodo.objectId!);
+                                        setState(() {
+                                          const snackBar = SnackBar(
+                                            content: Text("Dog removed!"),
+                                            duration: Duration(seconds: 1),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                            ..removeCurrentSnackBar()
+                                            ..showSnackBar(snackBar);
+                                        });
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  }
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
