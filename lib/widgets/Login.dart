@@ -27,16 +27,14 @@ class _LoginPageeState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  height: 350,
-                  child: Image.network(
-                      AppConstants.APPLOGO
-                    ),
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: Image.network(AppConstants.APPLOGO5),
                 ),
-                Center(
-                  child:
-                      const Text('User Login', style: TextStyle(fontSize: 14)),
-                ),
-                SizedBox(height: 10),
+                // Center(
+                //   child:
+                //       //const Text('User Login', style: TextStyle(fontSize: 14)),
+                // ),
+                SizedBox(height: 40),
                 TextField(
                   controller: controllerEmail,
                   enabled: !isLoggedIn,
@@ -45,6 +43,7 @@ class _LoginPageeState extends State<LoginPage> {
                   autocorrect: false,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
                           gapPadding: 5.0,
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Email'),
@@ -61,22 +60,27 @@ class _LoginPageeState extends State<LoginPage> {
                   autocorrect: false,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Password'),
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                Container(
-                  height: 50,
-                  child: ElevatedButton(
-                      child: const Text('Login'),
-                      onPressed: () {
-                        // isLoggedIn == false ? () => doUserLogin() : null ;
-                        doUserLogin();
-                      }),
-                ),
-              
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        maximumSize: Size.fromHeight(60),
+                        minimumSize: Size.fromHeight(50),
+                        visualDensity: VisualDensity.compact,
+                        splashFactory: InkRipple.splashFactory,
+                        enableFeedback: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                    child: const Text('Login'),
+                    onPressed: () {
+                      // isLoggedIn == false ? () => doUserLogin() : null ;
+                      doUserLogin();
+                    }),
                 SizedBox(
                   height: 5,
                 ),

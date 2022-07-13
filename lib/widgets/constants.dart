@@ -8,6 +8,12 @@ class AppConstants {
       'https://ik.imagekit.io/aml28/DogiApp__2__zJl1hYcXv.png?ik-sdk-version=javascript-1.4.3&updatedAt=1652993161226';
   static const String APPLOGO2 =
       'https://ik.imagekit.io/aml28/Applogo2_6WVO3Pmgkm.PNG?ik-sdk-version=javascript-1.4.3&updatedAt=1656056922472';
+  static const String APPLOGO3 =
+      'https://ik.imagekit.io/aml28/logo3_OMaOXXCpP.PNG?ik-sdk-version=javascript-1.4.3&updatedAt=1657747289971';
+  static const String APPLOGO4 =
+      'https://ik.imagekit.io/aml28/LOGO4_RZZ8YPmtw.PNG?ik-sdk-version=javascript-1.4.3&updatedAt=1657747542981';
+  static const String APPLOGO5 =
+      'https://ik.imagekit.io/aml28/logo6_SVHBftX63.PNG?ik-sdk-version=javascript-1.4.3&updatedAt=1657748432111';
 
   static const APIBASE_URL = 'https://dogsbreedapp.herokuapp.com/all/';
 

@@ -237,7 +237,7 @@ class _UserDogListState extends State<UserDogList> {
                                 title: Text(varTitle),
                                 subtitle: Text(varBreed as String),
                                 leading: Container(
-                                  //borderRadius: BorderRadius.all(Radius.circular(40)),
+                                  
                                   decoration:
                                       const BoxDecoration(shape: BoxShape.circle),
                                   child: CircleAvatar(

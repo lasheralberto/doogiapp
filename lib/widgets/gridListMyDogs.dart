@@ -78,7 +78,10 @@ class _gridListDogsState extends State<gridListDogs> {
     } else {
       String filter = value.toLowerCase();
       _filteredDogList = snapList
-          .where((dog) => dog['title'].toLowerCase().contains(filter))
+          .where((dog) => (dog['title'].toLowerCase().contains(filter)) 
+                          | (dog['CityName'].toLowerCase().contains(filter)) 
+                          | (dog['Breed'].toLowerCase().contains(filter))
+                          )
           .toList();
     }
   }

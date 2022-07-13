@@ -49,7 +49,10 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
     const title = 'Grid List';
 
     return Scaffold(
-      appBar: AppBar( title: Text('Dogs Adoption List'), backgroundColor: Colors.blue ,),
+        appBar: AppBar(
+          title: Text('Dogs Adoption List'),
+          backgroundColor: Colors.blue,
+        ),
         backgroundColor: Colors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: SizedBox(
@@ -97,7 +100,6 @@ class _DogsAdoptionListState extends State<DogsAdoptionList> {
                         ),
                       ),
                       expandedHeight: MediaQuery.of(context).size.height * 0.30,
-                      
                       actions: <Widget>[
                         IconButton(
                           icon: Icon(
