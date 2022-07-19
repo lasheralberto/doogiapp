@@ -2,6 +2,8 @@
 
 //https://app.brandmark.io/v3/
 
+import 'dart:ffi';
+
 import 'package:ebook/models/fetchdata.dart';
 import 'package:ebook/widgets/DogsAdoptionList.dart';
 import 'package:ebook/widgets/GridAllCards.dart';
@@ -12,12 +14,14 @@ import 'package:ebook/widgets/longPressGrid.dart';
 import 'package:ebook/widgets/searchBarUi.dart';
 import 'package:flutter/material.dart';
 import 'package:ebook/models/searchbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:getwidget/getwidget.dart' as getwid;
 import 'package:getwidget/types/gf_loader_type.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ebook/widgets/filterGridList.dart';
 
 class gridListDogs extends StatefulWidget {
   var lat;
@@ -37,29 +41,20 @@ class gridListDogs extends StatefulWidget {
 }
 
 class _gridListDogsState extends State<gridListDogs> {
-  double start = 30.0;
-  double end = 50.0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<ParseObject>>? futuregetalldogs;
   late SearchBar searchBar;
+  var varSelectedFilterAge;
+  var varSelectedFilterAgeStart;
+  var varSelectedFilterAgeEnd;
+  bool isFiltering = false;
   List<dynamic> snapList = [];
+  List<dynamic> snapListFiltered = [];
+  RangeValues _rangeValues = RangeValues(0.0, 19.0);
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-        //leading:
-         //Builder(
-        //   builder: (BuildContext context) {
-        //     return IconButton(
-        //       icon: const Icon(
-        //         Icons.filter_alt_rounded,
-        //       ),
-        //       onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-        //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        //     );
-        //   },
-        // ),
-        title: const 
-        Text(
+        title: const Text(
           'Breed',
         ),
         elevation: 8,
@@ -67,6 +62,77 @@ class _gridListDogsState extends State<gridListDogs> {
         //backgroundColor: Colors.white,
         //shape: RoundedRectangleBorder(borderRadius:  BorderRadius.vertical(bottom: Radius.circular(30))),
         actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.filter_alt_rounded,
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(
+                      builder: (context, setState) => AlertDialog(
+                        title: const Text('Filter'),
+                        content: SizedBox(
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Text('Age'),
+                                RangeSlider(
+                                  values: _rangeValues,
+                                  divisions: 20,
+                                  labels: RangeLabels(
+                                      _rangeValues.start.round().toString(),
+                                      _rangeValues.end.round().toString()),
+                                  onChanged: (value) {
+                                    _rangeValues = value;
+                                    setState(() {
+                                      isFiltering = false;
+
+                                      varSelectedFilterAgeStart = value.start;
+                                      varSelectedFilterAgeEnd = value.end;
+                                    });
+                                  },
+                                  min: 0.0,
+                                  max: 20.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        actions: [
+                          ElevatedButton(
+                            child: const Text('Apply'),
+                            onPressed: () {
+                              setState(() {
+                                isFiltering = true;
+                                snapListFiltered = snapList
+                                    .where((element) =>
+                                        element['Age'] >=
+                                            varSelectedFilterAgeStart &&
+                                        element['Age'] <=
+                                            varSelectedFilterAgeEnd)
+                                    .toList();
+                              });
+                              Navigator.of(context).pop([
+                                varSelectedFilterAgeStart,
+                                varSelectedFilterAgeEnd
+                              ]);
+                            },
+                          ),
+                          ElevatedButton(
+                            child: const Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          ),
           searchBar.getSearchAction(context),
         ]);
   }
@@ -77,11 +143,13 @@ class _gridListDogsState extends State<gridListDogs> {
       _filteredDogList = GridAllDogsList;
     } else {
       String filter = value.toLowerCase();
+
+      //Si estamos filtrando,
       _filteredDogList = snapList
-          .where((dog) => (dog['title'].toLowerCase().contains(filter)) 
-                          | (dog['CityName'].toLowerCase().contains(filter)) 
-                          | (dog['Breed'].toLowerCase().contains(filter))
-                          )
+          .where((dog) =>
+              (dog['title'].toLowerCase().contains(filter)) |
+              (dog['CityName'].toLowerCase().contains(filter)) |
+              (dog['Breed'].toLowerCase().contains(filter)))
           .toList();
     }
   }
@@ -119,25 +187,6 @@ class _gridListDogsState extends State<gridListDogs> {
     const Widget emptyBlock = GridAllCardsShimmer();
 
     return Scaffold(
-      drawer: Drawer(
-        child: Column(children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-          ),
-          RangeSlider(
-            values: RangeValues(start, end),
-            labels: RangeLabels(start.toString(), end.toString()),
-            onChanged: (value) {
-              setState(() {
-                start = value.start;
-                end = value.end;
-              });
-            },
-            min: 10.0,
-            max: 80.0,
-          )
-        ]),
-      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -211,7 +260,7 @@ class _gridListDogsState extends State<gridListDogs> {
                       final varTodo = snapshot.data![index];
                       final varTitle = varTodo.get<String>('title')!;
                       final varBreed = varTodo.get<String>('Breed');
-                      final varAge = varTodo.get<String>('Age');
+                      final varAge = varTodo.get<int>('Age');
                       final varImg = varTodo.get<ParseFileBase>('DogImg')!;
                       final varDogDesc = varTodo.get<String>('DogDescription')!;
                       final varGender = varTodo.get<String>('Gender')!;

@@ -140,8 +140,8 @@ class _UserImgProfileState extends State<UserImgProfile> {
 }
 
 class UserDogList extends StatefulWidget {
+  
   var usermail;
-
   UserDogList({
     Key? key,
     required this.usermail,
@@ -198,7 +198,7 @@ class _UserDogListState extends State<UserDogList> {
                           final varTodo = snapshot.data![index];
                           final varTitle = varTodo.get<String>('title')!;
                           final varBreed = varTodo.get<String>('Breed');
-                          final varAge = varTodo.get<String>('Age');
+                          final varAge = varTodo.get<int>('Age');
                           final varDesc = varTodo.get<String>('DogDescription');
                           final varImg = varTodo.get<ParseFileBase>('DogImg')!;
                           final varLat = varTodo.get<double>('latitude');
@@ -237,9 +237,8 @@ class _UserDogListState extends State<UserDogList> {
                                 title: Text(varTitle),
                                 subtitle: Text(varBreed as String),
                                 leading: Container(
-                                  
-                                  decoration:
-                                      const BoxDecoration(shape: BoxShape.circle),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle),
                                   child: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(varImg.url as String),

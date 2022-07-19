@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ebook/widgets/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -19,6 +20,7 @@ Future<void> main() async {
   //////////////////BACK4APP KEYS/////////////////////////////////////
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
+
       clientKey: keyClientKey, autoSendSessionId: true);
 
   runApp(const MyApp());
