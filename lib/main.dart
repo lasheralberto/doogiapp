@@ -14,8 +14,8 @@ Future<void> main() async {
   CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
   WidgetsFlutterBinding.ensureInitialized();
 //////////////////BACK4APP KEYS/////////////////////////////////////
-  const keyApplicationId = 'USNwyNAtrpDSief7vHRuXJUZ8cVQQjZQ3i5an5pK';
-  const keyClientKey = '23fX637JXhjdB8cDGMPxu82dzzrKFeJDcYuZbUxp';
+  const keyApplicationId ='';
+  const keyClientKey = '';
   const keyParseServerUrl = 'https://parseapi.back4app.com';
   //////////////////BACK4APP KEYS/////////////////////////////////////
 
