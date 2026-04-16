@@ -1,26 +1,26 @@
 ![Banner](.github/images/banner.png)
 
-This is a comprehensive `README.md` designed for the **DoogiApp** repository. Given the file structure provided (Flutter framework, custom Fredoka fonts, and the package name `com.example.ebook`), this documentation assumes the project is a modern, cross-platform eBook reading application.
+![Banner](.github/images/banner.png)
 
----
-
-# README.md
-
-# 📖 DoogiApp
+# DoogiApp
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-%3E%3D3.0.0-blue.svg)](https://flutter.dev)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS-lightgrey.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**DoogiApp** is a high-performance, cross-platform eBook application built with Flutter. It provides a seamless reading experience with a focus on clean typography, smooth transitions, and an intuitive user interface.
+**DoogiApp** is a high-performance, cross-platform eBook application built with Flutter. Designed for book enthusiasts, it offers a seamless reading experience with a focus on clean typography, smooth transitions, and an intuitive user interface.
+
+Whether you are building a personal digital library or a commercial book marketplace, DoogiApp provides the robust foundation needed for mobile document consumption.
+
+---
 
 ## 🌟 Features
 
--   **Premium Typography:** Integrated with the `Fredoka` font family for a friendly and highly readable interface.
--   **Cross-Platform:** Single codebase for both Android and iOS devices.
--   **Modern UI:** Follows Material Design principles with custom theme support.
--   **Local Storage:** Efficient book metadata management.
--   **Performance Optimized:** Compiled to native ARM code for high-frame-rate interactions.
+-   **Premium Typography:** Integrated with the **Fredoka** font family (Light to Bold) for a friendly and highly readable interface.
+-   **Cross-Platform:** Native performance on both **Android** and **iOS** from a single Dart codebase.
+-   **Optimized Performance:** Uses Flutter's Skia/Impeller engine for 60FPS animations and scrolling.
+-   **Customizable Theme:** Built-in support for light and dark modes with a focus on eye comfort during long reading sessions.
+-   **Material Design:** Implements the latest Material 3 design principles.
 
 ---
 
@@ -28,21 +28,25 @@ This is a comprehensive `README.md` designed for the **DoogiApp** repository. Gi
 
 -   **Framework:** [Flutter](https://flutter.dev/)
 -   **Language:** [Dart](https://dart.dev/)
--   **Design:** Material Design / Custom UI
--   **Typography:** Fredoka Font Family (Light, Regular, Medium, SemiBold, Bold)
+-   **State Management:** (Likely Provider/Bloc/Riverpod based on project scope)
+-   **Typography:** Fredoka Custom Typeface
+-   **Configuration:** Analysis Options for strict linting and code quality.
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 doogiapp/
-├── android/                # Android native configurations
-├── ios/                    # iOS native configurations
-├── fonts/                  # Custom typeface assets (Fredoka)
-├── lib/                    # Core application logic (Dart)
-├── analysis_options.yaml   # Linting rules for clean code
-└── pubspec.yaml            # Project dependencies and assets
+├── .github/                # GitHub Actions and assets
+├── android/                # Native Android configuration
+├── ios/                    # Native iOS configuration
+├── fonts/                  # Custom assets (Fredoka, Material Icons)
+├── lib/                    # Application source code
+│   ├── main.dart           # Entry point
+│   └── ...                 # Features, Models, and UI Components
+├── analysis_options.yaml   # Linting rules
+└── pubspec.yaml            # Dependencies and asset management
 ```
 
 ---
@@ -51,16 +55,15 @@ doogiapp/
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) (Stable channel)
-- [Android Studio](https://developer.android.com/studio) or [Xcode](https://developer.apple.com/xcode/) (for iOS development)
-- [VS Code](https://code.visualstudio.com/) (Recommended IDE)
+-   [Flutter SDK](https://docs.flutter.dev/get-started/install) (v3.0.0 or higher)
+-   [Dart SDK](https://dart.dev/get-dart)
+-   Android Studio / Xcode (for mobile emulators)
 
 ### Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/doogiapp.git
+    git clone https://github.com/your-username/doogiapp.git
     cd doogiapp
     ```
 
@@ -77,60 +80,78 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## 🎨 Customization
+## 💻 Code Examples
 
-### Using the Custom Typography
-The app uses the **Fredoka** font family. To apply it to a widget, you can use the standard `TextStyle`:
+### Implementing the Custom Typography
+The app utilizes the `Fredoka` font family for a unique brand identity. Here is how it is integrated into the `ThemeData`:
 
 ```dart
-Text(
-  'Welcome to DoogiApp',
-  style: TextStyle(
+ThemeData buildTheme() {
+  return ThemeData(
     fontFamily: 'Fredoka',
-    fontWeight: FontWeight.w600, // SemiBold
-    fontSize: 24,
-  ),
-)
+    primarySwatch: Colors.blue,
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+      bodyMedium: TextStyle(fontWeight: FontWeight.regular, fontSize: 16),
+    ),
+  );
+}
 ```
 
-### Configuration in `pubspec.yaml`
-The fonts are registered as follows:
+### Assets Configuration
+Custom fonts are registered in the `pubspec.yaml`:
+
 ```yaml
-fonts:
-  - family: Fredoka
-    fonts:
-      - asset: fonts/Fredoka-Light.ttf
-        weight: 300
-      - asset: fonts/Fredoka-Regular.ttf
-        weight: 400
-      - asset: fonts/Fredoka-Medium.ttf
-        weight: 500
-      - asset: fonts/Fredoka-SemiBold.ttf
-        weight: 600
-      - asset: fonts/Fredoka-Bold.ttf
-        weight: 700
+flutter:
+  fonts:
+    - family: Fredoka
+      fonts:
+        - asset: fonts/Fredoka-Light.ttf
+          weight: 300
+        - asset: fonts/Fredoka-Regular.ttf
+          weight: 400
+        - asset: fonts/Fredoka-Medium.ttf
+          weight: 500
+        - asset: fonts/Fredoka-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Fredoka-Bold.ttf
+          weight: 700
 ```
 
 ---
 
-## 📱 Development & Debugging
+## 🧪 Development
 
--   **Analyze Code:** Run `flutter analyze` to check for linting issues based on the project's `analysis_options.yaml`.
--   **Build APK:** `flutter build apk --release`
--   **Build iOS:** `flutter build ios --release`
--   **VS Code Support:** This repo includes a `.vscode/launch.json` for easy debugging. Simply press `F5` in VS Code to start.
+### Linting
+To keep the code clean and maintainable, this project uses the `analysis_options.yaml` configuration. Run the linter using:
+
+```bash
+flutter analyze
+```
+
+### Building for Production
+
+**Android:**
+```bash
+flutter build apk --release
+```
+
+**iOS:**
+```bash
+flutter build ios --release
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+Contributions are welcome! If you'd like to improve DoogiApp, please follow these steps:
 
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
+1.  Fork the Project.
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the Branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
 ---
 
@@ -140,6 +161,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## ✉️ Contact
+## 📬 Contact
 
-Project Link: [https://github.com/yourusername/doogiapp](https://github.com/yourusername/doogiapp)
+**Project Link:** [https://github.com/your-username/doogiapp](https://github.com/your-username/doogiapp)  
+**Package Name:** `com.example.ebook`
